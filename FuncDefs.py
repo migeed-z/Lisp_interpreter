@@ -1,6 +1,6 @@
 class FuncDef:
 
-    def __init__(self, name, body, param):
+    def __init__(self, name, body, params):
         """
 
         :param name: String to represent the name of the function
@@ -10,7 +10,7 @@ class FuncDef:
         """
         self.name = name
         self.body = body
-        self.param = param
+        self.params = params
 
 
 

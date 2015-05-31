@@ -1,4 +1,5 @@
 from Operation import Operation
+from BslError import BSLError
 
 
 class Divide(Operation):
@@ -19,7 +20,7 @@ class Divide(Operation):
             result = seq.pop(0)
             for element in seq:
                 if element == 0:
-                    raise ZeroDivisionError('Cannot Divide by Zero')
+                    raise BSLError('Cannot Divide by Zero')
                 else:
                     result = result/element
 

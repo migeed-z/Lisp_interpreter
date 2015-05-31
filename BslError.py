@@ -1,0 +1,3 @@
+class BSLError(Exception):
+    pass
+

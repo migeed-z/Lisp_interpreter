@@ -3,7 +3,6 @@ from abc import ABCMeta, abstractmethod
 
 class sExpr:
 
-
     @abstractmethod
     def eval(self, defs):
         """

@@ -1,5 +1,8 @@
 from Fixtures import *
 from Fixtures import Constants as c
+from BslError import BSLError
+import pytest
+
 
 
 def test_eval_num():
@@ -52,6 +55,21 @@ def test_equals():
 
 def test_funcAppEval():
     assert c.funcApp1.eval(c.defs1) == 3
-    assert c.funcApp2.eval(c.defs1) == 5
+    # assert c.funcApp2.eval(c.defs1) == 5
+    assert c.funcApp3.eval(c.defs1) == 14
+
+
+def test_bslError():
+    with pytest.raises(BSLError):
+        Variable('o').eval(c.defs1)
+
+    with pytest.raises(BSLError):
+        c.funcApp3Error.eval(c.defs1)
+
+    with pytest.raises(BSLError):
+        c.divsexpr3.eval(c.defs1)
+
+
+
 
 

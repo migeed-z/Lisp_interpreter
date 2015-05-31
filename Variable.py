@@ -1,6 +1,6 @@
 from sExpr import sExpr
 from Num import Num
-
+from BslError import BSLError
 
 class Variable(sExpr):
     """
@@ -14,11 +14,11 @@ class Variable(sExpr):
         self.name = name
 
     def eval(self, defs):
-        return defs.get(self.name)
-
-    # def eval(self, defs):
-    #     numericSexpr =  self.substAll(defs)
-    #     return numericSexpr.eval(defs)
+        val = defs.get(self.name)
+        if not val:
+            raise BSLError('Variable not defined')
+        else:
+            return val
 
     def equals(self, other):
         if not isinstance(other, Variable):

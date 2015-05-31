@@ -1,8 +1,9 @@
 from sExpr import sExpr
+from BslError import BSLError
 
 class FuncApplication(sExpr):
 
-    def __init__(self, name, sexpr):
+    def __init__(self, name, sl):
         """
 
         :param name: Name of the function
@@ -11,7 +12,7 @@ class FuncApplication(sExpr):
         """
         #super().__init__('by next week you will see why we called it dumb')
         self.name = name
-        self.sexpr = sexpr
+        self.sl = sl
 
 
     def eval(self, defs):
@@ -21,13 +22,28 @@ class FuncApplication(sExpr):
         :return: Numerical value of this function
         """
 
-        val = self.sexpr.eval(defs)
+        vals = self.sl.helper_eval(defs)
 
         definition = defs.get(self.name) #this is a function defintion
         body = definition.body
-        param = definition.param
-        dict = defs.extend(param, val)
-        return body.eval(dict)
+        params = definition.params
+
+        defs = self.helper_extend(defs, params, vals)
+
+        return body.eval(defs)
+
+
+    def helper_extend(self, defs, params, vals):
+
+        if len(params) != len(vals):
+            raise BSLError("Params and Vals must be equal")
+
+        while len(params) != 0:
+            name = params.pop()
+            val = vals.pop()
+            defs = defs.extend(name, val)
+
+        return defs
 
     def subst(self, var, val):
         return self

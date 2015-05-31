@@ -9,13 +9,16 @@ class Scope:
         return Scope((name,val,self))
 
     def get(self, key):
-        name = self.defs[0]
-        val = self.defs[1]
-        old_self = self.defs[2]
-        if key == name:
-            return val
+        if not self.defs:
+            return None
         else:
-            return old_self.get(key)
+            name = self.defs[0]
+            val = self.defs[1]
+            old_self = self.defs[2]
+            if key == name:
+                return val
+            else:
+                return old_self.get(key)
 
     #raise Exception('Cannot evaluate variable')
 
