@@ -3,8 +3,6 @@ from Constants import Constants as c
 from BslError import BSLError
 import pytest
 
-
-
 def test_eval_num():
     assert Num(1).eval(c.defs1) == 1
     assert Num(9).eval(c.defs1) == 9

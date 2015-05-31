@@ -28,7 +28,6 @@ class Constants:
     list10 = SL([Num(4), Num(3)])
     list11 = SL([Num(4), Num(0), Num(3)])
 
-
     addsexpr1 = Add(SL([Num(1)]))
     addsexpr2 = Add(list2)
     addsexpr3 = Add(list10)
@@ -50,7 +49,6 @@ class Constants:
     varsexpr2 = Add(list9)
     varsexpr3 = Subtract(SL([varsexpr1, varsexpr2]))
 
-
     #functions
     funcDef1 = FuncDef("f", Variable("x"), ["x"])
     funcApp1 = FuncApplication('f', SL([Num(4)]))
@@ -66,8 +64,6 @@ class Constants:
     funcDef3 = FuncDef('z', funcExpr2, ['x', 'y'])
     funcApp3 = FuncApplication('z', SL([Num(7), Num(7)]))
     funcApp3Error = FuncApplication('z', SL([Num(7), Num(7), Num(7)]))
-
-
 
     defs1 = Scope(()).extend('x',1).extend('y',4).extend('f', funcDef1).extend('g', funcDef2).extend('z', funcDef3)
 
