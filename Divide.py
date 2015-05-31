@@ -1,12 +1,10 @@
 from Operation import Operation
 from BslError import BSLError
 
-
 class Divide(Operation):
     """
     To represent sExpr with Division at the top level
     """
-
 
     def __init__(self, args):
         super().__init__(args)

@@ -1,5 +1,5 @@
-from Fixtures import *
-from Fixtures import Constants as c
+from Constants import *
+from Constants import Constants as c
 from BslError import BSLError
 import pytest
 
@@ -46,16 +46,10 @@ def test_equals():
     assert not c.addsexpr1.equals(c.addsexpr2)
     assert c.addsexpr1.equals(c.addsexpr1)
 
-# def test_subst():
-#     assert c.varsexpr1.subst('x', 1).equals(c.addsexpr2)
-#     assert c.addsexpr1.subst('x', 1).equals(c.addsexpr1)
-#
-# def test_substAll():
-#     assert c.varsexpr3.substAll(c.defs1).equals(c.subsexpr3)
-
 def test_funcAppEval():
-    assert c.funcApp1.eval(c.defs1) == 3
-    # assert c.funcApp2.eval(c.defs1) == 5
+
+    assert c.funcApp1.eval(c.defs1) == 4
+    assert c.funcApp2.eval(c.defs1) == 6
     assert c.funcApp3.eval(c.defs1) == 14
 
 
@@ -68,6 +62,9 @@ def test_bslError():
 
     with pytest.raises(BSLError):
         c.divsexpr3.eval(c.defs1)
+
+    with pytest.raises(BSLError):
+        FuncDef('z', c.var1, [4])
 
 
 

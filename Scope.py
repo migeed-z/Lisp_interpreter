@@ -1,10 +1,17 @@
 class Scope:
-    # a list of pairs, each pair is a name and a value
+    """
+    To represent the definitions as a tuple T, where t[0] is a key, t[1] is a value and t[2] is
+    the old scopre
+    """
 
-    def __init__(self,defs):
+    def __init__(self, defs):
+        """
+        Initialises the scope from a tuple with three elements
+        :param defs: Tuple containing three elements. If no definitions exist, we may use an empty tuple
+        :return:
+        """
         self.defs = defs
 
-    # name: String val: Number -> Scope
     def extend(self, name, val):
         return Scope((name,val,self))
 
@@ -18,9 +25,8 @@ class Scope:
             if key == name:
                 return val
             else:
-                return old_self.get(key)
+                return old_self.get(key) #will return none unless the tuple is formed of three elements
 
-    #raise Exception('Cannot evaluate variable')
 
 
 

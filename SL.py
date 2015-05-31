@@ -25,9 +25,7 @@ class SL:
         """
         if len(self.sl) != len(element.sl):
             return False
-
         else:
-
             result = True
             for i in range(0, len(self.sl)):
                 result = result and self.sl[i].equals(element.sl[i])

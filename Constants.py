@@ -53,7 +53,7 @@ class Constants:
 
     #functions
     funcDef1 = FuncDef("f", Variable("x"), ["x"])
-    funcApp1 = FuncApplication('f', SL([Num(3)]))
+    funcApp1 = FuncApplication('f', SL([Num(4)]))
 
     list11 = SL([funcApp1, Num(2)])
     funcExpr = Add(list11)
@@ -67,9 +67,9 @@ class Constants:
     funcApp3 = FuncApplication('z', SL([Num(7), Num(7)]))
     funcApp3Error = FuncApplication('z', SL([Num(7), Num(7), Num(7)]))
 
-#defs1 = Scope([('x', 1), ('y', 4), ('f', funcDef1), ('g', funcDef2)])
-    defs1 = Scope([]).extend('x',1).extend('y',4).extend('f', funcDef1).extend('g', funcDef2).extend('z', funcDef3)
 
+
+    defs1 = Scope(()).extend('x',1).extend('y',4).extend('f', funcDef1).extend('g', funcDef2).extend('z', funcDef3)
 
 
 

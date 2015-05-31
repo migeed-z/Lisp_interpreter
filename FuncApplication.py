@@ -7,33 +7,29 @@ class FuncApplication(sExpr):
         """
 
         :param name: Name of the function
-        :param sexpr: Substituted function parameter
-        :return:
+        :param sl: List of sExpr representing the parameters
         """
-        #super().__init__('by next week you will see why we called it dumb')
         self.name = name
         self.sl = sl
 
-
     def eval(self, defs):
-        """
-        Evaluates this function application
-        :param defs: Scope containing tuples of keys and values
-        :return: Numerical value of this function
-        """
-
-        vals = self.sl.helper_eval(defs)
-
         definition = defs.get(self.name) #this is a function defintion
         body = definition.body
         params = definition.params
 
+        vals = self.sl.helper_eval(params)
         defs = self.helper_extend(defs, params, vals)
 
         return body.eval(defs)
 
-
     def helper_extend(self, defs, params, vals):
+        """
+
+        :param defs: Scope representing the definitions
+        :param params: list of Strings representing parameters
+        :param vals: list of numbers representing the values of the parameters
+        :return:
+        """
 
         if len(params) != len(vals):
             raise BSLError("Params and Vals must be equal")
@@ -45,8 +41,6 @@ class FuncApplication(sExpr):
 
         return defs
 
-    def subst(self, var, val):
-        return self
 
 
 

@@ -12,7 +12,6 @@ class sExpr:
         """
         raise NotImplementedError('Method not yet implemented')
 
-
     @abstractmethod
     def equals(self, other):
         """
