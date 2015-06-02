@@ -15,9 +15,9 @@ class FuncApplication(sExpr):
     def eval(self, defs):
         definition = defs.get(self.name) #this is a function defintion
         body = definition.body
-        params = definition.params
+        params = definition.params.copy()
 
-        vals = self.sl.helper_eval(params)
+        vals = self.sl.helper_eval(defs)
         defs = self.helper_extend(defs, params, vals)
 
         return body.eval(defs)

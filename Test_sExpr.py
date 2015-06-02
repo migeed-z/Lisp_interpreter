@@ -1,6 +1,7 @@
 from Constants import *
 from Constants import Constants as c
 from BslError import BSLError
+import Values as v
 import pytest
 
 def test_eval_num():
@@ -64,7 +65,25 @@ def test_bslError():
     with pytest.raises(BSLError):
         FuncDef('z', c.var1, [4])
 
+def test_if0():
+    assert c.if_1.eval(c.defs1) == 1
+    assert c.if_2.eval(c.defs1) == c.funcApp2.eval(c.defs1)
+    assert c.funcApp4.eval(c.defs1) == 6
 
 
+def test_eval_posn():
+    assert v.compare(c.posn1.eval(c.defs1), c.pair1)
+    assert v.compare(c.funcApp5.eval(c.defs1), c.pair2)
+
+def test_eval_posn_x():
+    assert c.posn_x1.eval(c.defs1) == 1
+    assert c.posn_x2.eval(c.defs1) == 4
+
+    with pytest.raises(BSLError):
+        c.posn_x1_error.eval(c.defs1)
+
+    with pytest.raises(BSLError):
+        c.posnsexpr.eval(c.defs1)
 
 
+c.funcApp4.eval(c.defs1)

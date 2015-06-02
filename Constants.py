@@ -8,6 +8,10 @@ from FuncDefs import FuncDef
 from FuncApplication import FuncApplication
 from SL import SL
 from Scope import Scope
+from If0 import If0
+from Posn import Posn
+from Pair import Pair
+from Posn_x import Posn_x
 
 class Constants:
 
@@ -27,6 +31,7 @@ class Constants:
     list9 = SL([var2, Num(3)])
     list10 = SL([Num(4), Num(3)])
     list11 = SL([Num(4), Num(0), Num(3)])
+
 
     addsexpr1 = Add(SL([Num(1)]))
     addsexpr2 = Add(list2)
@@ -64,6 +69,27 @@ class Constants:
     funcDef3 = FuncDef('z', funcExpr2, ['x', 'y'])
     funcApp3 = FuncApplication('z', SL([Num(7), Num(7)]))
     funcApp3Error = FuncApplication('z', SL([Num(7), Num(7), Num(7)]))
+
+    if_1 = If0(Num(0), Num(1), Num(2))
+    if_2 = If0(funcApp1, funcApp1, funcApp2)
+    if_3 = If0(funcApp2, Num(42), funcApp1)
+
+    funcApp4 = FuncApplication('z', SL([if_3, Num(2)]))
+
+    posn1 = Posn(Num(1), Num(1))
+    pair1 = Pair(1, 1)
+
+    funcApp5 = FuncApplication('f', SL([Posn(funcApp1, Num(1))]))
+    pair2 = Pair(4, 1)
+
+    posn_x1 = Posn_x(posn1)
+    posn_x2 = Posn_x(funcApp5)
+
+    posn_x1_error = Posn_x(Num(1))
+
+    list12 = SL([posn_x1, Num(5)])
+
+    posnsexpr = Add(list12)
 
     defs1 = Scope(()).extend('x',1).extend('y',4).extend('f', funcDef1).extend('g', funcDef2).extend('z', funcDef3)
 

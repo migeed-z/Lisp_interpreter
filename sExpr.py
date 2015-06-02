@@ -6,6 +6,11 @@ class sExpr:
     @abstractmethod
     def eval(self, defs):
         """
+        sexpr Scope -> Value
+
+        Value is one of:
+            -- Number
+            -- Pair(Value,Value)
         defs: Scope
         Evaluates this sExpression
         :return: The value of evaluating this sExpression
