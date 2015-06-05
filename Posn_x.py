@@ -1,16 +1,10 @@
-from sExpr import sExpr
-from Pair import Pair
-from BslError import BSLError
+from Posn_selector import Posn_Selector
 
-class Posn_x(sExpr):
+class Posn_x(Posn_Selector):
 
     def __init__(self, sub_expr):
-        self.sub_expr = sub_expr
+        super().__init__(sub_expr)
 
     def eval(self, defs):
-        value = self.sub_expr.eval(defs)
+        return self.eval_helper(defs).left
 
-        if isinstance(value, Pair):
-            return value.left
-        else:
-            raise BSLError('Value is not a pair')

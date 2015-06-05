@@ -26,21 +26,4 @@ class sExpr:
         """
         return NotImplementedError('Method not yet implemented')
 
-    @abstractmethod
-    def subst(self, var, val):
-        """
-        Substitutes all Variable occurrences with val
-        :param val: Numerical value
-        :return: sExpr
-        """
-        return NotImplementedError('Method not yet implemented')
-
-    @abstractmethod
-    def substAll(self, defs):
-        """
-        Substitutes all keys in defs with their corresponding values in this sExpr
-        :param defs: Dictionary of keys and values
-        :return: sExpr
-        """
-        return NotImplementedError('Method not yet implemented')
 

@@ -21,8 +21,3 @@ class Num(sExpr):
         else:
             return self.num == other.num
 
-    def subst(self, var, val):
-        return self
-
-    def substAll(self, defs):
-        return self

@@ -33,28 +33,6 @@ class SL:
             return result
 
 
-    def helper_subst(self, var, val):
-        """
-        Substitutes all occurences of var in this SL with val
-        :param var: String
-        :param val: Numerical value
-        :return: SL
-        """
-        result = []
-        for sexpr in self.sl:
-            result.append(sexpr.subst(var, val))
-        return SL(result)
-
-    def helper_substAll(self, defs):
-        """
-        Substitutes all keys in defs with their corresponding values in this SL
-        :param defs: Dictionary of key-value pairs
-        :return: SL
-        """
-        result = []
-        for sexpr in self.sl:
-            result.append(sexpr.substAll(defs))
-        return SL(result)
 
 
 

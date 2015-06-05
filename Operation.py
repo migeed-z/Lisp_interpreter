@@ -25,8 +25,3 @@ class Operation(sExpr):
         else:
             return self.args.helper_equals(other.args)
 
-    def subst(self, var, val):
-        return self.This(self.args.helper_subst(var, val))
-
-    def substAll(self, defs):
-        return self.This(self.args.helper_substAll(defs))

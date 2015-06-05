@@ -26,17 +26,5 @@ class Variable(sExpr):
         else:
             return self.name == other.name
 
-    def subst(self, var, val):
-        if var == self.name:
-            return Num(val)
-        else:
-            return self
-
-    def substAll(self, scope_defs):
-        expr = self
-        defs = scope_defs.defs
-        for item in defs:
-            expr = expr.subst(item[0], item[1])
-        return expr
 
 

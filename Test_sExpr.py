@@ -82,8 +82,8 @@ def test_eval_posn_x():
     with pytest.raises(BSLError):
         c.posn_x1_error.eval(c.defs1)
 
-    with pytest.raises(BSLError):
-        c.posnsexpr.eval(c.defs1)
+    # with pytest.raises(BSLError):
+    #     c.posnsexpr.eval(c.defs1)
 
 
-c.funcApp4.eval(c.defs1)
+#c.funcApp4.eval(c.defs1)
