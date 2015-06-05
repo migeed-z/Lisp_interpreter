@@ -1,15 +1,15 @@
-from sExpr import sExpr
-from Pair import Pair
+from BSLexpr import BSLexpr
+from Values import Pair
 
-class Posn(sExpr):
+class Posn(BSLexpr):
     """
-    Represents an sExpr of the shape (posn e e)
+    Represents an BSLexpr of the shape (posn e e)
     """
     def __init__(self, posn_x, posn_y):
         """
 
-        :param posn_x: sExpr
-        :param posn_y: sExpr
+        :param posn_x: BSLexpr
+        :param posn_y: BSLexpr
         :return:
         """
         self.posn_x = posn_x

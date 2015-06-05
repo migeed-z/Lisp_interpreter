@@ -14,7 +14,7 @@ def test_eval_expr():
 
 
 def test_eval_empty():
-    assert SL([]).helper_eval(c.defs1) == []
+    assert BSLlist([]).helper_eval(c.defs1) == []
 
 
 def test_eval_add():

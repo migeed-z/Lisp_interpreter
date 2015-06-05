@@ -1,9 +1,9 @@
 from abc import abstractmethod
-from sExpr import sExpr
-from Pair import Pair
+from BSLexpr import BSLexpr
+from Values import Pair
 from BslError import BSLError
 
-class Posn_Selector(sExpr):
+class Posn_Selector(BSLexpr):
     """
     To represent Posn Selector
     """

@@ -3,7 +3,7 @@ from Operation import Operation
 
 class Multiply(Operation):
     """
-    To represent sExpr with Multiplication at the top level
+    To represent BSLexpr with Multiplication at the top level
     """
 
     def __init__(self, args):

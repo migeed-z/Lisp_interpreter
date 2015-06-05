@@ -1,13 +1,13 @@
-from sExpr import sExpr
+from BSLexpr import BSLexpr
 from BslError import BSLError
 
-class FuncApplication(sExpr):
+class FuncApplication(BSLexpr):
 
     def __init__(self, name, sl):
         """
 
         :param name: Name of the function
-        :param sl: List of sExpr representing the parameters
+        :param sl: List of BSLexpr representing the parameters
         """
         self.name = name
         self.sl = sl

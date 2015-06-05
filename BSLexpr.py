@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 
-class sExpr:
+class BSLexpr:
 
     @abstractmethod
     def eval(self, defs):
@@ -20,7 +20,7 @@ class sExpr:
     @abstractmethod
     def equals(self, other):
         """
-        Is this sExpr equal to other?
+        Is this BSLexpr equal to other?
         :param other: Any
         :return: True if this = other and false otherwise
         """

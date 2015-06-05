@@ -1,6 +1,6 @@
-from sExpr import sExpr
+from BSLexpr import BSLexpr
 
-class If0(sExpr):
+class If0(BSLexpr):
 
     def __init__(self, test, if_branch, else_branch):
         """

@@ -6,7 +6,7 @@ class FuncDef:
         """
 
         :param name: String to represent the name of the function
-        :param body: sExpr
+        :param body: BSLexpr
         :param params: List of Strings to represent function parameters
         :return:
         """

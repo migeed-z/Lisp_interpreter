@@ -1,7 +1,7 @@
-from sExpr import sExpr
+from BSLexpr import BSLexpr
 
 
-class Num(sExpr):
+class Num(BSLexpr):
     """
     To represent an atomic, numerical sExpression
     """

@@ -1,8 +1,8 @@
-from sExpr import sExpr
+from BSLexpr import BSLexpr
 from Num import Num
 from BslError import BSLError
 
-class Variable(sExpr):
+class Variable(BSLexpr):
     """
     To represent a class of Variables
     """

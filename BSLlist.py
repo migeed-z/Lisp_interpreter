@@ -1,4 +1,4 @@
-class SL:
+class BSLlist:
     """
     To represent List of sExpressions
     """
@@ -17,7 +17,6 @@ class SL:
 
         return result
 
-
     def helper_equals(self, element):
         """
         evaluates each sexpression to return a boolean then evaluates booleans and returns the result
@@ -25,9 +24,10 @@ class SL:
         """
         if len(self.sl) != len(element.sl):
             return False
+
         else:
             result = True
-            for i in range(0, len(self.sl)):
+            for i in range(len(self.sl)):
                 result = result and self.sl[i].equals(element.sl[i])
 
             return result

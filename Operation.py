@@ -1,14 +1,14 @@
-from sExpr import sExpr
+from BSLexpr import BSLexpr
 from BslError import BSLError
 
-class Operation(sExpr):
+class Operation(BSLexpr):
     """
-    To represent Algebraic operations on SL
+    To represent Algebraic operations on BSLlist
     """
 
     def __init__(self, args):
         """
-        :param args: list of sExpr
+        :param args: list of BSLexpr
         """
         self.args = args
         self.operation = lambda seq: 1/0

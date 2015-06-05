@@ -3,7 +3,7 @@ from Operation import Operation
 
 class Subtract(Operation):
     """
-    To represent sExpr with Subtraction at the top level
+    To represent BSLexpr with Subtraction at the top level
     """
 
     def __init__(self, args):

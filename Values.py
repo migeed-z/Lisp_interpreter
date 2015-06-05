@@ -1,4 +1,19 @@
-from Pair import Pair
+class Pair:
+    """
+    Represents a combination of two values
+    """
+    def __init__(self, left, right):
+        """
+
+        :param left: Value
+        :param right: Value
+        :return:
+        """
+        self.left = left
+        self.right = right
+
+
+
 
 def compare(one_value, other_value):
     if (isinstance(one_value, (int, float, complex))) and (isinstance(other_value, (int, float, complex))):

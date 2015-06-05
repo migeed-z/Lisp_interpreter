@@ -3,7 +3,7 @@ from BslError import BSLError
 
 class Divide(Operation):
     """
-    To represent sExpr with Division at the top level
+    To represent BSLexpr with Division at the top level
     """
 
     def __init__(self, args):

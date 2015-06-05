@@ -2,9 +2,8 @@ from Operation import Operation
 
 class Add(Operation):
     """
-    To represent sExpr with Addition at the top level
+    To represent BSLexpr with Addition at the top level
     """
-
     def __init__(self, args):
         super().__init__(args)
         self.operation = lambda seq: self.add(seq)
