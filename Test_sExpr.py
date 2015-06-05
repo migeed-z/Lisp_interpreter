@@ -78,12 +78,12 @@ def test_eval_posn():
 def test_eval_posn_x():
     assert c.posn_x1.eval(c.defs1) == 1
     assert c.posn_x2.eval(c.defs1) == 4
+    assert c.posnsexpr.eval(c.defs1) == 6
 
     with pytest.raises(BSLError):
         c.posn_x1_error.eval(c.defs1)
 
-    # with pytest.raises(BSLError):
-    #     c.posnsexpr.eval(c.defs1)
-
+    with pytest.raises(BSLError):
+        c.posnsexpr_error.eval(c.defs1)
 
 #c.funcApp4.eval(c.defs1)

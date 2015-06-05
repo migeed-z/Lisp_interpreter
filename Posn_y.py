@@ -1,6 +1,6 @@
 from Posn_selector import Posn_Selector
 
-class Posn_x(Posn_Selector):
+class Posn_y(Posn_Selector):
 
     def __init__(self, sub_expr):
         super().__init__(sub_expr)

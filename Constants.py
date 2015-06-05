@@ -88,8 +88,10 @@ class Constants:
     posn_x1_error = Posn_x(Num(1))
 
     list12 = SL([posn_x1, Num(5)])
+    list13 = SL([posn1])
 
     posnsexpr = Add(list12)
+    posnsexpr_error = Add(list13)
 
     defs1 = Scope(()).extend('x',1).extend('y',4).extend('f', funcDef1).extend('g', funcDef2).extend('z', funcDef3)
 

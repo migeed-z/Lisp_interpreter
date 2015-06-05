@@ -1,5 +1,5 @@
 from sExpr import sExpr
-
+from BslError import BSLError
 
 class Operation(sExpr):
     """
@@ -11,13 +11,17 @@ class Operation(sExpr):
         :param args: list of sExpr
         """
         self.args = args
-        self.operation = lambda seq : 1/0
+        self.operation = lambda seq: 1/0
         self.This = Operation
-
 
     def eval(self, defs):
         seq = self.args.helper_eval(defs)
-        return self.operation(seq)
+        for item in seq:
+            if not isinstance(item, (complex, int, float)):
+                raise BSLError('Element is not a number')
+
+        else:
+            return self.operation(seq)
 
     def equals(self, other):
         if not isinstance(other, self.This):
