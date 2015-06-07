@@ -20,11 +20,3 @@ class BSLexpr:
         """
         return NotImplementedError('Method not yet implemented')
 
-    @abstractmethod
-    def validate(self, *kargs):
-        """
-        Verifies the constructor has the correct datatypes
-        :param kargs: Arguments to be validated
-        :return: *kargs
-        :raise: BSLError
-        """

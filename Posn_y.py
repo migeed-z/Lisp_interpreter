@@ -9,4 +9,5 @@ class Posn_y(Posn_Selector):
         super().__init__(sub_expr)
 
     def eval(self, defs):
-        return self.eval_helper(defs).right
+        v = super(Posn_y,self).eval(defs)
+        return v.right
