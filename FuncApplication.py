@@ -1,19 +1,23 @@
 from BSLexpr import BSLexpr
 from BslError import BSLError
+from BSLlist import BSLlist
 
 class FuncApplication(BSLexpr):
+    """
+    To represent function applications
+    """
 
     def __init__(self, name, sl):
         """
-
         :param name: Name of the function
         :param sl: List of BSLexpr representing the parameters
         """
+        self.validate(name, sl)
         self.name = name
         self.sl = sl
 
     def eval(self, defs):
-        definition = defs.get(self.name) #this is a function defintion
+        definition = defs.get(self.name)
         body = definition.body
         params = definition.params.copy()
 
@@ -24,7 +28,7 @@ class FuncApplication(BSLexpr):
 
     def helper_extend(self, defs, params, vals):
         """
-
+        Extends defs with params and vals
         :param defs: Scope representing the definitions
         :param params: list of Strings representing parameters
         :param vals: list of numbers representing the values of the parameters
@@ -41,7 +45,9 @@ class FuncApplication(BSLexpr):
 
         return defs
 
+    def validate(self, name, sl):
+        if not isinstance(name, str):
+            raise BSLError('name must be a string')
 
-
-
-
+        elif not isinstance(sl, BSLlist):
+            raise BSLError('not a BSL list')

@@ -1,15 +1,15 @@
 from abc import abstractmethod
 from BSLexpr import BSLexpr
-from Values import Pair
+from Value import Pair
 from BslError import BSLError
 
 class Posn_Selector(BSLexpr):
     """
-    To represent Posn Selector
+    To represent a Posn Selector
     """
 
     def __init__(self, sub_expr):
-        self.sub_expr = sub_expr
+        self.sub_expr = self.validate(sub_expr)
 
     def eval_helper(self, defs):
         """
@@ -29,3 +29,7 @@ class Posn_Selector(BSLexpr):
     def eval(self, defs):
         raise NotImplementedError('Method not yet implemented')
 
+    def validate(self, sub_expr):
+        if not isinstance(sub_expr, BSLexpr):
+            raise BSLError('sub-expression must be a posn')
+        return sub_expr

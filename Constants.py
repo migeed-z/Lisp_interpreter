@@ -10,7 +10,7 @@ from BSLlist import BSLlist
 from Scope import Scope
 from If0 import If0
 from Posn import Posn
-from Values import Pair
+from Value import Pair
 from Posn_x import Posn_x
 
 class Constants:
@@ -22,7 +22,7 @@ class Constants:
 
     emptyList = BSLlist([])
     list2 = BSLlist([Num(1), Num(2), Num(3)])
-    list3 = BSLlist([Add(list2), -3])
+    list3 = BSLlist([Add(list2), Num(-3)])
     list4 = BSLlist([Subtract(list2), Add(list2)])
     list5 = BSLlist([Multiply(list2)])
     list6 = BSLlist([Num(8), Num(4)])

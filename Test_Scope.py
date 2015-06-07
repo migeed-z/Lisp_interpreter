@@ -1,4 +1,6 @@
+import pytest
 from Scope import Scope
+from BslError import BSLError
 
 class Test_scope:
 
@@ -10,6 +12,18 @@ class Test_scope:
 
         assert defs2.get('x') == 3
         assert defs3.get('f') == 3
+
+        with pytest.raises(BSLError):
+            defs.extend(4, 4)
+
+        with pytest.raises(BSLError):
+            Scope([])
+
+        with pytest.raises(BSLError):
+            Scope((1, 2, 3, 4))
+
+
+
 
 
 

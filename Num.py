@@ -1,4 +1,5 @@
 from BSLexpr import BSLexpr
+from BslError import BSLError
 
 
 class Num(BSLexpr):
@@ -10,7 +11,7 @@ class Num(BSLexpr):
         """
         :param num: Number
         """
-        self.num = num
+        self.num = self.validate(num)
 
     def eval(self, defs):
         return self.num
@@ -21,3 +22,8 @@ class Num(BSLexpr):
         else:
             return self.num == other.num
 
+    def validate(self, num):
+        if not isinstance(num, (complex, int, float)):
+            raise BSLError('field must be a number')
+        else:
+            return num

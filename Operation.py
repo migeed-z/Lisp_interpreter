@@ -16,12 +16,7 @@ class Operation(BSLexpr):
 
     def eval(self, defs):
         seq = self.args.helper_eval(defs)
-        for item in seq:
-            if not isinstance(item, (complex, int, float)):
-                raise BSLError('Element is not a number')
-
-        else:
-            return self.operation(seq)
+        return self.operation(self.validate(seq))
 
     def equals(self, other):
         if not isinstance(other, self.This):
@@ -29,3 +24,8 @@ class Operation(BSLexpr):
         else:
             return self.args.helper_equals(other.args)
 
+    def validate(self, seq):
+        for item in seq:
+            if not isinstance(item, (complex, int, float)):
+                raise BSLError('Element is not a number')
+        return seq

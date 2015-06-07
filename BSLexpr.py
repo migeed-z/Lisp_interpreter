@@ -1,19 +1,13 @@
-from abc import ABCMeta, abstractmethod
-
+from abc import abstractmethod
 
 class BSLexpr:
 
     @abstractmethod
     def eval(self, defs):
         """
-        sexpr Scope -> Value
-
-        Value is one of:
-            -- Number
-            -- Pair(Value,Value)
-        defs: Scope
-        Evaluates this sExpression
-        :return: The value of evaluating this sExpression
+        Evaluates this expression
+        :param defs: Scope
+        :return: Value of this expresson
         """
         raise NotImplementedError('Method not yet implemented')
 
@@ -26,4 +20,11 @@ class BSLexpr:
         """
         return NotImplementedError('Method not yet implemented')
 
-
+    @abstractmethod
+    def validate(self, *kargs):
+        """
+        Verifies the constructor has the correct datatypes
+        :param kargs: Arguments to be validated
+        :return: *kargs
+        :raise: BSLError
+        """
