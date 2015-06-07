@@ -12,6 +12,7 @@ class FuncApplication(BSLexpr):
         :param name: Name of the function
         :param sl: List of BSLexpr representing the parameters
         """
+        self.validate(name, sl)
         self.name = name
         self.sl = sl
 
@@ -44,3 +45,9 @@ class FuncApplication(BSLexpr):
 
         return defs
 
+    def validate(self, name, sl):
+        if not isinstance(name, str):
+            raise BSLError('name must be a string')
+
+        elif not isinstance(sl, BSLlist):
+            raise BSLError('not a BSL list')

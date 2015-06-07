@@ -12,7 +12,6 @@ from If0 import If0
 from Posn import Posn
 from Value import Pair
 from Posn_x import Posn_x
-from Posn_y import Posn_y
 
 class Constants:
 
@@ -94,14 +93,7 @@ class Constants:
     posnsexpr = Add(list12)
     posnsexpr_error = Add(list13)
 
-    posn2 = Posn(Num(42), Num(21))
-    funcdef4 = FuncDef('d', posn2, ['x'])
-    funcApp5 = FuncApplication('d', BSLlist([Num(100)]))
-
-    posnsexpr_error2 = Add(BSLlist([Num(1), funcApp5]))
-
-    defs1 = Scope(()).extend('x',1).extend('y',4).extend('f', funcDef1).extend('g', funcDef2).extend('z', funcDef3)\
-        .extend('d', funcdef4)
+    defs1 = Scope(()).extend('x',1).extend('y',4).extend('f', funcDef1).extend('g', funcDef2).extend('z', funcDef3)
 
 
 

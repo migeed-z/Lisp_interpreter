@@ -9,7 +9,7 @@ class Posn_Selector(BSLexpr):
     """
 
     def __init__(self, sub_expr):
-        self.sub_expr = sub_expr
+        self.sub_expr = self.validate(sub_expr)
 
     def eval_helper(self, defs):
         """
@@ -25,7 +25,11 @@ class Posn_Selector(BSLexpr):
         else:
             raise BSLError('Value is not a Pair')
 
+    @abstractmethod
     def eval(self, defs):
-        v = self.eval_helper(defs)
-        return v
+        raise NotImplementedError('Method not yet implemented')
 
+    def validate(self, sub_expr):
+        if not isinstance(sub_expr, BSLexpr):
+            raise BSLError('sub-expression must be a posn')
+        return sub_expr

@@ -10,7 +10,7 @@ class Variable(BSLexpr):
         """
         :param name: String representing the name of the variable
         """
-        self.name = name
+        self.name = self.validate(name)
 
     def eval(self, defs):
         val = defs.get(self.name)
@@ -25,3 +25,7 @@ class Variable(BSLexpr):
         else:
             return self.name == other.name
 
+    def validate(self, name):
+        if not isinstance(name, str):
+            raise BSLError('field must be a string')
+        return name
