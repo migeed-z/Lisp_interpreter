@@ -10,7 +10,7 @@ class BSLlist:
         """
         :param sl: List of BSLexpr
         """
-        self.sl = self.validate(sl)
+        self.sl = sl
 
     def helper_eval(self, defs):
         """
@@ -37,18 +37,6 @@ class BSLlist:
                 result = result and self.sl[i].equals(element.sl[i])
 
             return result
-
-    def validate(self, sl):
-        if not isinstance(sl, list):
-            raise BSLError('SL must be a List')
-
-        for item in sl:
-            if not isinstance(item, BSLexpr):
-                raise BSLError('Not a BSL expression')
-
-        return sl
-
-
 
 
 

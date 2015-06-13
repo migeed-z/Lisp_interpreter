@@ -13,7 +13,7 @@ class Scope:
         :param defs: Tuple containing three elements. If no definitions exist, we may use an empty tuple
         :return:
         """
-        self.defs = self.validate(defs)
+        self.defs = defs
 
     def extend(self, name, val):
         """
@@ -37,16 +37,6 @@ class Scope:
                 return val
             else:
                 return old_self.get(key)
-
-    def validate(self, defs):
-        if len(defs) != 3 and len(defs)!=0:
-            raise BSLError('wrong instantiation of scope')
-
-        elif not isinstance(defs, tuple):
-            raise BSLError('defs must be a tuple')
-
-        else:
-            return defs
 
 
 

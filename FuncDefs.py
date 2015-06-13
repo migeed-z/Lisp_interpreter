@@ -12,7 +12,6 @@ class FuncDef:
         :param body: BSLexpr
         :param params: List of Strings to represent function parameters
         """
-        self.validate(name, body, params)
         self.name = name
         self.body = body
 
@@ -21,16 +20,4 @@ class FuncDef:
 
         else:
             raise BSLError('Parameters can only be strings')
-
-    def validate(self, name, body, params):
-        if not isinstance(name, str):
-            raise BSLError('name must be a string')
-        elif not isinstance(body, BSLexpr):
-            raise BSLError('body must be a BSLexpr')
-        elif not isinstance(params, list):
-            raise BSLError('params must be a list')
-        else:
-            for item in params:
-                if not isinstance(item, str):
-                    raise BSLError('parameter must be a string')
 

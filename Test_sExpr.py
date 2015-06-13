@@ -79,6 +79,8 @@ def test_eval_posn_x():
     assert c.posn_x1.eval(c.defs1) == 1
     assert c.posn_x2.eval(c.defs1) == 4
     assert c.posnsexpr.eval(c.defs1) == 6
+    assert Posn_x(c.funcApp5).eval(c.defs1) == 42
+
 
     with pytest.raises(BSLError):
         c.posn_x1_error.eval(c.defs1)
@@ -86,30 +88,8 @@ def test_eval_posn_x():
     with pytest.raises(BSLError):
         c.posnsexpr_error.eval(c.defs1)
 
-def test_constructors():
     with pytest.raises(BSLError):
-        Num("5")
+        c.posnsexpr_error2.eval(c.defs1)
 
-    with pytest.raises(BSLError):
-        Variable(4)
 
-    with pytest.raises(BSLError):
-        BSLlist([4])
 
-    with pytest.raises(BSLError):
-        FuncApplication('x', 1)
-
-    with pytest.raises(BSLError):
-        FuncDef(4, c.addsexpr1, [])
-
-    with pytest.raises(BSLError):
-        FuncDef('f', c.addsexpr1, 4)
-
-    with pytest.raises(BSLError):
-        FuncDef('f', 2, [])
-
-    with pytest.raises(BSLError):
-        Posn(5, Num(5))
-
-    with pytest.raises(BSLError):
-        Posn_x(5)
