@@ -103,7 +103,30 @@ class Constants:
     defs1 = Scope(()).extend('x',1).extend('y',4).extend('f', funcDef1).extend('g', funcDef2).extend('z', funcDef3)\
         .extend('d', funcdef4)
 
+    ex1 = '(ex*'
+    ex2 = 'abc' #token
+    ex3 = '1'   #token
+
+    exx1 = ')'
+    exx2 = ex2 + exx1
 
 
 
 
+# ;; -----------------------------------------------------------------------------
+# ;; INPUT
+# ;; An external S-expression has the following textual representation:
+# ;; Ex1 is one of:
+# ;; -- '(' followed by Ex*
+# ;; -- Tok
+# ;; Ex* is one of:
+# ;; -- ')'
+# ;; -- Ex1 followed by Ex*
+# ;; Tok is any sequence of characters, not including '(' ')' or whitespace chars,
+# ;;  upto EOF
+#
+# ;; OUTPUT
+# ;; An S-expression is one of:
+# ;; -- Symbol
+# ;; -- Number
+# ;; -- [List-of S-expression] (which includes '() )
