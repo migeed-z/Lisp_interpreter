@@ -10,7 +10,7 @@ class FuncApplication(BSLexpr):
     def __init__(self, name, sl):
         """
         :param name: Name of the function
-        :param sl: List of BSLexpr representing the parameters
+        :param sl: [BSLexpr]
         """
         self.name = name
         self.sl = sl
@@ -29,13 +29,14 @@ class FuncApplication(BSLexpr):
         """
         Extends defs with params and vals
         :param defs: Scope representing the definitions
-        :param params: list of Strings representing parameters
-        :param vals: list of numbers representing the values of the parameters
-        :return:
+        :param params: [String]
+        :param vals: [number]
+        :return: Scope
+        :raises: BSLError if len(params) not equal len(vals)
         """
 
         if len(params) != len(vals):
-            raise BSLError("Params and Vals must be equal")
+            raise BSLError("params and vals must be equal")
 
         while len(params) != 0:
             name = params.pop()

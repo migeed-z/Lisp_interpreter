@@ -13,8 +13,8 @@ class Add(Operation):
     def add(self, seq):
         """
         Adds all elements of this seq
-        :param seq: List of numbers
-        :return: Value of addition
+        :param seq: [numbers]
+        :return: Value
         """
         total = 0
         for element in seq:

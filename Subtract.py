@@ -12,6 +12,11 @@ class Subtract(Operation):
         self.This = Subtract
 
     def subtract(self, seq):
+        """
+        Subtracts elements in this seq
+        :param seq: [number]
+        :return: Value
+        """
         if 1 == len(seq):
             return 0 - seq[0]
         else:

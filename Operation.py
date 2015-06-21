@@ -8,7 +8,7 @@ class Operation(BSLexpr):
 
     def __init__(self, args):
         """
-        :param args: list of BSLexpr
+        :param args: [BSLexpr]
         """
         self.args = args
         self.operation = lambda seq: 1/0

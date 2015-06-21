@@ -12,6 +12,11 @@ class Divide(Operation):
         self.This = Divide
 
     def divide (self, seq):
+        """
+        Divide all elements of this seq
+        :param seq: [numbers]
+        :return: Value
+        """
         if 1 == len(seq):
             return 1 / seq[0]
         else:

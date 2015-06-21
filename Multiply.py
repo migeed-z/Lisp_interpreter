@@ -12,6 +12,11 @@ class Multiply(Operation):
         self.This = Multiply
 
     def multiply(self, seq):
+        """
+        Multiplies elements in seq
+        :param seq: [number]
+        :return: Value
+        """
         total = 1
         for element in seq:
             total = total * element

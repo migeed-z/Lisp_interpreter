@@ -11,7 +11,6 @@ class Scope:
         """
         Initialises the scope from a tuple with three elements
         :param defs: Tuple containing three elements. If no definitions exist, we may use an empty tuple
-        :return:
         """
         self.defs = defs
 
