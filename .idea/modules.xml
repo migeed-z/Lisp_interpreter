@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Lisp_interpreter.iml" filepath="$PROJECT_DIR$/Lisp_interpreter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Lisp_Interpreter.iml" filepath="$PROJECT_DIR$/Lisp_Interpreter.iml" />
     </modules>
   </component>
 </project>
