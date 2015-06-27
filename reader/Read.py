@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 from sys import stdin, stdout
 
-from reader.Reader import Reader
-from parser.Parser import exp_parser
+from reader import Reader
+from parser import exp_parser
+from interpreter import BSLError
 from interpreter import Scope
-from interpreter.BslError import BSLError
 
 
 def read():

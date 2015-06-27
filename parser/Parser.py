@@ -1,4 +1,5 @@
-from interpreter import Num, Add, Variable, BSLlist
+from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide
+from parser import ParserException
 
 # A P-expression is one of:
 # - string, represents a symbol in BSL
@@ -42,22 +43,25 @@ from interpreter import Num, Add, Variable, BSLlist
 
 def exp_parser(p):
     """
-
+    To Parse Operation expressions
     :param p:
     :return:
     """
     if isinstance(p,(complex,int,float)):
         return Num(p)
-    elif isinstance(p,str):
-        # do not (NOT) turn 'reserved tokens' into variable references
-        # for example '+' is NOT a variable
-        # for example 'define' is NOT a variable
-        return Variable(p)
+    elif isinstance(p, str):
+        if is_reserved(p):
+            return False
+
+        else:
+            return Variable(p)
     else:
         if not p:
             return False
+
+        #Add expression
         elif p[0] == '+':
-            operation = p.pop(0)
+            p.pop(0)
             result = []
             for element in p:
                 element_as_bsl_exp = exp_parser(element)
@@ -65,8 +69,49 @@ def exp_parser(p):
                     return False
                 result.append(element_as_bsl_exp)
             return Add(BSLlist(result))
+
+        #Multiply expression
         elif p[0] == '*':
-            pass
+            p.pop(0)
+            result = []
+            for element in p:
+                element_as_bsl_exp = exp_parser(element)
+                if not element_as_bsl_exp:
+                    return False
+                result.append(element_as_bsl_exp)
+            return Multiply(BSLlist(result))
+
+        #Subtract expression
+        elif p[0] == '-':
+            p.pop(0)
+
+            if len(p) == 0:
+                return False
+            else:
+                result = []
+                for element in p:
+                    element_as_bsl_exp = exp_parser(element)
+                    if not element_as_bsl_exp:
+                        return False
+                    result.append(element_as_bsl_exp)
+
+            return Subtract(BSLlist(result))
+
+        #Divide expression
+        elif p[0] == '/':
+            p.pop(0)
+
+            if len(p) == 0:
+                return False
+            else:
+                result = []
+                for element in p:
+                    element_as_bsl_exp = exp_parser(element)
+                    if not element_as_bsl_exp:
+                        return False
+                    result.append(element_as_bsl_exp)
+            return Divide(BSLlist(result))
+
         else:
             return False
 
@@ -80,7 +125,13 @@ def def_parser(p):
 
 
 
-
+def is_reserved(word):
+    """
+    Determines if word is reserved
+    :param word: String representing the variable
+    :return: True if word is reserved and False otherwise
+    """
+    return word == 'define' or word == '+' or word == '-' or word == '/' or word == '*'
 
 # repl:
 #  next = read_p_expression()
