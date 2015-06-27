@@ -1,1 +1,1 @@
-__author__ = 'Migeedz'
+from reader.Reader import Reader

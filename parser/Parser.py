@@ -1,7 +1,4 @@
-from interpreter.Num import Num
-from interpreter.Add import Add
-from interpreter.Variable import Variable
-from interpreter.BSLlist import BSLlist
+from interpreter import Num, Add, Variable, BSLlist
 
 # A P-expression is one of:
 # - string, represents a symbol in BSL

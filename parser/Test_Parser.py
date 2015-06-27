@@ -1,8 +1,5 @@
-from interpreter.Num import Num
-from interpreter.Variable import Variable
-from interpreter.BSLlist import BSLlist
-from interpreter.Add import Add
-from parser.Parser import exp_parser
+from interpreter import Num, Variable, BSLlist, Add
+from parser import exp_parser
 
 
 #  42                 Num(42)

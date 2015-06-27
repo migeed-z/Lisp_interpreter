@@ -1,4 +1,4 @@
-from reader.Reader import Reader
+from reader import Reader
 
 reader1 = Reader("1234")
 reader2 = Reader("1234")

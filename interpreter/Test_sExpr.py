@@ -1,9 +1,6 @@
 import pytest
 
-from interpreter.Constants import *
-from interpreter.Constants import Constants as c
-from interpreter.BslError import BSLError
-from interpreter import Value as v
+from interpreter import Constants as c, BSLError, Value as v, Num, BSLlist, Variable, Posn_x, FuncDef
 
 
 def test_eval_num():
