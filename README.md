@@ -19,10 +19,19 @@ STEP 2 a:
  The PARSER consumes P-expressions and produces pre-BSL-expression, it's a BSL-expression but with errors
 
  NAIVE approach
- parser : P-expression -> Boolean
- is this P-expression a valid representation of a BSL program
- ["f",["define","x"],"x"] ~~~ (f (define x) x) bad, parser must throw out
- ["define",["f","x","x"],"x"] ~~~ (define (f x x) x), good, parser cannot discover this kind of mistake
+ parser : P-expression -> [Maybe BSLexpr]
+
+A BSLexpr is one of:
+  Num(number)
+  Var(string)
+  Add([Listof BSLexpr])
+  Mul([BSLexpr])
+  Sub([BSLexpr])
+  Div([BSLexpr])
+  App(string,[BSLexpr])
+
+ A FuncDef is:
+   Def(string,string,BSLexpr)
 
 A P-expression/e is one of:
  - string, represents a symbol in BSL
@@ -57,3 +66,10 @@ STEP 3:
  The BSLexpression .eval method determines the value of each input expression.
  Extend BSL with lambda, if, assignment statement, non-local control (Python: generator), ... (see node.js)
     *** language design ****
+
+    -- if expression
+    -- cons
+    -- define-struct
+    -- assignment statement and loop
+
+ STEP 4: implement this properly

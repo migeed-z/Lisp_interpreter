@@ -1,9 +1,16 @@
 
 #TODO:
 
+# put all sexpr in constants
+#rename variables
+#do divide, mult, sub for parser
+** divide must have at least one element **
+# check in parser for bad variables
+#parser for function definitions and function applications???
 
-#white space include characters such as tabs and new lines
 
-#figure out real I/O -> create an abstraction layer to hide the list stuff
 
-# code for parser 
+
+
+
+## peeking

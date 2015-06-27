@@ -8,7 +8,7 @@ class Reader:
     An external S-expression has the following textual representation:
 
     Ex1 is one of:
-    
+
     - '(' followed by Exx
     - Token
 
@@ -50,10 +50,12 @@ class Reader:
         :return: S-expression
         """
         next = self.read_first_proper_char()
-        if next == ')':
+        if not next:
+            raise BSLError('Incomplete s-expression')
+        elif next == ')':
             raise BSLError('Unexpected %s' % (')'))
-        elif next == "": #???
-            raise BSLError('EOF')
+        # elif next == "": #???
+        #    raise BSLError('EOF')
         else:
             return self.read_ex1(next)[0]
 
@@ -67,7 +69,7 @@ class Reader:
 
         # **** if we start with a space, then we get rid of it ***
         # MF to be explained, why the heck does this work
-        if char.isspace():  #why is this condition needed? -- MF: will need whitespace predicate
+        if next.isspace():  #why is this condition needed? -- MF: will need whitespace predicate
             next = self.read_first_proper_char()
 
         if not next:
@@ -197,4 +199,3 @@ class Reader:
 
 
 
-#mf_reader = print(Reader(['(','f',' ','1','0',')']).reader())

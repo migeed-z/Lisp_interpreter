@@ -1,4 +1,3 @@
-import pytest
 from Reader import Reader
 
 reader1 = Reader("1234")
