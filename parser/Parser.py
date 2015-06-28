@@ -1,4 +1,4 @@
-from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide
+from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide, FuncDef
 from parser import ParserException
 
 # A P-expression is one of:
@@ -24,21 +24,6 @@ from parser import ParserException
 # A FuncDef is:
 # Def(string,string,BSLexpr)
 
-
-# P-expression -> BSLexpr or False
-# checks whether the given P-expression is a BSL expression and, if so, turns it into an instance of BSLexpr
-# otherwise produce False
-# in                   out
-# -------------------------
-#  42                 Num(42)
-#  'xyz'              Var('xyz')
-#  ['+',1,1]          Add([Num(1),Num(1)])
-#  ['+',['+',1,1],1]  Add([Add([Num(1),Num(1)]),Num(1)])
-#  [1,'+',1]          False
-#  ['+',1,['+',1]]    Add([Num(1), Add([Num(1)])
-#  ['+',1,[1,'+']]    False
-#  []                 False
-#  [1]                False
 
 
 def exp_parser(p):
@@ -117,12 +102,90 @@ def exp_parser(p):
 
 def def_parser(p):
     """
-
+    Parses Function Definitions
     :param p: P-expression
-    :return: Def(...) or False
+    :return: Define(...) or False
     """
-    pass
+    if len(p) < 3:
+        return False
 
+    elif p[0] != 'define':
+        return False
+
+    name = parse_name(p[1])
+    params = parse_params(p[1])
+    body = exp_parser(p[2])
+
+    if (not name) or (params == False) or (body == False):
+        return False
+
+    else:
+        return FuncDef(name, params, body)
+
+
+def parse_name_from_string(expr):
+    """
+    parses name, given as a string
+    :param expr: String
+    :return: expr or False
+    """
+    if is_reserved(expr):
+        return False
+    else:
+        return expr
+
+
+def parse_name(expr):
+    """
+    Parses Function Definition name
+    :param expr: [Parameters, Function name] or 'Function name'
+    :return: expr or False
+    """
+
+    if isinstance(expr, str):
+        return parse_name_from_string(expr)
+
+    elif isinstance(expr, list):
+        name = expr[0]
+        return parse_name_from_string(name)
+
+
+def parse_params(expr):
+    """
+    Parses Parameters given as a String or a List
+    :param expr: [string]
+    :return: [], False or Expr - Expr[0]
+    """
+    if isinstance(expr, str):
+        return []
+    elif isinstance(expr, list):
+        expr.pop(0)
+        if validate_duplicates(expr) == False or validate_reserved_words(expr) == False:
+            return False
+
+        else:
+            return expr
+
+
+def validate_duplicates(expr):
+    """
+    checks for duplicates in the parameter list
+    :param expr: [string]
+    :return: True if no duplicates exist and False otherwise
+    """
+    return len(expr) == len(set(expr))
+
+
+def validate_reserved_words(expr):
+    """
+    Checkes if any of the reseved words are in the parameter list
+    :param expr: [string]
+    :return: True if no reserved words are used and False otherwise
+    """
+    for element in expr:
+        if is_reserved(element):
+            return False
+    return True
 
 
 def is_reserved(word):
@@ -133,9 +196,9 @@ def is_reserved(word):
     """
     return word == 'define' or word == '+' or word == '-' or word == '/' or word == '*'
 
-# repl:
-#  next = read_p_expression()
-#  if next parses as definition, add next-as-definition to scope
-#  if next parses as expression, evaluate next-as-expression in scope
-#  otherwise say error
-#  now loop back to repl
+    # repl:
+    #  next = read_p_expression()
+    #  if next parses as definition, add next-as-definition to scope
+    #  if next parses as expression, evaluate next-as-expression in scope
+    #  otherwise say error
+    #  now loop back to repl

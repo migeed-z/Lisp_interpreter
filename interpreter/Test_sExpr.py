@@ -1,6 +1,6 @@
 import pytest
 
-from interpreter import Constants as c, BSLError, Value as v, Num, BSLlist, Variable, Posn_x, FuncDef
+from interpreter import Constants as c, BSLError, Value as v, Num, BSLlist, Variable, Posn_x
 
 
 def test_eval_num():
@@ -43,6 +43,8 @@ def test_eval_var():
 def test_equals():
     assert not c.addsexpr1.equals(c.addsexpr2)
     assert c.addsexpr1.equals(c.addsexpr1)
+    assert not c.funcDef1.equals(c.funcDef2)
+    assert c.funcDef1.equals(c.funcDef1)
 
 def test_funcAppEval():
 
@@ -60,9 +62,6 @@ def test_bslError():
 
     with pytest.raises(BSLError):
         c.divsexpr3.eval(c.defs1)
-
-    with pytest.raises(BSLError):
-        FuncDef('z', c.var1, [4])
 
 def test_if0():
     assert c.if_1.eval(c.defs1) == 1

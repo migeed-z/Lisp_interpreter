@@ -3,10 +3,12 @@
 
 # put all sexpr in constants
 #rename variables
-#do divide, mult, sub for parser
-** divide must have at least one element **
-# check in parser for bad variables
+#do divide, mult, sub for parser - done
+#divide must have at least one element -- done
+# check in parser for bad variables -- done
 #parser for function definitions and function applications???
+#must check if params are unique
+#parse function applications too
 
 
 

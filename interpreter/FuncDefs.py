@@ -6,7 +6,7 @@ class FuncDef:
     To represent function definitions
     """
 
-    def __init__(self, name, body, params):
+    def __init__(self, name, params, body):
         """
         :param name: String to represent the name of the function
         :param body: BSLexpr
@@ -14,10 +14,19 @@ class FuncDef:
         """
         self.name = name
         self.body = body
+        self.params = params
 
-        if all(isinstance(item, str) for item in params):
-            self.params = params
+
+    def equals(self, other):
+        """
+        is this equal to other?
+        :param other:
+        :return:
+        """
+
+        if not isinstance(other, FuncDef):
+            return False
 
         else:
-            raise BSLError('Parameters can only be strings')
+            return other.name == self.name and other.params == self.params and (other.body).equals(self.body)
 

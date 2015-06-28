@@ -56,18 +56,18 @@ class Constants:
     varsexpr3 = Subtract(BSLlist([varsexpr1, varsexpr2]))
 
     #functions
-    funcDef1 = FuncDef("f", Variable("x"), ["x"])
+    funcDef1 = FuncDef("f", ["x"], Variable("x"))
     funcApp1 = FuncApplication('f', BSLlist([Num(4)]))
 
     list11 = BSLlist([funcApp1, Num(2)])
     funcExpr = Add(list11)
 
-    funcDef2 = FuncDef('g', funcExpr, [])
+    funcDef2 = FuncDef('g',[], funcExpr)
     funcApp2 = FuncApplication('g', BSLlist([]))
 
     funcExpr2 = Add(BSLlist([var1, var2]))
 
-    funcDef3 = FuncDef('z', funcExpr2, ['x', 'y'])
+    funcDef3 = FuncDef('z', ['x', 'y'], funcExpr2)
     funcApp3 = FuncApplication('z', BSLlist([Num(7), Num(7)]))
     funcApp3Error = FuncApplication('z', BSLlist([Num(7), Num(7), Num(7)]))
 
@@ -95,7 +95,7 @@ class Constants:
     posnsexpr_error = Add(list13)
 
     posn2 = Posn(Num(42), Num(21))
-    funcdef4 = FuncDef('d', posn2, ['x'])
+    funcdef4 = FuncDef('d', ['x'], posn2)
     funcApp5 = FuncApplication('d', BSLlist([Num(100)]))
 
     posnsexpr_error2 = Add(BSLlist([Num(1), funcApp5]))

@@ -10,6 +10,8 @@ read_f10 = Reader('(f 10)')
 read_f_of_g10 = Reader('(f(g 10))')
 read_blank_old = Reader('(  f(g))')
 read_blank = Reader('(   token0(token1))')
+read_function_definition = Reader('(define (add x y z) (+ 1 3))')
+read_function_definition_no_params = Reader('(define add (+ 1 3))')
 
 class Test_Reader:
 
@@ -28,4 +30,10 @@ class Test_Reader:
         assert read_mt.reader() == []
         assert read_f10.reader() == ["f", 10]
         assert read_f_of_g10.reader() == ["f",["g",10]]
+
         assert read_blank.reader() == ["token0",["token1"]]
+
+        assert read_function_definition.reader() == ['define', ['add', 'x', 'y', 'z'], ['+', 1, 3]]
+        assert read_function_definition_no_params.reader() == ['define', 'add', ['+', 1, 3]]
+
+
