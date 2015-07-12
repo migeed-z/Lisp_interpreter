@@ -14,5 +14,6 @@ from interpreter.Scope import Scope
 from interpreter.BslError import BSLError
 from interpreter.BSLExpr import BSLExpr
 from interpreter.FuncApplication import FuncApplication
+from interpreter.Definition import Definition
 
 
