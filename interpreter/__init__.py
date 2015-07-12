@@ -12,7 +12,7 @@ from interpreter.Value import compare
 from interpreter.Posn_x import Posn_x
 from interpreter.Scope import Scope
 from interpreter.BslError import BSLError
-from interpreter.BSLExpr import BSLexpr
+from interpreter.BSLExpr import BSLExpr
 from interpreter.FuncApplication import FuncApplication
 
 

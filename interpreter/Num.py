@@ -1,8 +1,8 @@
-from interpreter.BSLExpr import BSLexpr
+from interpreter.BSLExpr import BSLExpr
 from interpreter.BslError import BSLError
 
 
-class Num(BSLexpr):
+class Num(BSLExpr):
     """
     To represent an atomic, numerical sExpression
     """

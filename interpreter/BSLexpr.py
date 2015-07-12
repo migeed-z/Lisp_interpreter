@@ -1,6 +1,6 @@
 from abc import abstractmethod
 
-class BSLexpr:
+class BSLExpr:
 
     @abstractmethod
     def eval(self, defs):
