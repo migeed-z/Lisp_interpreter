@@ -16,99 +16,98 @@ from interpreter.Scope import Scope
 
 class Constants:
 
-    var1 = Variable('x')
-    var2 = Variable('y')
-    var3 = Variable('z')
-    var4 = Variable('o')
+    varx = Variable('x')
+    vary = Variable('y')
+    varz = Variable('z')
+    varo = Variable('o')
 
     emptyList = BSLlist([])
-    list2 = BSLlist([Num(1), Num(2), Num(3)])
-    list3 = BSLlist([Add(list2), Num(-3)])
-    list4 = BSLlist([Subtract(list2), Add(list2)])
-    list5 = BSLlist([Multiply(list2)])
-    list6 = BSLlist([Num(8), Num(4)])
-    list7 = BSLlist([Divide(list6)])
-    list8 = BSLlist([var1, Num(2), Num(3)])
-    list9 = BSLlist([var2, Num(3)])
-    list10 = BSLlist([Num(4), Num(3)])
-    list11 = BSLlist([Num(4), Num(0), Num(3)])
+    list123 = BSLlist([Num(1), Num(2), Num(3)])
+    listadd123 = BSLlist([Add(list123), Num(-3)])
+    listaddsubtract123 = BSLlist([Subtract(list123), Add(list123)])
+    listmultiply123 = BSLlist([Multiply(list123)])
+    list84 = BSLlist([Num(8), Num(4)])
+    listdivide84 = BSLlist([Divide(list84)])
+    listx23 = BSLlist([varx, Num(2), Num(3)])
+    listy3 = BSLlist([vary, Num(3)])
+    list43 = BSLlist([Num(4), Num(3)])
+    list403 = BSLlist([Num(4), Num(0), Num(3)])
 
+    expradd1 = Add(BSLlist([Num(1)]))
+    expradd123 = Add(list123)
+    expradd43 = Add(list43)
 
-    addsexpr1 = Add(BSLlist([Num(1)]))
-    addsexpr2 = Add(list2)
-    addsexpr3 = Add(list10)
+    exprsub1 = Subtract(BSLlist([Num(1)]))
+    exprsub123 = Subtract(list123)
+    exprsub_add123_add123 = Subtract(BSLlist([expradd123, expradd43]))
 
-    subsexpr1 = Subtract(BSLlist([Num(1)]))
-    subsexpr2 = Subtract(list2)
-    subsexpr3 = Subtract(BSLlist([addsexpr2, addsexpr3]))
+    exprdiv1 = Divide(BSLlist([Num(1)]))
+    exprdiv84 = Divide(list84)
+    exprdiv403 = Divide(list403)
 
-    divsexpr1 = Divide(BSLlist([Num(1)]))
-    divsexpr2 = Divide(list6)
-    divsexpr3 = Divide(list11)
+    exprmul1 = Multiply(BSLlist([Num(1)]))
+    exprmul84 = Multiply(list84)
 
-    multsexpr1 = Multiply(BSLlist([Num(1)]))
-    multsexpr2 = Multiply(list6)
+    expradd_expradd123_exprdiv84 = Add(BSLlist([expradd123, exprdiv84]))
 
-    compositeSexpr = Add(BSLlist([addsexpr2, divsexpr2]))
-
-    varsexpr1 = Add(list8)
-    varsexpr2 = Add(list9)
-    varsexpr3 = Subtract(BSLlist([varsexpr1, varsexpr2]))
+    expraddx23 = Add(listx23)
+    expraddy3 = Add(listy3)
+    expsub_expraddx23_expradd3 = Subtract(BSLlist([expraddx23, expraddy3]))
 
     #functions
-    funcDef1 = FuncDef("f", ["x"], Variable("x"))
-    funcApp1 = FuncApplication('f', BSLlist([Num(4)]))
+    func_def_varx = FuncDef("f", ["x"], Variable("x"))
+    func_app_varx = FuncApplication('f', BSLlist([Num(4)]))
 
-    list11 = BSLlist([funcApp1, Num(2)])
-    funcExpr = Add(list11)
+    list_func_app_varx = BSLlist([func_app_varx, Num(2)])
+    expradd_func_app_varx = Add(list_func_app_varx)
 
-    funcDef2 = FuncDef('g',[], funcExpr)
-    funcApp2 = FuncApplication('g', BSLlist([]))
+    funcDef2 = FuncDef('g',[], expradd_func_app_varx)
+    func_app_emptylist = FuncApplication('g', BSLlist([]))
 
-    funcExpr2 = Add(BSLlist([var1, var2]))
+    expradd_varx_vary = Add(BSLlist([varx, vary]))
 
-    funcDef3 = FuncDef('z', ['x', 'y'], funcExpr2)
-    funcApp3 = FuncApplication('z', BSLlist([Num(7), Num(7)]))
-    funcApp3Error = FuncApplication('z', BSLlist([Num(7), Num(7), Num(7)]))
+    func_def_add_varx_vary = FuncDef('z', ['x', 'y'], expradd_varx_vary)
+    func_app_varx_vary = FuncApplication('z', BSLlist([Num(7), Num(7)]))
+    func_app_error_777 = FuncApplication('z', BSLlist([Num(7), Num(7), Num(7)]))
 
-    if_1 = If0(Num(0), Num(1), Num(2))
-    if_2 = If0(funcApp1, funcApp1, funcApp2)
-    if_3 = If0(funcApp2, Num(42), funcApp1)
+    if_012 = If0(Num(0), Num(1), Num(2))
+    if_varx_varx_emptylist = If0(func_app_varx, func_app_varx, func_app_emptylist)
+    if_emptylist_42_varx = If0(func_app_emptylist, Num(42), func_app_varx)
 
-    funcApp4 = FuncApplication('z', BSLlist([if_3, Num(2)]))
+    funcApp4 = FuncApplication('z', BSLlist([if_emptylist_42_varx, Num(2)]))
 
-    posn1 = Posn(Num(1), Num(1))
-    pair1 = Pair(1, 1)
+    posn11 = Posn(Num(1), Num(1))
+    pair11 = Pair(1, 1)
 
-    funcApp5 = FuncApplication('f', BSLlist([Posn(funcApp1, Num(1))]))
-    pair2 = Pair(4, 1)
+    func_app_varx_1 = FuncApplication('f', BSLlist([Posn(func_app_varx, Num(1))]))
+    pair41 = Pair(4, 1)
 
-    posn_x1 = Posn_x(posn1)
-    posn_x2 = Posn_x(funcApp5)
+    posn_x_11 = Posn_x(posn11)
+    posn_y_func_app_varx_1 = Posn_x(func_app_varx_1)
 
     posn_x1_error = Posn_x(Num(1))
 
-    list12 = BSLlist([posn_x1, Num(5)])
-    list13 = BSLlist([posn1])
+    list_posn_x_11_5 = BSLlist([posn_x_11, Num(5)])
+    list_posn11 = BSLlist([posn11])
 
-    posnsexpr = Add(list12)
-    posnsexpr_error = Add(list13)
+    expraddposnx_11_5 = Add(list_posn_x_11_5)
+    expraddposn11 = Add(list_posn11)
 
-    posn2 = Posn(Num(42), Num(21))
-    funcdef4 = FuncDef('d', ['x'], posn2)
-    funcApp5 = FuncApplication('d', BSLlist([Num(100)]))
+    posn_42_21 = Posn(Num(42), Num(21))
+    func_def_posn_42_11 = FuncDef('d', ['x'], posn_42_21)
+    func_app_100 = FuncApplication('d', BSLlist([Num(100)]))
 
-    posnsexpr_error2 = Add(BSLlist([Num(1), funcApp5]))
+    posnsexpr_error2 = Add(BSLlist([Num(1), func_app_100]))
 
-    defs1 = Scope(()).extend('x',1).extend('y',4).extend('f', funcDef1).extend('g', funcDef2).extend('z', funcDef3)\
-        .extend('d', funcdef4)
+    defs1 = Scope(()).extend('x',1).extend('y',4).extend('f', func_def_varx).extend('g', funcDef2).extend('z', func_def_add_varx_vary)\
+        .extend('d', func_def_posn_42_11)
 
     ex1 = '(ex*'
-    ex2 = 'abc' #token
-    ex3 = '1'   #token
+    ex_abc = 'abc' #token
+    ex_1 = '1'   #token
 
     exx1 = ')'
-    exx2 = ex2 + exx1
+    exx2 = ex_abc + exx1
 
 
 

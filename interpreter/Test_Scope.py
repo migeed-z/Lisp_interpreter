@@ -1,9 +1,8 @@
 from interpreter.Scope import Scope
 
-
 class Test_scope:
 
-    def test_1(self):
+    def test_get(self):
 
         defs = Scope(()).extend('g', 2).extend('f', 1)
         defs2 = defs.extend('x', 3)
