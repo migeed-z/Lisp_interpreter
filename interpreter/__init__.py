@@ -13,3 +13,6 @@ from interpreter.Posn_x import Posn_x
 from interpreter.Scope import Scope
 from interpreter.BslError import BSLError
 from interpreter.BSLexpr import BSLexpr
+from interpreter.FuncApplication import FuncApplication
+
+

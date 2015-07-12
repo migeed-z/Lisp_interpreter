@@ -170,6 +170,13 @@ class Reader:
         """
         return self.ip.pop(0)
 
+    def peak(self):
+        """
+        Gets the next character
+        :return: String
+        """
+        return self.ip[0]
+
     def is_not_eof(self):
         """
         Is ip not eof?

@@ -1,5 +1,6 @@
-from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide, FuncDef
+from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide, FuncDef, FuncApplication
 from parser import ParserException
+from functools import partial
 
 # A P-expression is one of:
 # - string, represents a symbol in BSL
@@ -46,58 +47,26 @@ def exp_parser(p):
 
         #Add expression
         elif p[0] == '+':
-            p.pop(0)
-            result = []
-            for element in p:
-                element_as_bsl_exp = exp_parser(element)
-                if not element_as_bsl_exp:
-                    return False
-                result.append(element_as_bsl_exp)
-            return Add(BSLlist(result))
+            return parse_operation(p, 0, Add)
 
         #Multiply expression
         elif p[0] == '*':
-            p.pop(0)
-            result = []
-            for element in p:
-                element_as_bsl_exp = exp_parser(element)
-                if not element_as_bsl_exp:
-                    return False
-                result.append(element_as_bsl_exp)
-            return Multiply(BSLlist(result))
+            return parse_operation(p, 0, Multiply)
 
         #Subtract expression
         elif p[0] == '-':
-            p.pop(0)
-
-            if len(p) == 0:
-                return False
-            else:
-                result = []
-                for element in p:
-                    element_as_bsl_exp = exp_parser(element)
-                    if not element_as_bsl_exp:
-                        return False
-                    result.append(element_as_bsl_exp)
-
-            return Subtract(BSLlist(result))
+            return parse_operation(p, 1, Subtract)
 
         #Divide expression
         elif p[0] == '/':
-            p.pop(0)
+            return parse_operation(p, 1, Divide)
 
-            if len(p) == 0:
-                return False
-            else:
-                result = []
-                for element in p:
-                    element_as_bsl_exp = exp_parser(element)
-                    if not element_as_bsl_exp:
-                        return False
-                    result.append(element_as_bsl_exp)
-            return Divide(BSLlist(result))
+        #function application
+        elif isinstance(p[0], str) and not is_reserved(p[0]):
+            name_of_function = p[0]
+            return parse_operation(p,0, partial(FuncApplication, name_of_function))
 
-        else:
+        else: # suppose we have a function application
             return False
 
 def def_parser(p):
@@ -196,9 +165,24 @@ def is_reserved(word):
     """
     return word == 'define' or word == '+' or word == '-' or word == '/' or word == '*'
 
-    # repl:
-    #  next = read_p_expression()
-    #  if next parses as definition, add next-as-definition to scope
-    #  if next parses as expression, evaluate next-as-expression in scope
-    #  otherwise say error
-    #  now loop back to repl
+def parse_operation(p, n, C):
+    """
+    Parses Operation that needs at least n arguments
+    :param p: p-expresson
+    :param C: Class of operation
+    :return: Operation
+    """
+    p.pop(0)
+
+    if len(p) < n:
+        return False
+    else:
+        result = []
+        for element in p:
+            element_as_bsl_exp = exp_parser(element)
+            if not element_as_bsl_exp:
+                return False
+            result.append(element_as_bsl_exp)
+
+    return C(BSLlist(result))
+

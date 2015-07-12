@@ -1,12 +1,38 @@
 
 #TODO:
+# ** extend interpreter first **
+# - (4) put all parsing in table
+# - (5) Refactor name from helper equals to equals
+# - (3) inspect all parameter specifications to see if they are readable
+# - (0) Redo error handling so that parsing catches errors that are context free
+# - (no) and checker catches errors that require context (LOOK AT numeric? from HtDP/2e to get an idea)
+# - (1) add most things mentioned in README that are not done yet (skip define-struct)
+# - (2) write in YOUR BSL an evaluator for arithmetic (+,*,-,/,n)
+# - (6) extend (1) so you can interpret function definitions and function
+ http://www.ccs.neu.edu/home/matthias/HtDP2e/part_four.html#%28part._ch~3aevaluator%29
+ BUT don't use cons or define-struct to represent expressions
+ USE posn instead
+
+# write (2) and (6) in drracket BSL, then run it on our own BSL via file
+
+$ cat my_interpreter_in_bsl_for_bsl > ./Read.py
+
+# in my_interpre ..
+# ;; RepresentationOfBsLExpression -> Number
+# (define (evaluator e)
+#     ...)
+# (evaluator (make-posn "+" (make-posn 1 (make-posn 1 EMPTY))))
+# how do you represent (+ 1 1)
+# in your Python interpreter you use Add([Num(1),NUm(1)])
+# what do you use in your BSL interpreter, the one you write in YOUR bsl
+
 
 # put all sexpr in constants
 #rename variables
 #do divide, mult, sub for parser - done
 #divide must have at least one element -- done
 # check in parser for bad variables -- done
-#parser for function definitions and function applications???
+#parser for function definitions and (function applications???)
 #must check if params are unique
 #parse function applications too
 

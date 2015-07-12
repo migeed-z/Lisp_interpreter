@@ -2,7 +2,7 @@
 from sys import stdin, stdout
 
 from reader import Reader
-from parser import exp_parser
+from parser import exp_parser, def_parser
 from interpreter import BSLError
 from interpreter import Scope
 
@@ -12,12 +12,13 @@ def read():
     Reads text from stdin
     :return: s-expression
     """
-    stdout.write('> ')
-    stdout.flush()
-    userinput = stdin.readline()
-    r = Reader(userinput)
-
+    s = Scope([])
     while True:
+        stdout.write("\033> ")
+        stdout.flush()
+        userinput = stdin.readline()
+        r = Reader(userinput)
+
         p_expr = r.reader()
         print('p_expr = ',p_expr)
         if not p_expr:
@@ -26,10 +27,14 @@ def read():
         bsl_expr = exp_parser(p_expr)
 
         if not bsl_expr:
-            print('dumbo!!')
+            bsl_def = def_parser(p_expr)
+            if not bsl_def:
+                print('dumbo!')
+            else:
+                s = s.extend(bsl_def.name, bsl_def)
         else:
             try:
-                result = bsl_expr.eval(Scope([]))
+                result = bsl_expr.eval(s)
                 print(result)
             except BSLError:
                 print('an eval exception happened')

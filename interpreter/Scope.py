@@ -23,7 +23,7 @@ class Scope:
         """
         if not isinstance(name, str):
             raise BSLError('name field must be a string')
-        return Scope((name,val,self))
+        return Scope((name, val,self))
 
     def get(self, key):
         if not self.defs:

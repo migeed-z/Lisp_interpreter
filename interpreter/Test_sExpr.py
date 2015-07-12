@@ -45,6 +45,8 @@ def test_equals():
     assert c.addsexpr1.equals(c.addsexpr1)
     assert not c.funcDef1.equals(c.funcDef2)
     assert c.funcDef1.equals(c.funcDef1)
+    assert not c.funcApp5.equals(c.funcdef4)
+    assert c.funcDef1.equals(c.funcDef1)
 
 def test_funcAppEval():
 

@@ -45,3 +45,14 @@ class FuncApplication(BSLexpr):
 
         return defs
 
+    def equals(self, other):
+        """
+
+        :param other:
+        :return:
+        """
+        if not isinstance(other, FuncApplication):
+            return False
+
+        else:
+            return self.name == other.name and self.sl.helper_equals(other.sl)
