@@ -1,7 +1,6 @@
-from interpreter.BslError import BSLError
+from interpreter.BSLDef import BSLDef
 
-
-class FuncDef:
+class FuncDefinition(BSLDef):
     """
     To represent function definitions
     """
@@ -24,7 +23,7 @@ class FuncDef:
         :return:
         """
 
-        if not isinstance(other, FuncDef):
+        if not isinstance(other, FuncDefinition):
             return False
 
         else:

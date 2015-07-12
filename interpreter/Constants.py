@@ -4,7 +4,7 @@ from interpreter.Multiply import Multiply
 from interpreter.Subtract import Subtract
 from interpreter.Divide import Divide
 from interpreter.Variable import Variable
-from interpreter.FuncDefs import FuncDef
+from interpreter.FuncDefinition import FuncDefinition
 from interpreter.FuncApplication import FuncApplication
 from interpreter.BSLlist import BSLlist
 from interpreter.If0 import If0
@@ -55,18 +55,18 @@ class Constants:
     expsub_expraddx23_expradd3 = Subtract(BSLlist([expraddx23, expraddy3]))
 
     #functions
-    func_def_varx = FuncDef("f", ["x"], Variable("x"))
+    func_def_varx = FuncDefinition("f", ["x"], Variable("x"))
     func_app_varx = FuncApplication('f', BSLlist([Num(4)]))
 
     list_func_app_varx = BSLlist([func_app_varx, Num(2)])
     expradd_func_app_varx = Add(list_func_app_varx)
 
-    funcDef2 = FuncDef('g',[], expradd_func_app_varx)
+    funcDef2 = FuncDefinition('g',[], expradd_func_app_varx)
     func_app_emptylist = FuncApplication('g', BSLlist([]))
 
     expradd_varx_vary = Add(BSLlist([varx, vary]))
 
-    func_def_add_varx_vary = FuncDef('z', ['x', 'y'], expradd_varx_vary)
+    func_def_add_varx_vary = FuncDefinition('z', ['x', 'y'], expradd_varx_vary)
     func_app_varx_vary = FuncApplication('z', BSLlist([Num(7), Num(7)]))
     func_app_error_777 = FuncApplication('z', BSLlist([Num(7), Num(7), Num(7)]))
 
@@ -94,12 +94,12 @@ class Constants:
     expraddposn11 = Add(list_posn11)
 
     posn_42_21 = Posn(Num(42), Num(21))
-    func_def_posn_42_11 = FuncDef('d', ['x'], posn_42_21)
+    func_def_posn_42_11 = FuncDefinition('d', ['x'], posn_42_21)
     func_app_100 = FuncApplication('d', BSLlist([Num(100)]))
 
     posnsexpr_error2 = Add(BSLlist([Num(1), func_app_100]))
 
-    defs1 = Scope(()).extend('x',1).extend('y',4).extend('f', func_def_varx).extend('g', funcDef2).extend('z', func_def_add_varx_vary)\
+    defs1 = Scope(()).extend('x', 1).extend('y',4).extend('f', func_def_varx).extend('g', funcDef2).extend('z', func_def_add_varx_vary)\
         .extend('d', func_def_posn_42_11)
 
     ex1 = '(ex*'

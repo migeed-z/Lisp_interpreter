@@ -1,4 +1,4 @@
-from interpreter.BSLexpr import BSLexpr
+from interpreter.BSLExpr import BSLexpr
 from interpreter.BslError import BSLError
 
 class If0(BSLexpr):

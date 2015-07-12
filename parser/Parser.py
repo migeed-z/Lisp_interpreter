@@ -1,5 +1,4 @@
-from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide, FuncDef, FuncApplication
-from parser import ParserException
+from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide, FuncDefinition, FuncApplication
 from functools import partial
 
 # A P-expression is one of:
@@ -69,7 +68,8 @@ def exp_parser(p):
         else: # suppose we have a function application
             return False
 
-def def_parser(p):
+
+def func_def_parser(p):
     """
     Parses Function Definitions
     :param p: P-expression
@@ -89,7 +89,7 @@ def def_parser(p):
         return False
 
     else:
-        return FuncDef(name, params, body)
+        return FuncDefinition(name, params, body)
 
 
 def parse_name_from_string(expr):

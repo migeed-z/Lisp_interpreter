@@ -2,7 +2,7 @@
 from sys import stdin, stdout
 
 from reader import Reader
-from parser import exp_parser, def_parser
+from parser import exp_parser, func_def_parser
 from interpreter import BSLError
 from interpreter import Scope
 
@@ -27,7 +27,7 @@ def read():
         bsl_expr = exp_parser(p_expr)
 
         if not bsl_expr:
-            bsl_def = def_parser(p_expr)
+            bsl_def = func_def_parser(p_expr)
             if not bsl_def:
                 print('dumbo!')
             else:

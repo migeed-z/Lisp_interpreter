@@ -1,5 +1,5 @@
-from interpreter import Num, Variable, BSLlist, Add, Multiply, Subtract, Divide, FuncDef, FuncApplication
-from parser import exp_parser, def_parser, parse_name, parse_params, validate_duplicates, validate_reserved_words
+from interpreter import Num, Variable, BSLlist, Add, Multiply, Subtract, Divide, FuncDefinition, FuncApplication
+from parser import exp_parser, func_def_parser, parse_name, parse_params, validate_duplicates, validate_reserved_words
 
 class Test_parser:
     """
@@ -49,9 +49,9 @@ class Test_parser:
                                                                             Num(2)])), Divide(BSLlist([Num(1)]))])))
 
     def test_function_definition(self):
-         assert def_parser(['define', ['add', 'x', 'y', 'z'], ['+', 1, 3]]).equals(FuncDef('add', ['x', 'y', 'z'],
+         assert func_def_parser(['define', ['add', 'x', 'y', 'z'], ['+', 1, 3]]).equals(FuncDefinition('add', ['x', 'y', 'z'],
                                                                                     Add(BSLlist([Num(1), Num(3)]))))
-         assert def_parser(['define', 'add', ['+', 1, 3]]).equals(FuncDef('add', [], Add(BSLlist([Num(1), Num(3)]))))
+         assert func_def_parser(['define', 'add', ['+', 1, 3]]).equals(FuncDefinition('add', [], Add(BSLlist([Num(1), Num(3)]))))
 
     def test_not_function_definition(self):
 
@@ -61,14 +61,14 @@ class Test_parser:
         assert not parse_params(['Add', 'x', 'x'])
         assert not parse_params(['Add', '+', 'y', 'z'])
 
-        assert not def_parser(['define'])
-        assert not def_parser(['define', 'add'])
+        assert not func_def_parser(['define'])
+        assert not func_def_parser(['define', 'add'])
 
-        assert not def_parser(['a', ['add', 'x', 'y', 'z'], ['+', '+', 3]])
-        assert not def_parser(['define', ['+', 1, 3]])
-        assert not def_parser(['define', ['+', 'x', 'y', 'z'], ['+', 1, 3]])
-        assert not def_parser(['define', ['Add', '+', 'y', 'z'], ['+', 1, 3]])
-        assert not def_parser(['define', ['Add', 'x', 'y', 'z'], ['+', '+', 3]])
+        assert not func_def_parser(['a', ['add', 'x', 'y', 'z'], ['+', '+', 3]])
+        assert not func_def_parser(['define', ['+', 1, 3]])
+        assert not func_def_parser(['define', ['+', 'x', 'y', 'z'], ['+', 1, 3]])
+        assert not func_def_parser(['define', ['Add', '+', 'y', 'z'], ['+', 1, 3]])
+        assert not func_def_parser(['define', ['Add', 'x', 'y', 'z'], ['+', '+', 3]])
 
     def test_function_application(self):
         assert exp_parser(['f', 1]).equals(FuncApplication('f', BSLlist([Num(1)])))

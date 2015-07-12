@@ -1,4 +1,4 @@
-from interpreter.BSLexpr import BSLexpr
+from interpreter.BSLExpr import BSLexpr
 from interpreter.Value import Pair
 
 class Posn(BSLexpr):
