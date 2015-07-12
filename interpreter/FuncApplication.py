@@ -1,8 +1,8 @@
-from interpreter.BSLExpr import BSLexpr
+from interpreter.BSLExpr import BSLExpr
 from interpreter.BslError import BSLError
 
 
-class FuncApplication(BSLexpr):
+class FuncApplication(BSLExpr):
     """
     To represent function applications
     """

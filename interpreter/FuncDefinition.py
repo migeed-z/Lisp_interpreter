@@ -15,7 +15,6 @@ class FuncDefinition(BSLDef):
         self.body = body
         self.params = params
 
-
     def equals(self, other):
         """
         is this equal to other?

@@ -1,8 +1,8 @@
-from interpreter.BSLExpr import BSLexpr
+from interpreter.BSLExpr import BSLExpr
 from interpreter.Value import Pair
 from interpreter.BslError import BSLError
 
-class Posn_Selector(BSLexpr):
+class Posn_Selector(BSLExpr):
     """
     To represent a Posn Selector
     """

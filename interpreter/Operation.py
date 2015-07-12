@@ -1,7 +1,7 @@
-from interpreter.BSLExpr import BSLexpr
+from interpreter.BSLExpr import BSLExpr
 from interpreter.BslError import BSLError
 
-class Operation(BSLexpr):
+class Operation(BSLExpr):
     """
     To represent Algebraic operations on BSLlist
     """

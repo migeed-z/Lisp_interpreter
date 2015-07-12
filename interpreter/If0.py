@@ -1,7 +1,7 @@
-from interpreter.BSLExpr import BSLexpr
+from interpreter.BSLExpr import BSLExpr
 from interpreter.BslError import BSLError
 
-class If0(BSLexpr):
+class If0(BSLExpr):
     """
     To represent an if-statement
     """
@@ -25,10 +25,10 @@ class If0(BSLexpr):
             return self.else_branch.eval(defs)
 
     def validate(self, test, if_branch, else_branch):
-        if not isinstance(test, BSLexpr):
+        if not isinstance(test, BSLExpr):
             raise BSLError('test must be a BSL expression')
-        elif not isinstance(if_branch, BSLexpr):
+        elif not isinstance(if_branch, BSLExpr):
             raise BSLError('if_branch must be a BSL expression')
-        elif not isinstance(else_branch, BSLexpr):
+        elif not isinstance(else_branch, BSLExpr):
             raise BSLError('else_branch must be a BSL expression')
 

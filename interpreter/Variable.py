@@ -1,7 +1,7 @@
-from interpreter.BSLExpr import BSLexpr
+from interpreter.BSLExpr import BSLExpr
 from interpreter.BslError import BSLError
 
-class Variable(BSLexpr):
+class Variable(BSLExpr):
     """
     To represent a class of Variables
     """

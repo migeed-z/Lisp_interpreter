@@ -1,7 +1,7 @@
-from interpreter.BSLExpr import BSLexpr
+from interpreter.BSLExpr import BSLExpr
 from interpreter.Value import Pair
 
-class Posn(BSLexpr):
+class Posn(BSLExpr):
     """
     Represents an BSLexpr of the shape (posn e e)
     """
