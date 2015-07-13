@@ -69,34 +69,6 @@ def exp_parser(p):
         else: # suppose we have a function application
             return False
 
-def def_parser(p):
-    """
-    Parses Definitions
-    :param p: P-expression
-    :return: Definition or False
-    """
-
-    if len(p)!=3:
-        return False
-
-    elif p[0] != 'define':
-        return False
-
-    else:
-        name = p[1]
-        expression = p[2]
-
-        if not isinstance(name, str) or is_reserved(name):
-            return False
-
-        else:
-            expr_val = exp_parser(expression)
-            if not expr_val:
-                return False
-            else:
-                return Definition(name, expr_val)
-
-
 def func_def_parser(p):
     """
     Parses Function Definitions
@@ -108,6 +80,12 @@ def func_def_parser(p):
 
     elif p[0] != 'define':
         return False
+
+    # elif not isinstance(p[1], list):
+    #     return False
+    #
+    # elif len(p[1]) < 2:
+    #     return False
 
     name = parse_name(p[1])
     params = parse_params(p[1])

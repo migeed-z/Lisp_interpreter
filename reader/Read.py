@@ -29,9 +29,12 @@ def read():
         if not bsl_expr:
             bsl_def = func_def_parser(p_expr)
             if not bsl_def:
-                print('dumbo!')
+                print('wrong!')
             else:
-                s = s.extend(bsl_def.name, bsl_def)
+                if isinstance(p_expr[1], str):
+                    s = s.extend(bsl_def.name, bsl_def.body.eval(s))
+                else:
+                    s = s.extend(bsl_def.name, bsl_def)
         else:
             try:
                 result = bsl_expr.eval(s)
