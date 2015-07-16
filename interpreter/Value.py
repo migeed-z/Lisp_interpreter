@@ -22,20 +22,24 @@ class Structure:
         self.name = name
         self.fields = fields
 
-    def equals(self, other):
+    def __eq__(self, other):
 
-        if isinstance(other, Structure):
-            if len(other.fields) != len(self.fields):
-                return False
+        if not isinstance(other, Structure):
+            return False
+
+        elif self.name != other.name:
+            return False
+
+        elif len(self.fields) != len(other.fields):
+            return False
 
         else:
-            if self.name != other.name:
-                return False
             for i in range(len(self.fields)):
-                if self.fields[i] != other.fields:
+                if not self.fields[i].__eq__(other.fields[i]):
                     return False
 
-        return True
+            return True
+
 
 def compare(one_value, other_value):
     if (isinstance(one_value, (int, float, complex))) and (isinstance(other_value, (int, float, complex))):
@@ -46,11 +50,8 @@ def compare(one_value, other_value):
 
 
 
+        # Value is one of:
+        # -- Number
+        # -- Pair(Value,Value)
+        # -- Struct(String, [Value])
 
-
-    # Value is one of:
-    # -- Number
-    # -- Pair(Value,Value)
-
-    #Struct is:
-    # -- Structure(*fields)

@@ -18,7 +18,7 @@ class Operation(BSLExpr):
         seq = self.args.helper_eval(defs)
         return self.operation(self.validate(seq))
 
-    def equals(self, other):
+    def __eq__(self, other):
         if not isinstance(other, self.This):
             return False
         else:

@@ -40,12 +40,12 @@ def test_eval_var():
 
 
 def test_equals():
-    assert not c.expradd1.equals(c.expradd123)
-    assert c.expradd1.equals(c.expradd1)
-    assert not c.func_def_varx.equals(c.funcDef2)
-    assert c.func_def_varx.equals(c.func_def_varx)
-    assert not c.func_app_varx_1.equals(c.func_def_posn_42_11)
-    assert c.func_def_varx.equals(c.func_def_varx)
+    assert not c.expradd1.__eq__(c.expradd123)
+    assert c.expradd1.__eq__(c.expradd1)
+    assert not c.func_def_varx.__eq__(c.funcDef2)
+    assert c.func_def_varx.__eq__(c.func_def_varx)
+    assert not c.func_app_varx_1.__eq__(c.func_def_posn_42_11)
+    assert c.func_def_varx.__eq__(c.func_def_varx)
 
 def test_funcAppEval():
 
@@ -80,7 +80,6 @@ def test_eval_posn_x():
     assert c.expraddposnx_11_5.eval(c.defs1) == 6
     assert Posn_x(c.func_app_100).eval(c.defs1) == 42
 
-
     with pytest.raises(BSLError):
         c.posn_x1_error.eval(c.defs1)
 
@@ -90,16 +89,16 @@ def test_eval_posn_x():
     with pytest.raises(BSLError):
         c.posnsexpr_error2.eval(c.defs1)
 
+def test_equals_struct():
+    assert c.val_structure_12.__eq__(c.val_structure_12)
+    assert not c.val_structure_composite_13.__eq__(c.val_structure_12)
+    assert c.val_structure_composite_left_right_mid.__eq__(c.val_structure_composite_left_right_mid)
 
 def test_eval_struct():
-    c.make_struct_12.eval(c.defs1).equals(c.val_structure_12)
+    assert c.make_struct_12.eval(c.defs1).__eq__(c.val_structure_12)
+    assert c.make_struct_composite_13.eval(c.defs1).__eq__(c.val_structure_composite_13)
+    assert c.make_struct_composite_left_right_mid.eval(c.defs1).__eq__(c.val_structure_composite_left_right_mid)
 
 
 
-#     struct_def_xy = BSLStruct('posn', ['x', 'y'])
-#
-# defs1.extend(struct_def_xy.name, struct_def_xy)
-#
-# make_struct_12 = BSLMakeStruct('posn', [1, 2])
-#
 

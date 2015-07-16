@@ -45,7 +45,7 @@ class FuncApplication(BSLExpr):
 
         return defs
 
-    def equals(self, other):
+    def __eq__(self, other):
         """
 
         :param other:

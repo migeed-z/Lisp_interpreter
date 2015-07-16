@@ -18,7 +18,7 @@ class FuncDefinition(BSLDef):
             raise BSLError('Duplicate Params are not allowed in Function definitions')
         self.params = params
 
-    def equals(self, other):
+    def __eq__(self, other):
         """
         is this equal to other?
         :param other:

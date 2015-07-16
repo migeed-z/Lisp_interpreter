@@ -17,7 +17,6 @@ from interpreter.Posn_x import Posn_x
 from interpreter.Scope import Scope
 
 
-
 class Constants:
 
     varx = Variable('x')
@@ -103,23 +102,33 @@ class Constants:
 
     posnsexpr_error2 = Add(BSLlist([Num(1), func_app_100]))
 
-    defs1 = Scope(()).extend('x', 1).extend('y',4).extend('f', func_def_varx).extend('g', funcDef2).extend('z', func_def_add_varx_vary)\
+    defs1 = Scope(()).extend('x', 1).extend('y',4).extend('f', func_def_varx).extend('g', funcDef2).extend('z', func_def_add_varx_vary) \
         .extend('d', func_def_posn_42_11)
 
     ex1 = '(ex*'
-    ex_abc = 'abc' #token
-    ex_1 = '1'   #token
+    ex_abc = 'abc'
+    ex_1 = '1'
 
     exx1 = ')'
     exx2 = ex_abc + exx1
 
     #Structs
-    struct_def_xy = BSLStruct('posn', ['x', 'y'])
 
-    defs1 = defs1.extend('posn', struct_def_xy)
+    struct_def_xy = BSLStruct('posn', ['x', 'y'])
+    struct_def_xyz = BSLStruct('lrm', ['left', 'right', 'mid'])
+
+    defs1 = defs1.extend('posn', struct_def_xy).extend('lrm', struct_def_xyz)
 
     make_struct_12 = BSLMakeStruct('posn', [Num(1), Num(2)])
     val_structure_12 = Structure('posn', [1, 2])
+
+    make_struct_composite_13 = BSLMakeStruct('posn', [make_struct_12, make_struct_12])
+    val_structure_composite_13 = Structure('posn', [val_structure_12, val_structure_12])
+
+    make_struct_composite_left_right_mid = BSLMakeStruct('lrm', [make_struct_12, make_struct_composite_13, Variable('x')])
+    val_structure_composite_left_right_mid = Structure('lrm',
+                                                       [val_structure_12, val_structure_composite_13, 'x'])
+
 
 
 # # ;; -----------------------------------------------------------------------------

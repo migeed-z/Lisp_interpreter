@@ -22,7 +22,7 @@ class BSLMakeStruct(BSLExpr):
             raise BSLError('Could not find structure definition')
 
         elif len(struct_def.fields) != len(self.fields):
-            raise BSLError('Incorrect number of params')
+            raise BSLError('Incorrect number of fields')
 
         fields = self.fields
         val_fields = []
