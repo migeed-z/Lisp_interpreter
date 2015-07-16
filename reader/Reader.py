@@ -1,4 +1,4 @@
-from interpreter.BslError import BSLError
+from interpreter.BSLError import BSLError
 
 class Reader:
     """
@@ -54,8 +54,7 @@ class Reader:
             raise BSLError('Incomplete s-expression')
         elif next == ')':
             raise BSLError('Unexpected %s' % (')'))
-        # elif next == "": #???
-        #    raise BSLError('EOF')
+
         else:
             return self.read_ex1(next)[0]
 
@@ -63,13 +62,12 @@ class Reader:
         """
         Produce the next Sexpression and the character that follows it
         :param char: String
-        :return: [Sexpression, char]
+        :return: [[Sexpression], char]
         """
         next = char
 
-        # **** if we start with a space, then we get rid of it ***
-        # MF to be explained, why the heck does this work
-        if next.isspace():  #why is this condition needed? -- MF: will need whitespace predicate
+        # if we start with a space, then we get rid of it
+        if next.isspace():
             next = self.read_first_proper_char()
 
         if not next:
@@ -143,7 +141,7 @@ class Reader:
 
         while self.is_not_eof():
             next = self.read_char()
-            if  next == ')' or next == '(' or next.isspace():
+            if next == ')' or next == '(' or next.isspace():
                 final_next = next
                 break
             else:

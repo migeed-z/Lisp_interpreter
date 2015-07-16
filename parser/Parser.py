@@ -1,5 +1,4 @@
-from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide, FuncDefinition, FuncApplication, \
-    Definition
+from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide, FuncDefinition, FuncApplication
 from functools import partial
 
 # A P-expression is one of:
@@ -9,9 +8,6 @@ from functools import partial
 #
 # STEP 2 a:
 # The PARSER consumes P-expressions and produces pre-BSL-expression, it's a BSL-expression but with errors
-#
-# NAIVE approach
-# parser : P-expression -> [Maybe BSLexpr]
 #
 # A BSLexpr is one of:
 # Num(number)
@@ -64,9 +60,9 @@ def exp_parser(p):
         #function application
         elif isinstance(p[0], str) and not is_reserved(p[0]):
             name_of_function = p[0]
-            return parse_operation(p,0, partial(FuncApplication, name_of_function))
+            return parse_operation(p, 0, partial(FuncApplication, name_of_function))
 
-        else: # suppose we have a function application
+        else:
             return False
 
 def func_def_parser(p):
@@ -135,20 +131,11 @@ def parse_params(expr):
         return []
     elif isinstance(expr, list):
         expr.pop(0)
-        if validate_duplicates(expr) == False or validate_reserved_words(expr) == False:
+        if validate_reserved_words(expr) == False:
             return False
 
         else:
             return expr
-
-
-def validate_duplicates(expr):
-    """
-    checks for duplicates in the parameter list
-    :param expr: [string]
-    :return: True if no duplicates exist and False otherwise
-    """
-    return len(expr) == len(set(expr))
 
 
 def validate_reserved_words(expr):

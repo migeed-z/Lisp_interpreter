@@ -9,9 +9,13 @@ from interpreter.FuncApplication import FuncApplication
 from interpreter.BSLlist import BSLlist
 from interpreter.If0 import If0
 from interpreter.Posn import Posn
+from interpreter.BSLStruct import BSLStruct
+from interpreter.BSLMakeStruct import BSLMakeStruct
+from interpreter.Value import Structure
 from interpreter.Value import Pair
 from interpreter.Posn_x import Posn_x
 from interpreter.Scope import Scope
+
 
 
 class Constants:
@@ -109,7 +113,13 @@ class Constants:
     exx1 = ')'
     exx2 = ex_abc + exx1
 
+    #Structs
+    struct_def_xy = BSLStruct('posn', ['x', 'y'])
 
+    defs1 = defs1.extend('posn', struct_def_xy)
+
+    make_struct_12 = BSLMakeStruct('posn', [Num(1), Num(2)])
+    val_structure_12 = Structure('posn', [1, 2])
 
 
 # # ;; -----------------------------------------------------------------------------

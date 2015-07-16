@@ -1,4 +1,4 @@
-from interpreter.BslError import BSLError
+from interpreter.BSLError import BSLError
 
 
 class Scope:
@@ -21,9 +21,9 @@ class Scope:
         :param val: Value corresponding to name
         :return: New scope with extended definitions
         """
-        if not isinstance(name, str):
+        if not isinstance(name, str) :
             raise BSLError('name field must be a string')
-        return Scope((name, val,self))
+        return Scope((name, val, self))
 
     def get(self, key):
         if not self.defs:

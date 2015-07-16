@@ -91,4 +91,15 @@ def test_eval_posn_x():
         c.posnsexpr_error2.eval(c.defs1)
 
 
+def test_eval_struct():
+    c.make_struct_12.eval(c.defs1).equals(c.val_structure_12)
+
+
+
+#     struct_def_xy = BSLStruct('posn', ['x', 'y'])
+#
+# defs1.extend(struct_def_xy.name, struct_def_xy)
+#
+# make_struct_12 = BSLMakeStruct('posn', [1, 2])
+#
 

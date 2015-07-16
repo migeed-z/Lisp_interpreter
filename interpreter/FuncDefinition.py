@@ -1,4 +1,5 @@
 from interpreter.BSLDef import BSLDef
+from interpreter.BSLError import BSLError
 
 class FuncDefinition(BSLDef):
     """
@@ -13,6 +14,8 @@ class FuncDefinition(BSLDef):
         """
         self.name = name
         self.body = body
+        if len(params) != len(set(params)):
+            raise BSLError('Duplicate Params are not allowed in Function definitions')
         self.params = params
 
     def equals(self, other):
@@ -27,4 +30,5 @@ class FuncDefinition(BSLDef):
 
         else:
             return other.name == self.name and other.params == self.params and (other.body).equals(self.body)
+
 

@@ -1,6 +1,6 @@
 from interpreter.BSLExpr import BSLExpr
 from interpreter.Value import Pair
-from interpreter.BslError import BSLError
+from interpreter.BSLError import BSLError
 
 class Posn_Selector(BSLExpr):
     """

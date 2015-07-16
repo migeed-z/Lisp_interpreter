@@ -1,5 +1,5 @@
 from interpreter.Operation import Operation
-from interpreter.BslError import BSLError
+from interpreter.BSLError import BSLError
 
 class Divide(Operation):
     """

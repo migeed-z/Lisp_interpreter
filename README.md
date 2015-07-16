@@ -10,13 +10,13 @@
 STEP 0:
  Definition of BSL surface syntax
  BSL is one of:
-   -- BSLDef
+   -- BSLDef 
    -- BSLExp
 
   BSLDef is
-    -- (define-struct name (name ...)) -
-    -- (define name BSLExp) -
-    -- (define (name name ...) BSLExp)
+    -- (define-struct name (name ...)) - TODO
+    -- (define name BSLExp) - 
+    -- (define (name name ...) BSLExp) -
   BSLExp is one of:
     -- Number
     -- Name
@@ -29,10 +29,10 @@ STEP 0:
     -- (posn-right BSLExp) -
     -- (if BSLExp BSLexp BSLExp) -
     -- EMPTY -- need value for it and parsing -
-    -- (Name BSLExp ...)
-    -- (posn? NSLexpr)
-    -- (number? BSLexpr)
-    -- SOMETHING STRING LIKE and STRING=
+    -- (Name BSLExp ...) - ?????
+    -- (posn? BSLexpr) - TODO
+    -- (number? BSLexpr) - TODO
+    -- SOMETHING STRING LIKE and STRING? - TODO
 
 STEP 1:
  The READER will consume the text a programmer types into the console and produce a P-expression.

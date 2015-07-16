@@ -11,12 +11,5 @@ class BSLExpr:
         """
         raise NotImplementedError('Method not yet implemented')
 
-    @abstractmethod
-    def equals(self, other):
-        """
-        Is this BSLexpr equal to other?
-        :param other: Any
-        :return: True if this = other and false otherwise
-        """
-        return NotImplementedError('Method not yet implemented')
+
 

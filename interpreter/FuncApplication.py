@@ -1,5 +1,5 @@
 from interpreter.BSLExpr import BSLExpr
-from interpreter.BslError import BSLError
+from interpreter.BSLError import BSLError
 
 
 class FuncApplication(BSLExpr):

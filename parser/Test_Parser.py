@@ -1,5 +1,5 @@
 from interpreter import Num, Variable, BSLlist, Add, Multiply, Subtract, Divide, FuncDefinition, FuncApplication
-from parser import exp_parser, func_def_parser, parse_name, parse_params, validate_duplicates, validate_reserved_words
+from parser import exp_parser, func_def_parser, parse_name, parse_params
 
 class Test_parser:
     """
@@ -58,7 +58,6 @@ class Test_parser:
         assert not parse_name('+')
         assert not parse_name(['+', 'x', 'y', 'z'])
         assert not parse_name(['+'])
-        assert not parse_params(['Add', 'x', 'x'])
         assert not parse_params(['Add', '+', 'y', 'z'])
 
         assert not func_def_parser(['define'])
