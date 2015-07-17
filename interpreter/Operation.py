@@ -22,7 +22,7 @@ class Operation(BSLExpr):
         if not isinstance(other, self.This):
             return False
         else:
-            return self.args.helper_equals(other.args)
+            return self.args.__eq__(other.args)
 
     def validate(self, seq):
         for item in seq:

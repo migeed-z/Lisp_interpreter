@@ -55,4 +55,4 @@ class FuncApplication(BSLExpr):
             return False
 
         else:
-            return self.name == other.name and self.sl.helper_equals(other.sl)
+            return self.name == other.name and self.sl.__eq__(other.sl)

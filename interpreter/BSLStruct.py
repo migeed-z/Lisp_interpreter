@@ -1,4 +1,5 @@
 from interpreter.BSLDef import BSLDef
+from interpreter.BSLError import BSLError
 
 class BSLStruct(BSLDef):
     """
@@ -11,6 +12,8 @@ class BSLStruct(BSLDef):
         :param fields: List of fields of the struct
         """
         self.name = name
+        if len(fields) != len(set(fields)):
+            raise BSLError('Duplicate Params are not allowed in Function definitions')
         self.fields = fields
 
 

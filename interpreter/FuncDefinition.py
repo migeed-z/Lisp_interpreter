@@ -29,6 +29,6 @@ class FuncDefinition(BSLDef):
             return False
 
         else:
-            return other.name == self.name and other.params == self.params and (other.body).equals(self.body)
+            return other.name == self.name and other.params == self.params and (other.body).__eq__(self.body)
 
 

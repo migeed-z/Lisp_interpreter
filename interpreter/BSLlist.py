@@ -20,7 +20,7 @@ class BSLlist:
 
         return result
 
-    def helper_equals(self, element):
+    def __eq__(self, element):
         """
         evaluates each S-expression to return a boolean then evaluates booleans and returns the result
         :return: Items in this list are equal to items in element
@@ -31,7 +31,7 @@ class BSLlist:
         else:
             result = True
             for i in range(len(self.sl)):
-                result = result and self.sl[i].equals(element.sl[i])
+                result = result and self.sl[i].__eq__(element.sl[i])
 
             return result
 

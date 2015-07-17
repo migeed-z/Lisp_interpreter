@@ -15,6 +15,7 @@ from interpreter.Value import Structure
 from interpreter.Value import Pair
 from interpreter.Posn_x import Posn_x
 from interpreter.Scope import Scope
+from interpreter.StructSelector import StructSelector
 
 
 class Constants:
@@ -115,9 +116,9 @@ class Constants:
     #Structs
 
     struct_def_xy = BSLStruct('posn', ['x', 'y'])
-    struct_def_xyz = BSLStruct('lrm', ['left', 'right', 'mid'])
+    struct_def_lrm = BSLStruct('lrm', ['left', 'mid', 'right'])
 
-    defs1 = defs1.extend('posn', struct_def_xy).extend('lrm', struct_def_xyz)
+    defs1 = defs1.extend('posn', struct_def_xy).extend('lrm', struct_def_lrm)
 
     make_struct_12 = BSLMakeStruct('posn', [Num(1), Num(2)])
     val_structure_12 = Structure('posn', [1, 2])
@@ -129,7 +130,10 @@ class Constants:
     val_structure_composite_left_right_mid = Structure('lrm',
                                                        [val_structure_12, val_structure_composite_13, 'x'])
 
-
+    # Struct Selectors
+    select_x = StructSelector(val_structure_12, 'x')
+    select_mid = StructSelector(val_structure_composite_left_right_mid, 'mid')
+    select_mid_make = StructSelector(make_struct_composite_left_right_mid, 'mid')
 
 # # ;; -----------------------------------------------------------------------------
 # # ;; INPUT

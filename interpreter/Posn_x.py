@@ -9,6 +9,6 @@ class Posn_x(Posn_Selector):
         super().__init__(sub_expr)
 
     def eval(self, defs):
-        v = super(Posn_x,self).eval(defs)
+        v = super(Posn_x, self).eval(defs)
         return v.left
 

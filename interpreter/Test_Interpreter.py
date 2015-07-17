@@ -1,5 +1,6 @@
 import pytest
 from interpreter import Constants as c, BSLError, Value as v, Num, BSLlist, Variable, Posn_x
+from interpreter import StructSelector
 
 
 def test_eval_num():
@@ -99,6 +100,10 @@ def test_eval_struct():
     assert c.make_struct_composite_13.eval(c.defs1).__eq__(c.val_structure_composite_13)
     assert c.make_struct_composite_left_right_mid.eval(c.defs1).__eq__(c.val_structure_composite_left_right_mid)
 
+def test_eval_struct_selector():
+    assert c.select_x.eval(c.defs1) == 1
+    assert c.select_mid.eval(c.defs1).__eq__(c.val_structure_composite_13)
+    assert c.select_mid_make.eval(c.defs1).__eq__(c.val_structure_composite_13)
 
 
 

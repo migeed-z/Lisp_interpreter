@@ -14,5 +14,6 @@ from interpreter.Scope import Scope
 from interpreter.BSLError import BSLError
 from interpreter.BSLExpr import BSLExpr
 from interpreter.FuncApplication import FuncApplication
+from interpreter.StructSelector import StructSelector
 
 

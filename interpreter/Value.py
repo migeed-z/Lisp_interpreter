@@ -41,6 +41,28 @@ class Structure:
             return True
 
 
+    def add_defs(self, defs):
+        """
+        Adds the new defintions of the make-struct to scope
+        :param defs: Scope
+        :return: a new Scope containing the new defintions
+        """
+        struct_def = defs.get(self.name)
+        def_fields = struct_def.fields
+        make_fields = self.fields
+        new_defs = defs
+
+        # At this point, we know they are they map to eachother, because we've already
+        # evaluated the struct before calling this method in the selector class
+
+        for i in range(len(make_fields)):
+            new_defs = new_defs.extend(def_fields[i], make_fields[i])
+
+        return new_defs
+
+
+
+
 def compare(one_value, other_value):
     if (isinstance(one_value, (int, float, complex))) and (isinstance(other_value, (int, float, complex))):
         return other_value == other_value

@@ -31,3 +31,6 @@ class BSLMakeStruct(BSLExpr):
             val_fields.append(field.eval(defs))
 
         return Structure(self.struct_name, val_fields)
+
+
+
