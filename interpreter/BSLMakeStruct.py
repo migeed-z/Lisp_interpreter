@@ -10,7 +10,7 @@ class BSLMakeStruct(BSLExpr):
     def __init__(self, struct_name, fields):
         """
         :param struct_name: String representing name of the struct
-        :param fields: List of fields corresponding to those in the struct defintion
+        :param fields: [BSLExpr]
         """
         self.struct_name = struct_name
         self.fields = fields

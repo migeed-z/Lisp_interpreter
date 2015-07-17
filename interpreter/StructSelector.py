@@ -22,13 +22,13 @@ class StructSelector(BSLExpr):
 
     def eval(self, defs):
         expr = None
-        if isinstance(self.subexpr, BSLMakeStruct):
+        if isinstance(self.subexpr, BSLExpr):
             expr = self.subexpr.eval(defs)
 
         elif isinstance(self.subexpr, Structure):
             expr = self.subexpr
 
-        if not expr:
+        if not isinstance(expr, Structure):
             raise BSLError('This is not a Struct.')
 
         new_defs = expr.add_defs(defs)

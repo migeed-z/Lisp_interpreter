@@ -1,21 +1,11 @@
-from interpreter.BSLExpr import BSLExpr
-from interpreter.Value import Pair
+from interpreter.BSLStruct import BSLStruct
 
-class Posn(BSLExpr):
+class Posn(BSLStruct):
     """
-    Represents an BSLexpr of the shape (posn e e)
+    To represent a BSL Posn
     """
-    def __init__(self, posn_x, posn_y):
-        """
-        :param posn_x: BSLexpr
-        :param posn_y: BSLexpr
-        """
-        self.posn_x = posn_x
-        self.posn_y = posn_y
 
-    def eval(self, defs):
-        val_x = self.posn_x.eval(defs)
-        val_y = self.posn_y.eval(defs)
+    def __init__(self):
+        super().__init__('Posn', ['x', 'y'])
 
-        return Pair(val_x, val_y)
 

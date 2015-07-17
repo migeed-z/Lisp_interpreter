@@ -14,6 +14,7 @@ from interpreter.BSLMakeStruct import BSLMakeStruct
 from interpreter.Value import Structure
 from interpreter.Value import Pair
 from interpreter.Posn_x import Posn_x
+from interpreter.MakePosn import MakePosn
 from interpreter.Scope import Scope
 from interpreter.StructSelector import StructSelector
 
@@ -80,10 +81,10 @@ class Constants:
 
     funcApp4 = FuncApplication('z', BSLlist([if_emptylist_42_varx, Num(2)]))
 
-    posn11 = Posn(Num(1), Num(1))
+    posn11 = MakePosn(Num(1), Num(1))
     pair11 = Pair(1, 1)
 
-    func_app_varx_1 = FuncApplication('f', BSLlist([Posn(func_app_varx, Num(1))]))
+    func_app_varx_1 = FuncApplication('f', BSLlist([MakePosn(func_app_varx, Num(1))]))
     pair41 = Pair(4, 1)
 
     posn_x_11 = Posn_x(posn11)
@@ -97,9 +98,11 @@ class Constants:
     expraddposnx_11_5 = Add(list_posn_x_11_5)
     expraddposn11 = Add(list_posn11)
 
-    posn_42_21 = Posn(Num(42), Num(21))
+    posn_42_21 = MakePosn(Num(42), Num(21))
     func_def_posn_42_11 = FuncDefinition('d', ['x'], posn_42_21)
     func_app_100 = FuncApplication('d', BSLlist([Num(100)]))
+    posn_x_func_app_100 = Posn_x(func_app_100)
+
 
     posnsexpr_error2 = Add(BSLlist([Num(1), func_app_100]))
 
@@ -115,16 +118,16 @@ class Constants:
 
     #Structs
 
-    struct_def_xy = BSLStruct('posn', ['x', 'y'])
+    struct_def_xy = BSLStruct('struct_posn', ['x', 'y'])
     struct_def_lrm = BSLStruct('lrm', ['left', 'mid', 'right'])
 
-    defs1 = defs1.extend('posn', struct_def_xy).extend('lrm', struct_def_lrm)
+    defs1 = defs1.extend('struct_posn', struct_def_xy).extend('lrm', struct_def_lrm)
 
-    make_struct_12 = BSLMakeStruct('posn', [Num(1), Num(2)])
-    val_structure_12 = Structure('posn', [1, 2])
+    make_struct_12 = BSLMakeStruct('struct_posn', [Num(1), Num(2)])
+    val_structure_12 = Structure('struct_posn', [1, 2])
 
-    make_struct_composite_13 = BSLMakeStruct('posn', [make_struct_12, make_struct_12])
-    val_structure_composite_13 = Structure('posn', [val_structure_12, val_structure_12])
+    make_struct_composite_13 = BSLMakeStruct('struct_posn', [make_struct_12, make_struct_12])
+    val_structure_composite_13 = Structure('struct_posn', [val_structure_12, val_structure_12])
 
     make_struct_composite_left_right_mid = BSLMakeStruct('lrm', [make_struct_12, make_struct_composite_13, Variable('x')])
     val_structure_composite_left_right_mid = Structure('lrm',
@@ -134,6 +137,9 @@ class Constants:
     select_x = StructSelector(val_structure_12, 'x')
     select_mid = StructSelector(val_structure_composite_left_right_mid, 'mid')
     select_mid_make = StructSelector(make_struct_composite_left_right_mid, 'mid')
+
+    #Posn
+    defs1 = defs1.extend('posn', Posn())
 
 # # ;; -----------------------------------------------------------------------------
 # # ;; INPUT

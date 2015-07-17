@@ -1,6 +1,5 @@
 import pytest
-from interpreter import Constants as c, BSLError, Value as v, Num, BSLlist, Variable, Posn_x
-from interpreter import StructSelector
+from interpreter import Constants as c, BSLError, Value as v, Num, BSLlist, Variable
 
 
 def test_eval_num():
@@ -10,7 +9,6 @@ def test_eval_num():
 
 def test_eval_expr():
     assert c.list123.helper_eval(c.defs1) == [1, 2, 3]
-
 
 def test_eval_empty():
     assert BSLlist([]).helper_eval(c.defs1) == []
@@ -72,14 +70,14 @@ def test_if0():
 
 
 def test_eval_posn():
-    assert v.compare(c.posn11.eval(c.defs1), c.pair11)
-    assert v.compare(c.func_app_varx_1.eval(c.defs1), c.pair41)
+    assert c.posn11.eval(c.defs1).__eq__(c.pair11)
+    assert c.func_app_varx_1.eval(c.defs1).__eq__(c.pair41)
 
 def test_eval_posn_x():
     assert c.posn_x_11.eval(c.defs1) == 1
     assert c.posn_y_func_app_varx_1.eval(c.defs1) == 4
     assert c.expraddposnx_11_5.eval(c.defs1) == 6
-    assert Posn_x(c.func_app_100).eval(c.defs1) == 42
+    assert c.posn_x_func_app_100.eval(c.defs1) == 42
 
     with pytest.raises(BSLError):
         c.posn_x1_error.eval(c.defs1)

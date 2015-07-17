@@ -9,7 +9,7 @@ class BSLStruct(BSLDef):
     def __init__(self, name, fields):
         """
         :param name: String representing the name of the struct
-        :param fields: List of fields of the struct
+        :param fields: List of Strings
         """
         self.name = name
         if len(fields) != len(set(fields)):

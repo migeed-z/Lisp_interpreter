@@ -8,7 +8,6 @@ from interpreter.BSLlist import BSLlist
 from interpreter.Constants import Constants
 from interpreter.BSLError import BSLError
 from interpreter.FuncDefinition import FuncDefinition
-from interpreter.Value import compare
 from interpreter.Posn_x import Posn_x
 from interpreter.Scope import Scope
 from interpreter.BSLError import BSLError
