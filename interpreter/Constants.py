@@ -106,7 +106,8 @@ class Constants:
 
     posnsexpr_error2 = Add(BSLlist([Num(1), func_app_100]))
 
-    defs1 = Scope(()).extend('x', 1).extend('y',4).extend('f', func_def_varx).extend('g', funcDef2).extend('z', func_def_add_varx_vary) \
+    defs1 = Scope(()).extend('x', 1).extend('y',4).extend('f', func_def_varx).extend('g', funcDef2).\
+        extend('z', func_def_add_varx_vary) \
         .extend('d', func_def_posn_42_11)
 
     ex1 = '(ex*'
@@ -120,8 +121,14 @@ class Constants:
 
     struct_def_xy = BSLStruct('struct_posn', ['x', 'y'])
     struct_def_lrm = BSLStruct('lrm', ['left', 'mid', 'right'])
+    struct_def_xyz = BSLStruct('my-struct', ['x', 'y', 'z'])
+    struct_def_x = BSLStruct('your-struct', ['x'])
 
     defs1 = defs1.extend('struct_posn', struct_def_xy).extend('lrm', struct_def_lrm)
+
+    defs2 = Scope([]).extend('my-struct', struct_def_xyz).extend('your-struct', struct_def_x)
+
+    make_struct_123 = BSLMakeStruct('my-struct', [Num(1), Num(2), Num(3)])
 
     make_struct_12 = BSLMakeStruct('struct_posn', [Num(1), Num(2)])
     val_structure_12 = Structure('struct_posn', [1, 2])
@@ -134,12 +141,21 @@ class Constants:
                                                        [val_structure_12, val_structure_composite_13, 'x'])
 
     # Struct Selectors
-    select_x = StructSelector(val_structure_12, 'x')
-    select_mid = StructSelector(val_structure_composite_left_right_mid, 'mid')
-    select_mid_make = StructSelector(make_struct_composite_left_right_mid, 'mid')
+    select_x = StructSelector('struct_posn', make_struct_12, 'x')
+    select_xyz = StructSelector('your-struct', make_struct_123, 'x')
+    select_mid = StructSelector('lrm', make_struct_composite_left_right_mid, 'mid')
+    select_mid_make = StructSelector('lrm', make_struct_composite_left_right_mid, 'mid')
 
     #Posn
     defs1 = defs1.extend('posn', Posn())
+
+
+
+# (define-struct your-struct (x))
+# (define-struct my-struct (x y z))
+# (your-struct-x (make-my-struct 1 2 3))
+
+
 
 # # ;; -----------------------------------------------------------------------------
 # # ;; INPUT

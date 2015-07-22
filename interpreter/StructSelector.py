@@ -1,7 +1,6 @@
 from interpreter.BSLExpr import BSLExpr
 from interpreter.BSLError import BSLError
 from interpreter.Value import Structure
-from interpreter.BSLMakeStruct import BSLMakeStruct
 
 class StructSelector(BSLExpr):
     """
@@ -12,26 +11,27 @@ class StructSelector(BSLExpr):
     (mystruct-x s1) --> 1
     """
 
-    def __init__(self, subexpr, field_name):
+    def __init__(self, struct_name, subexpr, field_name):
         """
+        :param struct_name: String representing the name of the struct
         :param subexpr: BSLExpr
         :param field_name: String to represent the name of the field who's value we want to select
         """
+        self.struct_name = struct_name
         self.subexpr = subexpr
         self.field_name = field_name
 
     def eval(self, defs):
-        expr = None
-        if isinstance(self.subexpr, BSLExpr):
-            expr = self.subexpr.eval(defs)
+        value_of_subexpr = self.subexpr.eval(defs)
+        # looks like Structure("my-struct", [1, 2, 3])
 
-        elif isinstance(self.subexpr, Structure):
-            expr = self.subexpr
-
-        if not isinstance(expr, Structure):
+        if not isinstance(value_of_subexpr, Structure):
             raise BSLError('This is not a Struct.')
 
-        new_defs = expr.add_defs(defs)
+        if not value_of_subexpr.name == self.struct_name:
+            raise BSLError('Expects a different kind of struct')
+
+        new_defs = value_of_subexpr.add_defs(defs)
 
         return new_defs.get(self.field_name)
 

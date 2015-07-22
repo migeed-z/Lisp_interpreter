@@ -21,7 +21,7 @@ class BSLMakeStruct(BSLExpr):
         if not struct_def:
             raise BSLError('Could not find structure definition')
 
-        elif len(struct_def.fields) != len(self.fields):
+        if len(struct_def.fields) != len(self.fields):
             raise BSLError('Incorrect number of fields')
 
         fields = self.fields

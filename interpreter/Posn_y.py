@@ -6,5 +6,5 @@ class Posn_y(StructSelector):
     """
 
     def __init__(self, sub_expr):
-        super().__init__(sub_expr, 'y')
+        super().__init__('posn', sub_expr, 'y')
 
