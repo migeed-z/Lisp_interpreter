@@ -1,22 +1,14 @@
-from interpreter.Num import Num
-from interpreter.Add import Add
-from interpreter.Multiply import Multiply
-from interpreter.Subtract import Subtract
-from interpreter.Divide import Divide
-from interpreter.Variable import Variable
-from interpreter.FuncDefinition import FuncDefinition
-from interpreter.FuncApplication import FuncApplication
-from interpreter.BSLlist import BSLlist
-from interpreter.If0 import If0
-from interpreter.Posn import Posn
-from interpreter.BSLStruct import BSLStruct
-from interpreter.BSLMakeStruct import BSLMakeStruct
-from interpreter.Value import Structure
-from interpreter.Value import Pair
-from interpreter.Posn_x import Posn_x
-from interpreter.MakePosn import MakePosn
-from interpreter.Scope import Scope
-from interpreter.StructSelector import StructSelector
+from Num import Num
+from Add import Add
+from Multiply import Multiply
+from Subtract import Subtract
+from Divide import Divide
+from Variable import Variable
+from FuncDefinition import FuncDefinition
+from FuncApplication import FuncApplication
+from BSLlist import BSLlist
+from If0 import If0
+from Scope import Scope
 
 
 class Constants:
@@ -81,34 +73,13 @@ class Constants:
 
     funcApp4 = FuncApplication('z', BSLlist([if_emptylist_42_varx, Num(2)]))
 
-    posn11 = MakePosn(Num(1), Num(1))
-    pair11 = Pair(1, 1)
-
-    func_app_varx_1 = FuncApplication('f', BSLlist([MakePosn(func_app_varx, Num(1))]))
-    pair41 = Pair(4, 1)
-
-    posn_x_11 = Posn_x(posn11)
-    posn_y_func_app_varx_1 = Posn_x(func_app_varx_1)
-
-    posn_x1_error = Posn_x(Num(1))
-
-    list_posn_x_11_5 = BSLlist([posn_x_11, Num(5)])
-    list_posn11 = BSLlist([posn11])
-
-    expraddposnx_11_5 = Add(list_posn_x_11_5)
-    expraddposn11 = Add(list_posn11)
-
-    posn_42_21 = MakePosn(Num(42), Num(21))
-    func_def_posn_42_11 = FuncDefinition('d', ['x'], posn_42_21)
     func_app_100 = FuncApplication('d', BSLlist([Num(100)]))
-    posn_x_func_app_100 = Posn_x(func_app_100)
 
 
     posnsexpr_error2 = Add(BSLlist([Num(1), func_app_100]))
 
     defs1 = Scope(()).extend('x', 1).extend('y',4).extend('f', func_def_varx).extend('g', funcDef2).\
-        extend('z', func_def_add_varx_vary) \
-        .extend('d', func_def_posn_42_11)
+        extend('z', func_def_add_varx_vary)
 
     ex1 = '(ex*'
     ex_abc = 'abc'
@@ -117,60 +88,6 @@ class Constants:
     exx1 = ')'
     exx2 = ex_abc + exx1
 
-    #Structs
-
-    struct_def_xy = BSLStruct('struct_posn', ['x', 'y'])
-    struct_def_lrm = BSLStruct('lrm', ['left', 'mid', 'right'])
-    struct_def_xyz = BSLStruct('my-struct', ['x', 'y', 'z'])
-    struct_def_x = BSLStruct('your-struct', ['x'])
-
-    defs1 = defs1.extend('struct_posn', struct_def_xy).extend('lrm', struct_def_lrm)
-
-    defs2 = Scope([]).extend('my-struct', struct_def_xyz).extend('your-struct', struct_def_x)
-
-    make_struct_123 = BSLMakeStruct('my-struct', [Num(1), Num(2), Num(3)])
-
-    make_struct_12 = BSLMakeStruct('struct_posn', [Num(1), Num(2)])
-    val_structure_12 = Structure('struct_posn', [1, 2])
-
-    make_struct_composite_13 = BSLMakeStruct('struct_posn', [make_struct_12, make_struct_12])
-    val_structure_composite_13 = Structure('struct_posn', [val_structure_12, val_structure_12])
-
-    make_struct_composite_left_right_mid = BSLMakeStruct('lrm', [make_struct_12, make_struct_composite_13, Variable('x')])
-    val_structure_composite_left_right_mid = Structure('lrm',
-                                                       [val_structure_12, val_structure_composite_13, 'x'])
-
-    # Struct Selectors
-    select_x = StructSelector('struct_posn', make_struct_12, 'x')
-    select_xyz = StructSelector('your-struct', make_struct_123, 'x')
-    select_mid = StructSelector('lrm', make_struct_composite_left_right_mid, 'mid')
-    select_mid_make = StructSelector('lrm', make_struct_composite_left_right_mid, 'mid')
-
-    #Posn
-    defs1 = defs1.extend('posn', Posn())
 
 
 
-# (define-struct your-struct (x))
-# (define-struct my-struct (x y z))
-# (your-struct-x (make-my-struct 1 2 3))
-
-
-
-# # ;; -----------------------------------------------------------------------------
-# # ;; INPUT
-# # ;; An external S-expression has the following textual representation:
-# # ;; Ex1 is one of:
-# # ;; -- '(' followed by Ex*
-# # ;; -- Tok
-# # ;; Ex* is one of:
-# # ;; -- ')'
-# # ;; -- Ex1 followed by Ex*
-# # ;; Tok is any sequence of characters, not including '(' ')' or whitespace chars,
-# # ;;  upto EOF
-# #
-# # ;; OUTPUT
-# # ;; An S-expression is one of:
-# # ;; -- Symbol
-# # ;; -- Number
-# # ;; -- [List-of S-expression] (which includes '() )

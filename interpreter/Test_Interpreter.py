@@ -42,7 +42,6 @@ def test_equals():
     assert c.expradd1.__eq__(c.expradd1)
     assert not c.func_def_varx.__eq__(c.funcDef2)
     assert c.func_def_varx.__eq__(c.func_def_varx)
-    assert not c.func_app_varx_1.__eq__(c.func_def_posn_42_11)
     assert c.func_def_varx.__eq__(c.func_def_varx)
 
 def test_funcAppEval():
@@ -68,41 +67,8 @@ def test_if0():
     assert c.funcApp4.eval(c.defs1) == 6
 
 
-def test_eval_posn():
-    assert c.posn11.eval(c.defs1).__eq__(c.pair11)
-    assert c.func_app_varx_1.eval(c.defs1).__eq__(c.pair41)
 
-def test_eval_posn_x():
-    assert c.posn_x_11.eval(c.defs1) == 1
-    assert c.posn_y_func_app_varx_1.eval(c.defs1) == 4
-    assert c.expraddposnx_11_5.eval(c.defs1) == 6
-    assert c.posn_x_func_app_100.eval(c.defs1) == 42
 
-    with pytest.raises(BSLError):
-        c.posn_x1_error.eval(c.defs1)
-
-    with pytest.raises(BSLError):
-        c.expraddposn11.eval(c.defs1)
-
-    with pytest.raises(BSLError):
-        c.posnsexpr_error2.eval(c.defs1)
-
-def test_equals_struct():
-    assert c.val_structure_12.__eq__(c.val_structure_12)
-    assert not c.val_structure_composite_13.__eq__(c.val_structure_12)
-    assert c.val_structure_composite_left_right_mid.__eq__(c.val_structure_composite_left_right_mid)
-
-def test_eval_struct():
-    assert c.make_struct_12.eval(c.defs1).__eq__(c.val_structure_12)
-    assert c.make_struct_composite_13.eval(c.defs1).__eq__(c.val_structure_composite_13)
-    assert c.make_struct_composite_left_right_mid.eval(c.defs1).__eq__(c.val_structure_composite_left_right_mid)
-
-def test_eval_struct_selector():
-    assert c.select_x.eval(c.defs1) == 1
-    assert c.select_mid.eval(c.defs1).__eq__(c.val_structure_composite_13)
-    assert c.select_mid_make.eval(c.defs1).__eq__(c.val_structure_composite_13)
-    with pytest.raises(BSLError):
-        c.select_xyz.eval(c.defs2)
 
 
 

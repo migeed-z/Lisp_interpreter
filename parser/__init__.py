@@ -1,1 +1,3 @@
-from parser.Parser import exp_parser, func_def_parser, parse_name, parse_params, validate_reserved_words
+from interpreter import Num
+
+from Parser import exp_parser, func_def_parser, parse_name, parse_params, validate_reserved_words

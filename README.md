@@ -13,27 +13,42 @@ STEP 0:
    -- BSLDef 
    -- BSLExp
 
-  BSLDef is
-    -- (define-struct name (name ...)) - TODO
-    -- (define name BSLExp) - 
-    -- (define (name name ...) BSLExp) -
-  BSLExp is one of:
-    -- Number
-    -- Name
-    -- (+ BSLExp ...)
-    -- (* BSLExp ...)
-    -- (/ BSLExp BSLExp ...)
-    -- (- BSLExp BSLExp ...)
-    -- (make-posn BSLExp BSLExp) -
-    -- (posn-left BSLExp) -
-    -- (posn-right BSLExp) -
-    -- (if BSLExp BSLexp BSLExp) -
-    -- EMPTY -- need value for it and parsing -
-    -- (Name BSLExp ...) - ?????
-    -- (posn? BSLexpr) - TODO
-    -- (number? BSLexpr) - TODO
+ BSLDef is one of
+    -- FucntionDefinition
+    -- BSLStruct
+    
+ FunctionDefinition is one of:
+    -- ConstructorDef
+    -- SelectorDef
+    -- PredicateDef
+    
+ BSLStruct is:
+    -- BSLStruct(struct-name, [params])
+ 
+ Upon creating a BSLStrut, the following function definitions are initialized:
+    -- ConstructorDef
+    -- SelectorDef
+    -- PredicateDef
+    
+    **Here we will have the general apply() in the parent class and override it in the subclasses**
+      
+    
+ BSLExp is one of:
+    -- Num
+    -- Variable
+    -- Operation
+    -- if0
+    -- EMPTY -- need value for it and parsing - TODO
     -- SOMETHING STRING LIKE and STRING? - TODO
-
+    -- FunctionApplication
+    
+ Operation is one of:
+    -- Add
+    -- Subtract
+    -- Multiply
+    -- Divide
+   
+   
 STEP 1:
  The READER will consume the text a programmer types into the console and produce a P-expression.
 
@@ -94,10 +109,12 @@ STEP 3:
  Extend BSL with lambda, if, assignment statement, non-local control (Python: generator), ... (see node.js)
     *** language design ****
 
-    -- if expression
-    -- cons
-    -- define-struct
-    -- assignment statement and loop
+ a Value is one of:
+ - Python numbers
+ - Strings
+ - Structure("struct-name", [("param", value)])
+   
+  Once we have a make-struct, we create a structure with param-value tuples
 
  STEP 4: implement this properly
 

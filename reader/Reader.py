@@ -1,4 +1,4 @@
-from interpreter.BSLError import BSLError
+from interpreter import BSLError
 
 class Reader:
     """

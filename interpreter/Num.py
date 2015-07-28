@@ -27,3 +27,9 @@ class Num(BSLExpr):
             raise BSLError('field must be a number')
         else:
             return num
+
+    def __eq__(self, other):
+        if not isinstance(other, Num):
+            return False
+        else:
+            return other.num == self.num

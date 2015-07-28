@@ -1,3 +1,4 @@
+import copy
 from interpreter.BSLExpr import BSLExpr
 from interpreter.BSLError import BSLError
 
@@ -18,7 +19,7 @@ class FuncApplication(BSLExpr):
     def eval(self, defs):
         definition = defs.get(self.name)
         body = definition.body
-        params = definition.params.copy()
+        params = copy.copy(definition.params)
 
         vals = self.sl.helper_eval(defs)
         defs = self.helper_extend(defs, params, vals)

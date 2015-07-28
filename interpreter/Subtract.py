@@ -7,7 +7,7 @@ class Subtract(Operation):
     """
 
     def __init__(self, args):
-        super().__init__(args)
+        Operation.__init__(self, args)
         self.operation = lambda seq: self.subtract(seq)
         self.This = Subtract
 

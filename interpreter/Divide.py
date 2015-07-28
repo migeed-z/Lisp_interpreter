@@ -7,7 +7,7 @@ class Divide(Operation):
     """
 
     def __init__(self, args):
-        super().__init__(args)
+        Operation.__init__(self, args)
         self.operation = lambda seq: self.divide(seq)
         self.This = Divide
 

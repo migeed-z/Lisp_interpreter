@@ -25,3 +25,8 @@ class Variable(BSLExpr):
         else:
             return self.name == other.name
 
+    def __eq__(self, other):
+        if not isinstance(other, Variable):
+            return False
+        else:
+            return other.name == self.name
