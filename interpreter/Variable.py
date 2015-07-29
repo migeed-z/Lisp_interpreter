@@ -1,5 +1,5 @@
-from interpreter.BSLExpr import BSLExpr
-from interpreter.BSLError import BSLError
+from BSLExpr import BSLExpr
+from BSLError import BSLError
 
 class Variable(BSLExpr):
     """

@@ -1,5 +1,5 @@
 import pytest
-from interpreter import Constants as c, BSLError, Value as v, Num, BSLlist, Variable
+from interpreter import Constants as c, BSLError, Num, BSLlist, Variable
 
 def test_eval_num():
     assert Num(1).eval(c.defs1) == 1

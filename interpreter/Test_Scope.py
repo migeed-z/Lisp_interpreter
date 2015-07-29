@@ -1,4 +1,4 @@
-from interpreter.Scope import Scope
+from Scope import Scope
 
 class Test_scope:
 

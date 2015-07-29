@@ -1,4 +1,4 @@
-from interpreter.BSLError import BSLError
+from BSLError import BSLError
 
 
 class Scope:

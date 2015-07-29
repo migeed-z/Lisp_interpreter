@@ -1,4 +1,4 @@
-from interpreter.Operation import Operation
+from Operation import Operation
 
 
 class Multiply(Operation):

@@ -1,7 +1,4 @@
-import copy
-from interpreter.BSLExpr import BSLExpr
-from interpreter.BSLError import BSLError
-
+from BSLExpr import BSLExpr
 
 class FuncApplication(BSLExpr):
     """
@@ -18,33 +15,7 @@ class FuncApplication(BSLExpr):
 
     def eval(self, defs):
         definition = defs.get(self.name)
-        body = definition.body
-        params = copy.copy(definition.params)
-
-        vals = self.sl.helper_eval(defs)
-        defs = self.helper_extend(defs, params, vals)
-
-        return body.eval(defs)
-
-    def helper_extend(self, defs, params, vals):
-        """
-        Extends defs with params and vals
-        :param defs: Scope representing the definitions
-        :param params: [String]
-        :param vals: [number]
-        :return: Scope
-        :raises: BSLError if len(params) not equal len(vals)
-        """
-
-        if len(params) != len(vals):
-            raise BSLError("params and vals must be equal")
-
-        while len(params) != 0:
-            name = params.pop()
-            val = vals.pop()
-            defs = defs.extend(name, val)
-
-        return defs
+        return definition.apply(defs, self.sl)
 
     def __eq__(self, other):
         """
