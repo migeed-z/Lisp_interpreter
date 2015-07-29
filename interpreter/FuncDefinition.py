@@ -1,7 +1,8 @@
 import copy
 from BSLError import BSLError
+from BSLDef import BSLDef
 
-class FuncDefinition:
+class FuncDefinition(BSLDef):
 
     """
     To represent function definitions
@@ -13,11 +14,8 @@ class FuncDefinition:
         :param body: BSLexpr
         :param params: [String]
         """
-        self.name = name
+        BSLDef.__init__(self, name, params)
         self.body = body
-        if len(params) != len(set(params)):
-            raise BSLError('Duplicate Params are not allowed in Function definitions')
-        self.params = params
 
     def apply(self, defs, sl):
         """

@@ -12,5 +12,10 @@ from Scope import Scope
 from BSLError import BSLError
 from BSLExpr import BSLExpr
 from FuncApplication import FuncApplication
+from ConstructorDef import ConstructorDef
+from PredicateDef import PredicateDef
+from SelectorDef import SelectorDef
+
+
 
 
