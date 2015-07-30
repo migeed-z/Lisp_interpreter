@@ -9,6 +9,9 @@ from FuncApplication import FuncApplication
 from BSLlist import BSLlist
 from If0 import If0
 from Scope import Scope
+from Value import Structure
+from StructDefinition import StructDefinition
+from ConstructorDef import ConstructorDef
 
 
 class Constants:
@@ -75,11 +78,23 @@ class Constants:
 
     func_app_100 = FuncApplication('d', BSLlist([Num(100)]))
 
-
     posnsexpr_error2 = Add(BSLlist([Num(1), func_app_100]))
 
     defs1 = Scope(()).extend('x', 1).extend('y',4).extend('f', func_def_varx).extend('g', funcDef2).\
         extend('z', func_def_add_varx_vary)
+
+    #structs
+    posn_def = StructDefinition('posn', ['x', 'y'])
+    defs1 = posn_def.update_scope(defs1)
+
+    # const = ConstructorDef('posn', ['x', 'y'])
+    # defs1 = defs1.extend('make_posn', const)
+    make_posn = FuncApplication('make_posn', BSLlist([Num(1), Num(2)]))
+
+    value_posn = Structure('posn', [('x', 1), ('y', 2)])
+
+
+
 
     ex1 = '(ex*'
     ex_abc = 'abc'

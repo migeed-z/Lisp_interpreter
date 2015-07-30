@@ -1,4 +1,3 @@
-from abc import abstractmethod
 from BSLError import BSLError
 
 class BSLDef:
@@ -14,3 +13,4 @@ class BSLDef:
             raise BSLError('Duplicate Params are not allowed in Function definitions')
         self.params = params
         self.name = name
+

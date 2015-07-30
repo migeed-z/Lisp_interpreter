@@ -15,6 +15,8 @@ from FuncApplication import FuncApplication
 from ConstructorDef import ConstructorDef
 from PredicateDef import PredicateDef
 from SelectorDef import SelectorDef
+from StructDefinition import StructDefinition
+from Value import *
 
 
 

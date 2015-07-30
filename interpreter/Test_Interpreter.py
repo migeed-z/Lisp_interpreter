@@ -1,6 +1,5 @@
 import pytest
 from interpreter import Constants as c, BSLError, Num, BSLlist, Variable
-
 def test_eval_num():
     assert Num(1).eval(c.defs1) == 1
     assert Num(9).eval(c.defs1) == 9
@@ -67,7 +66,9 @@ def test_if0():
     assert c.funcApp4.eval(c.defs1) == 6
 
 
-
+def test_struct():
+    assert c.make_posn.eval(c.defs1) == (c.value_posn)
+    
 
 
 

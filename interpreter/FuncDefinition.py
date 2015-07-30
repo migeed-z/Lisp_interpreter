@@ -17,7 +17,7 @@ class FuncDefinition(BSLDef):
         BSLDef.__init__(self, name, params)
         self.body = body
 
-    def apply(self, defs, sl):
+    def apply(self, defs, vals):
         """
         Applies a function application to this function defintion
         :param defs: Scope
@@ -27,7 +27,6 @@ class FuncDefinition(BSLDef):
         body = self.body
         params = copy.copy(self.params)
 
-        vals = sl.helper_eval(defs)
         defs = self.helper_extend(defs, params, vals)
 
         return body.eval(defs)
@@ -44,10 +43,11 @@ class FuncDefinition(BSLDef):
 
         if len(params) != len(vals):
             raise BSLError("params and vals must be equal")
-
-        while len(params) != 0:
-            name = params.pop()
-            val = vals.pop()
+        new_vals = copy.copy(vals)
+        new_params = copy.copy(params)
+        while len(new_params) != 0:
+            name = new_params.pop()
+            val = new_vals.pop()
             defs = defs.extend(name, val)
 
         return defs

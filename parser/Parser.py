@@ -1,28 +1,6 @@
 from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide, FuncDefinition, FuncApplication
 from functools import partial
 
-# A P-expression is one of:
-# - string, represents a symbol in BSL
-# - number
-# - [P-expression, ..., P-expression]
-#
-# STEP 2 a:
-# The PARSER consumes P-expressions and produces pre-BSL-expression, it's a BSL-expression but with errors
-#
-# A BSLexpr is one of:
-# Num(number)
-# Var(string)
-# Add([Listof BSLexpr])
-# Mul([BSLexpr])
-# Sub([BSLexpr])
-# Div([BSLexpr])
-# App(string,[BSLexpr])
-#
-# A FuncDef is:
-# Def(string,string,BSLexpr)
-
-
-
 def exp_parser(p):
     """
     To Parse Operation expressions
