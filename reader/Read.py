@@ -1,6 +1,5 @@
 #! /usr/bin/env python3
 from sys import stdin, stdout
-
 from Reader import Reader
 from parser import exp_parser, func_def_parser
 from interpreter import BSLError

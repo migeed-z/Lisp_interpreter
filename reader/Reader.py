@@ -2,39 +2,26 @@ from interpreter import BSLError
 
 class Reader:
     """
-
     INPUT:
-
     An external S-expression has the following textual representation:
 
     Ex1 is one of:
-
     - '(' followed by Exx
     - Token
 
     EXX is one of:
-
     - ')'
     - Ex1 followed by EXX
 
     Token:
-
     Any sequence of characters not including '(', ')' or white space chars up to EOF
-
-    EOF:
-
-    Empty string
-
+    EOF: Empty string
 
     OUTPUT
-
     An S-expression is one of:
-
     - String
     - Number
     - [S-expression]
-
-
     """
 
     def __init__(self, ip):

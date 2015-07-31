@@ -1,23 +1,3 @@
-from Num import Num
-from Add import Add
-from Multiply import Multiply
-from Subtract import Subtract
-from Divide import Divide
-from Variable import Variable
-from BSLlist import BSLlist
-from Constants import Constants
-from BSLError import BSLError
-from FuncDefinition import FuncDefinition
-from Scope import Scope
-from BSLError import BSLError
-from BSLExpr import BSLExpr
-from FuncApplication import FuncApplication
-from ConstructorDef import ConstructorDef
-from PredicateDef import PredicateDef
-from SelectorDef import SelectorDef
-from StructDefinition import StructDefinition
-from Value import *
-
-
-
-
+from Other import *
+from BSL_Def import *
+from BSL_Expr import *

@@ -1,38 +1,31 @@
 # Lisp_interpreter
 
-> (define (f x) x)
-> (define (g x) (+ x 1))
-> (f (g 10))
-11
-> (g (g 10))
-12
-
 STEP 0:
  Definition of BSL surface syntax
  BSL is one of:
    -- BSLDef 
    -- BSLExp
+    
+ BSLDef is one of:
+    -- FunctionDefinition
+    -- StructDefinition
+    -- ConstructorDef
+    -- SelectorDef
+    -- PredicateDef
 
- BSLDef is one of
-    -- FucntionDefinition
-    -- BSLStruct
+ StructDefinition is:
+    -- StructDefinition(struct-name, [params])
     
- FunctionDefinition is one of:
-    -- ConstructorDef
-    -- SelectorDef
-    -- PredicateDef
-    
- BSLStruct is:
-    -- BSLStruct(struct-name, [params])
- 
- Upon creating a BSLStrut, the following function definitions are initialized:
-    -- ConstructorDef
-    -- SelectorDef
-    -- PredicateDef
-    
-    **Here we will have the general apply() in the parent class and override it in the subclasses**
-      
-    
+     EX:
+     StructDefinition(struct-name, [x, y, z])
+     In the scope we now extend name with StructDefinition(struct-name, [x, y, z])
+
+
+     Upon creating a StructDefinition, the following function definitions are initialized: ** currently have to call function **
+        -- ConstructorDef
+        -- SelectorDef (one for each parameter)
+        -- PredicateDef
+              
  BSLExp is one of:
     -- Num
     -- Variable
@@ -47,7 +40,7 @@ STEP 0:
     -- Subtract
     -- Multiply
     -- Divide
-   
+
    
 STEP 1:
  The READER will consume the text a programmer types into the console and produce a P-expression.
@@ -111,7 +104,6 @@ STEP 3:
 
  a Value is one of:
  - Python numbers
- - Strings
  - Structure("struct-name", [("param", value)])
    
   Once we have a make-struct, we create a structure with param-value tuples
