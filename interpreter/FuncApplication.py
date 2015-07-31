@@ -15,15 +15,12 @@ class FuncApplication(BSLExpr):
 
     def eval(self, defs):
         vals = self.sl.helper_eval(defs)
+
         definition = defs.get(self.name)
+
         return definition.apply(defs, vals)
 
     def __eq__(self, other):
-        """
-
-        :param other:
-        :return:
-        """
         if not isinstance(other, FuncApplication):
             return False
 

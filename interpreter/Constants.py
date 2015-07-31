@@ -11,8 +11,6 @@ from If0 import If0
 from Scope import Scope
 from Value import Structure
 from StructDefinition import StructDefinition
-from ConstructorDef import ConstructorDef
-
 
 class Constants:
 
@@ -78,8 +76,6 @@ class Constants:
 
     func_app_100 = FuncApplication('d', BSLlist([Num(100)]))
 
-    posnsexpr_error2 = Add(BSLlist([Num(1), func_app_100]))
-
     defs1 = Scope(()).extend('x', 1).extend('y',4).extend('f', func_def_varx).extend('g', funcDef2).\
         extend('z', func_def_add_varx_vary)
 
@@ -87,13 +83,30 @@ class Constants:
     posn_def = StructDefinition('posn', ['x', 'y'])
     defs1 = posn_def.update_scope(defs1)
 
-    # const = ConstructorDef('posn', ['x', 'y'])
-    # defs1 = defs1.extend('make_posn', const)
     make_posn = FuncApplication('make_posn', BSLlist([Num(1), Num(2)]))
+    make_posn_comp = FuncApplication('make_posn', BSLlist([make_posn, Num(2)]))
+
+    is_posn = FuncApplication('is_posn', BSLlist([make_posn]))
+    is_not_posn = FuncApplication('is_posn', BSLlist([Num(3)]))
+
+    select_posn_x = FuncApplication('posn_x', BSLlist([make_posn]))
+    select_posn_y = FuncApplication('posn_y', BSLlist([make_posn]))
+
+    select_posn_x_comp = FuncApplication('posn_x', BSLlist([make_posn_comp]))
+    select_posn_y_comp = FuncApplication('posn_y', BSLlist([make_posn_comp]))
 
     value_posn = Structure('posn', [('x', 1), ('y', 2)])
+    value_posn_comp = Structure('posn', [('x', value_posn), ('y', 2)])
 
+    #functions using struct
+    make_posn_func = FuncApplication('make_posn', BSLlist([func_app_varx, Num(1)]))
+    func_app_varx_1 = FuncApplication('f', BSLlist([make_posn_func]))
 
+    value_posn_func = Structure('posn', [('x', 4), ('y', 1)])
+
+    posn_x_func_app_varx_1 = FuncApplication('posn_x', BSLlist([func_app_varx_1]))
+
+    select_posn_x_error = FuncApplication('posn_x', BSLlist([Num(3)]))
 
 
     ex1 = '(ex*'

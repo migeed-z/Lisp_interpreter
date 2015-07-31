@@ -26,7 +26,6 @@ class FuncDefinition(BSLDef):
         """
         body = self.body
         params = copy.copy(self.params)
-
         defs = self.helper_extend(defs, params, vals)
 
         return body.eval(defs)
@@ -56,7 +55,6 @@ class FuncDefinition(BSLDef):
 
         if not isinstance(other, FuncDefinition):
             return False
-
         else:
             return other.name == self.name and other.params == self.params and (other.body).__eq__(self.body)
 

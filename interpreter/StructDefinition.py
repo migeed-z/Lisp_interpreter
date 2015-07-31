@@ -12,15 +12,17 @@ class StructDefinition(BSLDef):
 
     def update_scope(self, defs):
         """
-        Extends the scope with 3 definitions. Predicate, Constructor and Selector.
+        Extends the scope with new definitions: Predicate, Constructor and Selectors.
         :param: Current Scope
         :return: New scope
         """
         constructor = ConstructorDef(self.name, self.params)
-        selector = SelectorDef(self.name, self.params)
         predicate = PredicateDef(self.name, self.params)
 
-        defs = defs.extend('make_%s' % self.name, constructor).extend('select_%s' % self.name, selector).\
-            extend('is_%s' % self.name, predicate)
+        defs = defs.extend('make_%s' % self.name, constructor).extend('is_%s' % self.name, predicate)
+
+        for param in self.params:
+            selector = SelectorDef(self.name, [param])
+            defs = defs.extend('%s_%s' % (self.name, param), selector)
 
         return defs
