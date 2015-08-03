@@ -12,7 +12,8 @@ class ConstructorDef(BSLDef):
 
     def apply(self, defs, vals):
         """
-        Extends the scope with the new set of definitions, given an instance of the struct
+        Returns a Structure consisting of the name of the constructor and an
+        association list associating structure parameters (fields) w/ values
         :param: make_instance: extend the new scope with the new definitions
         :return: New Scope with parameter defintions
         """
@@ -24,7 +25,7 @@ class ConstructorDef(BSLDef):
         returns a list of tupes of params and vals
         :param params: [String]
         :param vals: [Value]
-        :return: [Tuples]
+        :return: [(string, value)]
         :raises: BSLError if len(params) not equal len(vals)
         """
         if len(params) != len(vals):

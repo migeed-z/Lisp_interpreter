@@ -1,5 +1,10 @@
-from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide, FuncDefinition, FuncApplication
+from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide, FuncDefinition, FuncApplication, \
+    StructDefinition
 from functools import partial
+from ParserError import ParserError
+import copy
+
+
 
 def exp_parser(p):
     """
@@ -43,6 +48,43 @@ def exp_parser(p):
         else:
             return False
 
+def struct_def_parser(p):
+    """
+    Parses Struct Definitions
+    :param p: P-expression
+    :return: StructDefinition
+    """
+
+    if len(p) != 3:
+        return False
+
+    elif p[0] != 'define-struct':
+        return False
+
+    elif not isinstance(p[1], str):
+        raise ParserError('Struct name must be a string')
+
+    elif is_reserved(p[1]):
+        raise ParserError('Struct name is a reserved word')
+
+    elif not isinstance(p[2], list):
+        raise ParserError('Expects a list of parameters')
+
+    # elif not parse_params(p[2]):
+    #     raise ParserError('Expects a list of parameters')
+
+    else:
+        check_on_fields = is_list_of_proper_names(p[2])
+        if check_on_fields == False:
+            raise ParserError('Not a list of field names')
+
+        return StructDefinition(p[1] , p[2])
+
+
+
+
+    #assert struct_def_parser(['define-struct', 'posn', ['x', 'y']]) == StructDefinition('posn', ['x', 'y'])
+
 def func_def_parser(p):
     """
     Parses Function Definitions
@@ -60,6 +102,9 @@ def func_def_parser(p):
     #
     # elif len(p[1]) < 2:
     #     return False
+
+    # (define f 42)
+    # (define (f x y) 42)
 
     name = parse_name(p[1])
     params = parse_params(p[1])
@@ -101,22 +146,57 @@ def parse_name(expr):
 
 def parse_params(expr):
     """
+    Given the ENTIRE function header (define (f x y z) x) it is given (f x y z)
+    EFFECT: chops off first item
+    Givem the ENTIRE struct def (define-struct s (x y z)) it is given (s x y z)
     Parses Parameters given as a String or a List
     :param expr: [string]
-    :return: [], False or Expr - Expr[0]
+    :return:
+     [] means we are looking at (define c ...)
+     False means we are looking at (define (f define-struct x y z) ...)
+     Expr - Expr[0] we are looking at (define (f x y z) ...)
     """
+
     if isinstance(expr, str):
         return []
     elif isinstance(expr, list):
         expr.pop(0)
-        if validate_reserved_words(expr) == False:
+        return is_list_of_proper_names(expr)
+
+def is_list_of_proper_names(expr):
+    """
+    Checks that expr is a list of strings and that no string is a reserved string
+    :param expr: [string]
+    :return: expr or False
+    False means that either a non-string is in expr or one string is reserved word
+    expr  means that all elements are strings and not reserved
+    """
+    if not is_string_list(expr):
+        return False
+    elif not contains_reserved_words(expr):
+        return False
+    else:
+        return expr
+# example: [] is string_list?
+
+# (define (f x y z) ...)
+# (define (f) 42)
+# (define-struct s (x y z))
+# (define-struct s ())
+def is_string_list(a_list):
+    """
+    Checks that every element is a string
+    :param a_list: []
+    :return: True if list of strings and False otherwise
+    """
+    for element in a_list:
+        if not isinstance(element, str):
             return False
 
-        else:
-            return expr
+    return True
 
 
-def validate_reserved_words(expr):
+def contains_reserved_words(expr):
     """
     Checkes if any of the reseved words are in the parameter list
     :param expr: [string]
@@ -127,6 +207,9 @@ def validate_reserved_words(expr):
             return False
     return True
 
+
+#["+", a, b, c] -> True
+#[] -> False
 
 def is_reserved(word):
     """

@@ -79,6 +79,17 @@ class Constants:
     posn_def = StructDefinition('posn', ['x', 'y'])
     defs1 = posn_def.update_scope(defs1)
 
+    zeina_def = StructDefinition('zeina', ['x', 'y'])
+    defs1 = zeina_def.update_scope(defs1)
+
+    make_zeina = FuncApplication('make_posn', BSLlist([Num(10), Num(20)]))
+
+    select_zeina_x = FuncApplication('zeina_x', BSLlist([make_zeina]))
+
+
+    # (define-struct zeina (x y))
+    # (zeina-x (make-posn 10 20))
+
     make_posn = FuncApplication('make_posn', BSLlist([Num(1), Num(2)]))
     make_posn_comp = FuncApplication('make_posn', BSLlist([make_posn, Num(2)]))
 

@@ -82,3 +82,8 @@ def test_struct():
 def test_struct_error():
     with pytest.raises(BSLError):
         c.select_posn_x_error.eval(c.defs1)
+
+    with pytest.raises(BSLError):
+        c.select_zeina_x.eval(c.defs1)
+
+

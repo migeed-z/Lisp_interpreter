@@ -1,3 +1,8 @@
+#Raise error in structs
+#Reserved words in parser
+#fix error in parser
+#make reader work for define-struct
+
 
 #TODO:
 # ** extend interpreter first **

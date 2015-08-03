@@ -1,6 +1,10 @@
-from interpreter import Num, Variable, BSLlist, Add, Multiply, Subtract, Divide, FuncDefinition, FuncApplication
+from interpreter import Num, Variable, BSLlist, Add, Multiply, Subtract, Divide, FuncDefinition, FuncApplication, \
+    StructDefinition
 
-from parser import exp_parser, func_def_parser, parse_name, parse_params
+from Parser import exp_parser, func_def_parser, parse_name, parse_params, struct_def_parser
+from Parser import ParserError
+
+import pytest
 
 class Test_parser:
     """
@@ -50,11 +54,26 @@ class Test_parser:
                                                                             Num(2)])), Divide(BSLlist([Num(1)]))])))
 
     def test_function_definition(self):
-         assert func_def_parser(['define', ['add', 'x', 'y', 'z'], ['+', 1, 3]]).__eq__(FuncDefinition('add', ['x', 'y', 'z'],
-                                                                                    Add(BSLlist([Num(1), Num(3)]))))
-         assert func_def_parser(['define', 'add', ['+', 1, 3]]).__eq__(FuncDefinition('add', [], Add(BSLlist([Num(1), Num(3)]))))
+        assert func_def_parser(['define', ['add', 'x', 'y', 'z'], ['+', 1, 3]])\
+            .__eq__(FuncDefinition('add', ['x', 'y', 'z'],Add(BSLlist([Num(1), Num(3)]))))
+
+        assert func_def_parser(['define', 'add', ['+', 1, 3]])\
+            .__eq__(FuncDefinition('add', [], Add(BSLlist([Num(1), Num(3)]))))
+
+        assert struct_def_parser(['define-struct', 'posn', ['x', 'y']]) == (StructDefinition('posn', ['x', 'y']))
+
+    def test_not_struct_def(self):
+        with pytest.raises(ParserError):
+            struct_def_parser(['define-struct', 'posn', [1, 2, 3]])
+
+        with pytest.raises(ParserError):
+            struct_def_parser(['define-struct', 1, []])
+
 
     def test_not_function_definition(self):
+        #
+        # with pytest.raises(ParserError):
+        #     func_def_parser(['define', ['f', 'x', 1, 'y'], 42])
 
         assert not parse_name('+')
         assert not parse_name(['+', 'x', 'y', 'z'])

@@ -5,24 +5,34 @@ from SelectorDef import SelectorDef
 
 class StructDefinition(BSLDef):
     """
-    To represent the definition of a Struct
+    To represent (define-struct name (param ...))
     """
     def __init__(self, name, params):
         BSLDef.__init__(self, name, params)
 
     def update_scope(self, defs):
         """
-        Extends the scope with new definitions: Predicate, Constructor and Selectors.
+        Extends the scope with new definitions for make-name, name_param, ..., is_name
+        (name-param (make-name ... p ...)) = p
         :param: Current Scope
-        :return: New scope
+        :return: New scope with above names
         """
         constructor = ConstructorDef(self.name, self.params)
         predicate = PredicateDef(self.name, self.params)
 
-        defs = defs.extend('make_%s' % self.name, constructor).extend('is_%s' % self.name, predicate)
-
+        defs_plus_constructor = defs.extend('make_%s' % self.name, constructor)
+        defs_plus_predicate = defs_plus_constructor.extend('is_%s' % self.name, predicate)
+        defs_plus_selectors = defs_plus_predicate
         for param in self.params:
             selector = SelectorDef(self.name, [param])
-            defs = defs.extend('%s_%s' % (self.name, param), selector)
+            defs_plus_selectors = defs_plus_selectors.extend('%s_%s' % (self.name, param), selector)
 
-        return defs
+        return defs_plus_selectors
+
+    def __eq__(self, other):
+        if not isinstance(other, StructDefinition):
+            return False
+
+        else:
+            return self.name == other.name and self.params.__eq__(other.params)
+

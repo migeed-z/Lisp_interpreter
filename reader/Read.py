@@ -23,9 +23,9 @@ def read():
         if not p_expr:
             break
 
-        bsl_expr = exp_parser(p_expr)
+        is_p_expr_a_bsl_expr = exp_parser(p_expr)
 
-        if not bsl_expr:
+        if not is_p_expr_a_bsl_expr:
             bsl_def = func_def_parser(p_expr)
             if not bsl_def:
                 print('wrong!')
@@ -36,7 +36,7 @@ def read():
                     s = s.extend(bsl_def.name, bsl_def)
         else:
             try:
-                result = bsl_expr.eval(s)
+                result = is_p_expr_a_bsl_expr.eval(s)
                 print(result)
             except BSLError:
                 print('an eval exception happened')

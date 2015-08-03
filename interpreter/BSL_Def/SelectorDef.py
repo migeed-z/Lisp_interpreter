@@ -15,9 +15,16 @@ class SelectorDef(BSLDef):
         if not isinstance(vals[0], Structure):
             raise BSLError('Can only select from a Structure')
 
+        if vals[0].name != self.name:
+            raise BSLError('Expects a %s, given a %s' % (self.name, vals[0].name))
+
+        # (define-struct zeina (x y))
+        # (zeina-x (make-posn 10 20))
+
         tuples = vals[0].tuples
         param = self.params[0]
 
+        # assoc assq
         for tuple in tuples:
             if tuple[0] == param:
                 return tuple[1]
