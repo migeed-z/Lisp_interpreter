@@ -20,12 +20,12 @@ class StructDefinition(BSLDef):
         constructor = ConstructorDef(self.name, self.params)
         predicate = PredicateDef(self.name, self.params)
 
-        defs_plus_constructor = defs.extend('make_%s' % self.name, constructor)
-        defs_plus_predicate = defs_plus_constructor.extend('is_%s' % self.name, predicate)
+        defs_plus_constructor = defs.extend('make-%s' % self.name, constructor)
+        defs_plus_predicate = defs_plus_constructor.extend('is-%s' % self.name, predicate)
         defs_plus_selectors = defs_plus_predicate
         for param in self.params:
             selector = SelectorDef(self.name, [param])
-            defs_plus_selectors = defs_plus_selectors.extend('%s_%s' % (self.name, param), selector)
+            defs_plus_selectors = defs_plus_selectors.extend('%s-%s' % (self.name, param), selector)
 
         return defs_plus_selectors
 

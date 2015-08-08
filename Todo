@@ -1,4 +1,9 @@
 #Raise error in structs
+ (define-struct (s x y z))
+ (define-struct s x y z)
+ (define-struct s x (y z))
+
+
 #Reserved words in parser
 #fix error in parser
 #make reader work for define-struct

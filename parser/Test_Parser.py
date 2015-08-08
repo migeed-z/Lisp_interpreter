@@ -1,9 +1,8 @@
 from interpreter import Num, Variable, BSLlist, Add, Multiply, Subtract, Divide, FuncDefinition, FuncApplication, \
     StructDefinition
 
-from Parser import exp_parser, func_def_parser, parse_name, parse_params, struct_def_parser
+from Parser import exp_parser, func_def_parser, struct_def_parser
 from Parser import ParserError
-
 import pytest
 
 class Test_parser:
@@ -16,16 +15,32 @@ class Test_parser:
         assert exp_parser('xyz').__eq__(Variable('xyz'))
 
     def test_not_bsl_expr(self):
-        assert not exp_parser([])
+
+        with pytest.raises(ParserError):
+            exp_parser([])
+
+        #TODO: check!!!!!
         assert not exp_parser([1])
-        assert not exp_parser(([1, '+']))
+        assert not exp_parser([1, '+'])
+
         assert not exp_parser([1,'+',1])
-        assert not exp_parser(['+',1,[1,'+']])
-        assert not exp_parser(['-'])
-        assert not exp_parser(['/'])
-        assert not exp_parser('+')
-        assert not exp_parser('define')
-        assert not exp_parser(['+', '+', 1, 3])
+
+        with pytest.raises(ParserError):
+            exp_parser(['+',1,[1,'+']])
+
+        assert not exp_parser('define') #??????????????????
+
+        with pytest.raises(ParserError):
+            exp_parser(['+', '+', 1, 3])
+
+        assert not exp_parser('+') #???????????????
+
+        with pytest.raises(ParserError):
+            exp_parser(['-'])
+
+        with pytest.raises(ParserError):
+            exp_parser(['/'])
+
 
     def test_add_bsl_expr(self):
         assert exp_parser(['+']).__eq__(Add(BSLlist([])))
@@ -54,11 +69,14 @@ class Test_parser:
                                                                             Num(2)])), Divide(BSLlist([Num(1)]))])))
 
     def test_function_definition(self):
+
         assert func_def_parser(['define', ['add', 'x', 'y', 'z'], ['+', 1, 3]])\
-            .__eq__(FuncDefinition('add', ['x', 'y', 'z'],Add(BSLlist([Num(1), Num(3)]))))
+            .__eq__(FuncDefinition('add', ['x', 'y', 'z'], Add(BSLlist([Num(1), Num(3)]))))
 
         assert func_def_parser(['define', 'add', ['+', 1, 3]])\
             .__eq__(FuncDefinition('add', [], Add(BSLlist([Num(1), Num(3)]))))
+
+    def test_struct_definition(self):
 
         assert struct_def_parser(['define-struct', 'posn', ['x', 'y']]) == (StructDefinition('posn', ['x', 'y']))
 
@@ -70,29 +88,34 @@ class Test_parser:
             struct_def_parser(['define-struct', 1, []])
 
 
+
     def test_not_function_definition(self):
-        #
-        # with pytest.raises(ParserError):
-        #     func_def_parser(['define', ['f', 'x', 1, 'y'], 42])
 
-        assert not parse_name('+')
-        assert not parse_name(['+', 'x', 'y', 'z'])
-        assert not parse_name(['+'])
-        assert not parse_params(['Add', '+', 'y', 'z'])
+        with pytest.raises(ParserError):
+            func_def_parser(['define', ['f', 'x', 1, 'y'], 42])
 
-        assert not func_def_parser(['define'])
-        assert not func_def_parser(['define', 'add'])
+        with pytest.raises(ParserError):
+            func_def_parser(['define'])
+            func_def_parser(['define', 'add'])
+            func_def_parser(['define', ['+', 1, 3]])
+            func_def_parser(['define', ['Add', '+', 'y', 'z'], ['+', 1, 3]])
 
+        with pytest.raises(ParserError):
+            func_def_parser(['define', ['+', 'x', 'y', 'z'], ['+', 1, 3]])
+
+        with pytest.raises(ParserError):
+            func_def_parser(['define', ['Add', 'x', 'y', 'z'], ['+', '+', 3]])
+
+        #check!!!!!!!!!!!!!!!!!!
         assert not func_def_parser(['a', ['add', 'x', 'y', 'z'], ['+', '+', 3]])
-        assert not func_def_parser(['define', ['+', 1, 3]])
-        assert not func_def_parser(['define', ['+', 'x', 'y', 'z'], ['+', 1, 3]])
-        assert not func_def_parser(['define', ['Add', '+', 'y', 'z'], ['+', 1, 3]])
-        assert not func_def_parser(['define', ['Add', 'x', 'y', 'z'], ['+', '+', 3]])
+
 
     def test_function_application(self):
         assert exp_parser(['f', 1]).__eq__(FuncApplication('f', BSLlist([Num(1)])))
         assert exp_parser(['f', 1, 2]).__eq__(FuncApplication('f', BSLlist([Num(1), Num(2)])))
         assert exp_parser(['x',1]).__eq__(FuncApplication('x',BSLlist([Num(1)])))
+
+        #check!!!!!!!!!!!!!!!!!!!!!
         assert not exp_parser(['define',['x',1],1])
 
 

@@ -1,6 +1,5 @@
 from interpreter import Scope
 
-
 class Test_scope:
 
     def test_get(self):

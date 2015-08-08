@@ -1,7 +1,6 @@
-#! /usr/bin/env python3
 from sys import stdin, stdout
 from Reader import Reader
-from parser import exp_parser, func_def_parser
+from parser import exp_parser, func_def_parser, struct_def_parser
 from interpreter import BSLError
 from interpreter import Scope
 
@@ -28,12 +27,13 @@ def read():
         if not is_p_expr_a_bsl_expr:
             bsl_def = func_def_parser(p_expr)
             if not bsl_def:
-                print('wrong!')
+                pass
             else:
                 if isinstance(p_expr[1], str):
+                    #????????????
                     s = s.extend(bsl_def.name, bsl_def.body.eval(s))
                 else:
-                    s = s.extend(bsl_def.name, bsl_def)
+                    s = bsl_def.update_func(s)
         else:
             try:
                 result = is_p_expr_a_bsl_expr.eval(s)

@@ -18,6 +18,23 @@ class FuncDefinition(BSLDef):
         BSLDef.__init__(self, name, params)
         self.body = body
 
+    def update_func(self, defs):
+        """
+        Updates the current scope with this function definition
+        :param defs: Current scope
+        :return: New scope
+        """
+        name = self.name
+
+        if len(self.params) == 0:
+            new_body = self.body.eval(defs)
+            new_defs = defs.extend(self.name, new_body)
+
+        else:
+            new_defs = defs.extend(name, self)
+
+        return new_defs
+
     def apply(self, defs, vals):
         """
         Applies a function application to this function defintion

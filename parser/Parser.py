@@ -2,8 +2,6 @@ from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide,
     StructDefinition
 from functools import partial
 from ParserError import ParserError
-import copy
-
 
 
 def exp_parser(p):
@@ -14,39 +12,38 @@ def exp_parser(p):
     """
     if isinstance(p,(complex,int,float)):
         return Num(p)
+
     elif isinstance(p, str):
         if is_reserved(p):
-            return False
-
+            return False ##??????
         else:
             return Variable(p)
+    elif not p:
+        raise ParserError('Expected a function after the open parenthesis, but nothing is there')
+
+    if p[0] == '+':
+        return parse_operation(p, 0, Add)
+
+    #Multiply expression
+    elif p[0] == '*':
+        return parse_operation(p, 0, Multiply)
+
+    #Subtract expression
+    elif p[0] == '-':
+        return parse_operation(p, 1, Subtract)
+
+    #Divide expression
+    elif p[0] == '/':
+        return parse_operation(p, 1, Divide)
+
+    #function application
+    elif isinstance(p[0], str) and not is_reserved(p[0]):
+        name_of_function = p[0]
+        return parse_operation(p, 0, partial(FuncApplication, name_of_function))
+
     else:
-        if not p:
-            return False
-
-        #Add expression
-        elif p[0] == '+':
-            return parse_operation(p, 0, Add)
-
-        #Multiply expression
-        elif p[0] == '*':
-            return parse_operation(p, 0, Multiply)
-
-        #Subtract expression
-        elif p[0] == '-':
-            return parse_operation(p, 1, Subtract)
-
-        #Divide expression
-        elif p[0] == '/':
-            return parse_operation(p, 1, Divide)
-
-        #function application
-        elif isinstance(p[0], str) and not is_reserved(p[0]):
-            name_of_function = p[0]
-            return parse_operation(p, 0, partial(FuncApplication, name_of_function))
-
-        else:
-            return False
+        return False
+        # raise ParserError('Expected a function after the open parenthesis but recieved %s' %str(p[0]))
 
 def struct_def_parser(p):
     """
@@ -55,11 +52,12 @@ def struct_def_parser(p):
     :return: StructDefinition
     """
 
-    if len(p) != 3:
+
+    if p[0] != 'define-struct':
         return False
 
-    elif p[0] != 'define-struct':
-        return False
+    elif len(p) != 3:
+        raise ParserError('length of p-expression must have length >= 3')
 
     elif not isinstance(p[1], str):
         raise ParserError('Struct name must be a string')
@@ -70,20 +68,12 @@ def struct_def_parser(p):
     elif not isinstance(p[2], list):
         raise ParserError('Expects a list of parameters')
 
-    # elif not parse_params(p[2]):
-    #     raise ParserError('Expects a list of parameters')
-
     else:
         check_on_fields = is_list_of_proper_names(p[2])
         if check_on_fields == False:
             raise ParserError('Not a list of field names')
 
-        return StructDefinition(p[1] , p[2])
-
-
-
-
-    #assert struct_def_parser(['define-struct', 'posn', ['x', 'y']]) == StructDefinition('posn', ['x', 'y'])
+        return StructDefinition(p[1], p[2])
 
 def func_def_parser(p):
     """
@@ -91,30 +81,36 @@ def func_def_parser(p):
     :param p: P-expression
     :return: FuncDefinition
     """
-    if len(p) < 3:
+    if p[0] != 'define':
         return False
 
-    elif p[0] != 'define':
-        return False
+    elif len(p) < 3:
+        raise ParserError('p-expression must have length >= 3')
 
-    # elif not isinstance(p[1], list):
-    #     return False
-    #
-    # elif len(p[1]) < 2:
-    #     return False
+    name_or_params = p[1]
 
-    # (define f 42)
-    # (define (f x y) 42)
+    if isinstance(name_or_params, str):
+        name = parse_name_from_string(name_or_params)
+        if not name:
+            raise ParserError('Wrong function name')
+        else:
+            body = exp_parser(p[2])
+            return FuncDefinition(name, [], body)
 
-    name = parse_name(p[1])
-    params = parse_params(p[1])
-    body = exp_parser(p[2])
+    elif isinstance(name_or_params, list):
 
-    if (not name) or (params == False) or (body == False):
-        return False
+        list_of_names_and_params = p[1]
+        name = list_of_names_and_params[0]
+        params = list_of_names_and_params[1:]
 
-    else:
-        return FuncDefinition(name, params, body)
+        parsed_name = parse_name_from_string(name)
+        parsed_params = is_list_of_proper_names(params)
+        body = exp_parser(p[2])
+
+        if parsed_name == False or parsed_params == False:
+            raise ParserError('Wrong name or params')
+        else:
+            return FuncDefinition(parsed_name, parsed_params, body)
 
 
 def parse_name_from_string(expr):
@@ -127,41 +123,6 @@ def parse_name_from_string(expr):
         return False
     else:
         return expr
-
-
-def parse_name(expr):
-    """
-    Parses Function Definition name
-    :param expr: [Parameters, Function name] or 'Function name'
-    :return: expr or False
-    """
-
-    if isinstance(expr, str):
-        return parse_name_from_string(expr)
-
-    elif isinstance(expr, list):
-        name = expr[0]
-        return parse_name_from_string(name)
-
-
-def parse_params(expr):
-    """
-    Given the ENTIRE function header (define (f x y z) x) it is given (f x y z)
-    EFFECT: chops off first item
-    Givem the ENTIRE struct def (define-struct s (x y z)) it is given (s x y z)
-    Parses Parameters given as a String or a List
-    :param expr: [string]
-    :return:
-     [] means we are looking at (define c ...)
-     False means we are looking at (define (f define-struct x y z) ...)
-     Expr - Expr[0] we are looking at (define (f x y z) ...)
-    """
-
-    if isinstance(expr, str):
-        return []
-    elif isinstance(expr, list):
-        expr.pop(0)
-        return is_list_of_proper_names(expr)
 
 def is_list_of_proper_names(expr):
     """
@@ -183,6 +144,8 @@ def is_list_of_proper_names(expr):
 # (define (f) 42)
 # (define-struct s (x y z))
 # (define-struct s ())
+
+
 def is_string_list(a_list):
     """
     Checks that every element is a string
@@ -207,10 +170,6 @@ def contains_reserved_words(expr):
             return False
     return True
 
-
-#["+", a, b, c] -> True
-#[] -> False
-
 def is_reserved(word):
     """
     Determines if word is reserved
@@ -229,13 +188,14 @@ def parse_operation(p, n, C):
     p.pop(0)
 
     if len(p) < n:
-        return False
+        raise ParserError('expects at least %s argument, but found none' % str(n))
+
     else:
         result = []
         for element in p:
             element_as_bsl_exp = exp_parser(element)
             if not element_as_bsl_exp:
-                return False
+                raise ParserError('expects s-expressions in the list of arguments')
             result.append(element_as_bsl_exp)
 
     return C(BSLlist(result))
