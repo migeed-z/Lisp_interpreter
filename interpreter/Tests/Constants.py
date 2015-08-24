@@ -1,12 +1,22 @@
-from interpreter import Divide, Subtract, Add, Multiply, Num
-from interpreter import Variable
-from interpreter import FuncDefinition
-from interpreter import FuncApplication
-from interpreter import BSLlist
-from interpreter import If0
-from interpreter import Scope
-from interpreter import Structure
-from interpreter import StructDefinition
+import sys
+
+sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/BSL_Def')
+sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/BSL_Expr')
+sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/Other')
+
+from Num import Num
+from Variable import Variable
+from FuncDefinition import FuncDefinition
+from FuncApplication import FuncApplication
+from BSLlist import BSLlist
+from If0 import If0
+from Scope import Scope
+from Value import Structure
+from StructDefinition import StructDefinition
+from And import And
+from Boolean import Boolean
+
+
 
 class Constants:
 
@@ -17,65 +27,68 @@ class Constants:
 
     emptyList = BSLlist([])
     list123 = BSLlist([Num(1), Num(2), Num(3)])
-    listadd123 = BSLlist([Add(list123), Num(-3)])
-    listaddsubtract123 = BSLlist([Subtract(list123), Add(list123)])
-    listmultiply123 = BSLlist([Multiply(list123)])
+    listadd123 = BSLlist([FuncApplication('+', list123), Num(-3)])
+
+    listaddsubtract123 = BSLlist([FuncApplication('-',list123), FuncApplication('+', list123)])
+    listmultiply123 = BSLlist([FuncApplication('*', list123)])
     list84 = BSLlist([Num(8), Num(4)])
-    listdivide84 = BSLlist([Divide(list84)])
+    listdivide84 = BSLlist([FuncApplication('/', list84)])
     listx23 = BSLlist([varx, Num(2), Num(3)])
     listy3 = BSLlist([vary, Num(3)])
     list43 = BSLlist([Num(4), Num(3)])
     list403 = BSLlist([Num(4), Num(0), Num(3)])
 
-    expradd1 = Add(BSLlist([Num(1)]))
-    expradd123 = Add(list123)
-    expradd43 = Add(list43)
+    expradd1 = FuncApplication('+', BSLlist([Num(1)]))
+    expradd123 = FuncApplication('+', list123)
+    expradd43 = FuncApplication('+', list43)
 
-    exprsub1 = Subtract(BSLlist([Num(1)]))
-    exprsub123 = Subtract(list123)
-    exprsub_add123_add123 = Subtract(BSLlist([expradd123, expradd43]))
+    exprsub1 = FuncApplication('-', BSLlist([Num(1)]))
+    exprsub123 = FuncApplication('-', list123)
+    exprsub_add123_add123 = FuncApplication('-', BSLlist([expradd123, expradd43]))
 
-    exprdiv1 = Divide(BSLlist([Num(1)]))
-    exprdiv84 = Divide(list84)
-    exprdiv403 = Divide(list403)
+    exprdiv1 = FuncApplication('/', BSLlist([Num(1)]))
+    exprdiv84 = FuncApplication('/', list84)
+    exprdiv403 = FuncApplication('/', list403)
 
-    exprmul1 = Multiply(BSLlist([Num(1)]))
-    exprmul84 = Multiply(list84)
+    exprmul1 = FuncApplication('*', BSLlist([Num(1)]))
+    exprmul84 = FuncApplication('*', list84)
 
-    expradd_expradd123_exprdiv84 = Add(BSLlist([expradd123, exprdiv84]))
+    expradd_expradd123_exprdiv84 = FuncApplication('+', BSLlist([expradd123, exprdiv84]))
 
-    expraddx23 = Add(listx23)
-    expraddy3 = Add(listy3)
-    expsub_expraddx23_expradd3 = Subtract(BSLlist([expraddx23, expraddy3]))
+    expraddx23 = FuncApplication('+', listx23)
+    expraddy3 = FuncApplication('+', listy3)
+    expsub_expraddx23_expradd3 = FuncApplication('-', BSLlist([expraddx23, expraddy3]))
 
     #functions
     func_def_varx = FuncDefinition("f", ["x"], Variable("x"))
     func_app_varx = FuncApplication('f', BSLlist([Num(4)]))
 
     list_func_app_varx = BSLlist([func_app_varx, Num(2)])
-    expradd_func_app_varx = Add(list_func_app_varx)
+    expradd_func_app_varx = FuncApplication('+', list_func_app_varx)
 
-    # funcDef2 = FuncDefinition('g',[], expradd_func_app_varx)
-    # func_app_emptylist = FuncApplication('g', BSLlist([]))
+    funcDef2 = FuncDefinition('g',[], expradd_func_app_varx)
+    func_app_emptylist = FuncApplication('g', BSLlist([])) ###############
 
-    expradd_varx_vary = Add(BSLlist([varx, vary]))
+    expradd_varx_vary = FuncApplication('+', BSLlist([varx, vary]))
 
     func_def_add_varx_vary = FuncDefinition('z', ['x', 'y'], expradd_varx_vary)
     func_app_varx_vary = FuncApplication('z', BSLlist([Num(7), Num(7)]))
     func_app_error_777 = FuncApplication('z', BSLlist([Num(7), Num(7), Num(7)]))
 
     if_012 = If0(Num(0), Num(1), Num(2))
-    # if_varx_varx_emptylist = If0(func_app_varx, func_app_varx, func_app_emptylist)
-    # if_emptylist_42_varx = If0(func_app_emptylist, Num(42), func_app_varx)
+    if_varx_varx_emptylist = If0(func_app_varx, func_app_varx, func_app_emptylist)
+    if_emptylist_42_varx = If0(func_app_emptylist, Num(42), func_app_varx)
 
-    # funcApp4 = FuncApplication('z', BSLlist([if_emptylist_42_varx, Num(2)]))
+    funcApp4 = FuncApplication('z', BSLlist([if_emptylist_42_varx, Num(2)]))
 
     func_app_100 = FuncApplication('d', BSLlist([Num(100)]))
 
 
-    defs1 = Scope(()).extend('x', 1).extend('y',4)
+
+    defs1 = Scope(()).add_definitions()
+    defs1 = defs1.extend('x', 1).extend('y',4)
     defs1 = func_def_varx.update_func(defs1)
-    #defs1 = funcDef2.update_func(defs1)
+    defs1 = funcDef2.update_func(defs1)
     defs1 = func_def_add_varx_vary.update_func(defs1)
 
     #structs
@@ -126,6 +139,11 @@ class Constants:
     exx1 = ')'
     exx2 = ex_abc + exx1
 
+    #And
+
+    and1 = And(BSLlist([Boolean(True), Boolean(False)]))
+    and2 = And(BSLlist([Boolean(False), FuncApplication('/', BSLlist([Num(1), Num(0)]))]))
+    and3 = And(BSLlist([Boolean(True), FuncApplication('/', BSLlist([Num(1), Num(1)]))]))
 
 
 

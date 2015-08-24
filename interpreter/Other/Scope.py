@@ -1,4 +1,15 @@
+import copy
+import sys
+sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/BSL_Expr')
+
 from BSLError import BSLError
+from AddDef import AddDef
+from SubtractDef import SubtractDef
+from MultiplyDef import MultiplyDef
+from DivideDef import DivideDef
+from ExponentDef import ExponentDef
+
+
 
 
 class Scope:
@@ -37,5 +48,16 @@ class Scope:
             else:
                 return old_self.get(key)
 
+    def add_definitions(self):
+        add = self.extend('+', AddDef())
+        sub = add.extend('-', SubtractDef())
+        mul = sub.extend('*', MultiplyDef())
+        div = mul.extend('/', DivideDef())
+        exp = div.extend('^', ExponentDef())
+
+        return exp
+
+    # def __str__(self):
+    #     return '%s(%s)' %('Value', self.defs)
 
 

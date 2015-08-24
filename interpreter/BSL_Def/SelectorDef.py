@@ -1,6 +1,7 @@
+import DirPaths
 from BSLDef import BSLDef
-from interpreter import BSLError
-from interpreter import Structure
+from BSLError import BSLError
+from Value import Structure
 
 class SelectorDef(BSLDef):
 

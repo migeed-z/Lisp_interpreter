@@ -1,4 +1,5 @@
-from interpreter import BSLError
+import DirPaths
+from BSLError import BSLError
 
 
 class BSLDef:

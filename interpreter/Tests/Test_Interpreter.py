@@ -1,8 +1,20 @@
 import pytest
+import sys
 
-from interpreter import Num, BSLlist, Variable
+sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/BSL_Expr')
+sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/Other')
+
+from BSLlist import BSLlist
+from Variable import Variable
+from BSLError import BSLError
+from Num import Num
+
+
 from Constants import Constants as c
-from interpreter import BSLError
+
+# from interpreter import Num, BSLlist, Variable
+# from Constants import Constants as c
+# from interpreter import BSLError
 
 
 def test_eval_num():
@@ -40,13 +52,13 @@ def test_eval_var():
 def test_equals():
     assert not c.expradd1 == c.expradd123
     assert c.expradd1 == c.expradd1
-#    assert not c.func_def_varx == c.funcDef2
+    assert not c.func_def_varx == c.funcDef2
     assert c.func_def_varx == c.func_def_varx
     assert c.func_def_varx == c.func_def_varx
 
 def test_funcAppEval():
     assert c.func_app_varx.eval(c.defs1) == 4
-   # assert c.func_app_emptylist.eval(c.defs1) == 6
+    assert c.func_app_emptylist.eval(c.defs1) == 6
     assert c.func_app_varx_vary.eval(c.defs1) == 14
 
 def test_bslError():
@@ -59,13 +71,13 @@ def test_bslError():
     with pytest.raises(BSLError):
         c.exprdiv403.eval(c.defs1)
 
-# def test_if0():
-#     assert c.if_012.eval(c.defs1) == 1
-#     assert c.if_varx_varx_emptylist.eval(c.defs1) == c.func_app_emptylist.eval(c.defs1)
-#     assert c.funcApp4.eval(c.defs1) == 6
+def test_if0():
+    assert c.if_012.eval(c.defs1) == 1
+    assert c.if_varx_varx_emptylist.eval(c.defs1) == c.func_app_emptylist.eval(c.defs1)
+    assert c.funcApp4.eval(c.defs1) == 6
 
 def test_struct():
-    assert c.make_posn.eval(c.defs1) == (c.value_posn)
+    assert c.make_posn.eval(c.defs1) == c.value_posn
     assert c.make_posn_comp.eval(c.defs1) == (c.value_posn_comp)
 
     assert c.is_posn.eval(c.defs1)
@@ -87,3 +99,17 @@ def test_struct_error():
         c.select_zeina_x.eval(c.defs1)
 
 
+def test_and():
+    assert c.and1.eval(c.defs1) == False
+    assert c.and2.eval(c.defs1) == False
+    with pytest.raises(BSLError):
+        c.and3.eval(c.defs1)
+
+def test_str():
+    assert str(c.value_posn) == "Structure(posn, ('x', 'y'))"
+    assert str(c.varx) == 'Variable(x)'
+    assert str(Num(3)) == 'Num(3)'
+    assert str(c.posn_def) == "StructureDefinition(posn, ('y', 'x'))"
+
+
+    #assert str(c.defs1) == 'x'

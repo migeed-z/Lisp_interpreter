@@ -1,13 +1,22 @@
-from interpreter import Num, Add, Variable, BSLlist, Multiply, Subtract, Divide, FuncDefinition, FuncApplication, \
-    StructDefinition
-from functools import partial
+import sys
+sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/BSL_Expr')
+sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/BSL_Def')
+
+
+from Num import Num
+from Variable import Variable
+from BSLlist import BSLlist
+from FuncDefinition import FuncDefinition
+from FuncApplication import FuncApplication
+from StructDefinition import StructDefinition
 from ParserError import ParserError
 
 
-def exp_parser(p):
+def exp_parser(p, lang):
     """
     To Parse Operation expressions
-    :param p:
+    :param p: p-expression
+    :param lang: String representing Language used. EX: BSL
     :return:
     """
     if isinstance(p,(complex,int,float)):
@@ -15,43 +24,44 @@ def exp_parser(p):
 
     elif isinstance(p, str):
         if is_reserved(p):
-            return False ##??????
+            my_lang(lang)
         else:
             return Variable(p)
     elif not p:
         raise ParserError('Expected a function after the open parenthesis, but nothing is there')
 
+    # now we know it is a parenthesize P-expression
     if p[0] == '+':
-        return parse_operation(p, 0, Add)
+        return parse_operation(p, 0, '+', lang)
 
     #Multiply expression
     elif p[0] == '*':
-        return parse_operation(p, 0, Multiply)
+        return parse_operation(p, 0, '*', lang)
 
     #Subtract expression
     elif p[0] == '-':
-        return parse_operation(p, 1, Subtract)
+        return parse_operation(p, 1, '-', lang)
 
     #Divide expression
     elif p[0] == '/':
-        return parse_operation(p, 1, Divide)
+        return parse_operation(p, 1, '/', lang)
 
     #function application
     elif isinstance(p[0], str) and not is_reserved(p[0]):
         name_of_function = p[0]
-        return parse_operation(p, 0, partial(FuncApplication, name_of_function))
+        return parse_operation(p, 0, name_of_function, lang)
 
     else:
         return False
         # raise ParserError('Expected a function after the open parenthesis but recieved %s' %str(p[0]))
 
-def struct_def_parser(p):
+def struct_def_parser(p, lang):
     """
     Parses Struct Definitions
     :param p: P-expression
+    :param lang: String representing Language used. EX: BSL
     :return: StructDefinition
     """
-
 
     if p[0] != 'define-struct':
         return False
@@ -75,10 +85,11 @@ def struct_def_parser(p):
 
         return StructDefinition(p[1], p[2])
 
-def func_def_parser(p):
+def func_def_parser(p, lang):
     """
     Parses Function Definitions
     :param p: P-expression
+    :param lang: String representing Language used. EX: BSL
     :return: FuncDefinition
     """
     if p[0] != 'define':
@@ -94,7 +105,7 @@ def func_def_parser(p):
         if not name:
             raise ParserError('Wrong function name')
         else:
-            body = exp_parser(p[2])
+            body = exp_parser(p[2], lang)
             return FuncDefinition(name, [], body)
 
     elif isinstance(name_or_params, list):
@@ -105,7 +116,7 @@ def func_def_parser(p):
 
         parsed_name = parse_name_from_string(name)
         parsed_params = is_list_of_proper_names(params)
-        body = exp_parser(p[2])
+        body = exp_parser(p[2], lang)
 
         if parsed_name == False or parsed_params == False:
             raise ParserError('Wrong name or params')
@@ -176,13 +187,13 @@ def is_reserved(word):
     :param word: String representing the variable
     :return: True if word is reserved and False otherwise
     """
-    return word == 'define' or word == '+' or word == '-' or word == '/' or word == '*'
+    return word == 'define' or word == '+' or word == '-' or word == '/' or word == '*' or word == 'define-struct'
 
-def parse_operation(p, n, C):
+def parse_operation(p, n, name, lang):
     """
     Parses Operation that needs at least n arguments
     :param p: p-expresson
-    :param C: Class of operation
+    :param name: name of operation
     :return: Operation
     """
     p.pop(0)
@@ -193,10 +204,14 @@ def parse_operation(p, n, C):
     else:
         result = []
         for element in p:
-            element_as_bsl_exp = exp_parser(element)
+            element_as_bsl_exp = exp_parser(element, lang)
             if not element_as_bsl_exp:
                 raise ParserError('expects s-expressions in the list of arguments')
             result.append(element_as_bsl_exp)
 
-    return C(BSLlist(result))
+    return FuncApplication(name, BSLlist(result))
 
+def my_lang(lang):
+    if lang == 'BSL':
+        raise ParserError('This word is reserved')
+    return False

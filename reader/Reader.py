@@ -1,4 +1,4 @@
-from interpreter import BSLError
+from ReaderError import ReaderError
 
 class Reader:
     """
@@ -38,9 +38,9 @@ class Reader:
         """
         next = self.read_first_proper_char()
         if not next:
-            raise BSLError('Incomplete s-expression')
+            raise ReaderError('Incomplete s-expression')
         elif next == ')':
-            raise BSLError('Unexpected %s' % (')'))
+            raise ReaderError('Unexpected %s' % (')'))
 
         else:
             return self.read_ex1(next)[0]
@@ -58,7 +58,7 @@ class Reader:
             next = self.read_first_proper_char()
 
         if not next:
-            raise BSLError('Incomplete s-expression')
+            raise ReaderError('Incomplete s-expression')
 
         elif next == '(':
             return self.read_exx()
@@ -85,7 +85,7 @@ class Reader:
         """
 
         if not next:
-            raise BSLError('Incomplete List')
+            raise ReaderError('Incomplete List')
         elif next == ')':
             return [[], self.read_first_proper_char()]
         else:
@@ -155,13 +155,6 @@ class Reader:
         """
         return self.ip.pop(0)
 
-    def peak(self):
-        """
-        Gets the next character
-        :return: String
-        """
-        return self.ip[0]
-
     def is_not_eof(self):
         """
         Is ip not eof?
@@ -187,7 +180,6 @@ class Reader:
         for c in line:
             chars.append(c)
         return chars
-
 
 
 

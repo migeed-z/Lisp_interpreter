@@ -1,32 +1,17 @@
-#Raise error in structs
- (define-struct (s x y z))
- (define-struct s x y z)
- (define-struct s x (y z))
 
+#TODO for reader
+-- Test for Read -- next time!!!
 
-#Reserved words in parser
-#fix error in parser
-#make reader work for define-struct
+#TODO for parser
+- find a datatype for strings
+
+#TODO for interpreter
+- add lists: http://www.ccs.neu.edu/home/matthias/HtDP2e/part_two.html#%28part._sec~3alists-cons%29
 
 
 #TODO:
-# ** extend interpreter first **
-# - (4) put all parsing in table
-# - (5) Refactor name from helper equals to equals
-# - (3) inspect all parameter specifications to see if they are readable
-# - (0) Redo error handling so that parsing catches errors that are context free
-# - (no) and checker catches errors that require context (LOOK AT numeric? from HtDP/2e to get an idea)
-# - (1) add most things mentioned in README that are not done yet (skip define-struct)
-# - (2) write in YOUR BSL an evaluator for arithmetic (+,*,-,/,n)
-# - (6) extend (1) so you can interpret function definitions and function
- http://www.ccs.neu.edu/home/matthias/HtDP2e/part_four.html#%28part._ch~3aevaluator%29
- BUT don't use cons or define-struct to represent expressions
- USE posn instead
-
-# write (2) and (6) in drracket BSL, then run it on our own BSL via file
 
 $ cat my_interpreter_in_bsl_for_bsl > ./Read.py
-
 # in my_interpre ..
 # ;; RepresentationOfBsLExpression -> Number
 # (define (evaluator e)
@@ -37,17 +22,13 @@ $ cat my_interpreter_in_bsl_for_bsl > ./Read.py
 # what do you use in your BSL interpreter, the one you write in YOUR bsl
 
 
-# put all sexpr in constants
-#rename variables
-#do divide, mult, sub for parser - done
-#divide must have at least one element -- done
-# check in parser for bad variables -- done
-#parser for function definitions and (function applications???)
-#must check if params are unique
-#parse function applications too
 
 
 
+Exercise 332. Formulate a data definition for the class of values to which a representation of a BSL expression can evaluate. image
 
+Exercise 333. Design eval-expression. The function consumes a representation of a BSL expression (according to exercise 331) and computes its value. image
 
+Exercise 334. Develop a data representation for boolean BSL expressions constructed from #true, #false, and, or, and not. Then design eval-bool-expression. The function consumes a representative of boolean BSL expression and computes its value. What is the value of a Boolean expression? image
 
+Exercise 335. S-expressions offer a convenient way to express BSL:

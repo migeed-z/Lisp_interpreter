@@ -1,5 +1,8 @@
 import copy
-from interpreter import BSLError
+import sys
+import DirPaths
+
+from BSLError import BSLError
 from BSLDef import BSLDef
 
 
@@ -26,12 +29,12 @@ class FuncDefinition(BSLDef):
         """
         name = self.name
 
-        if len(self.params) == 0:
-            new_body = self.body.eval(defs)
-            new_defs = defs.extend(self.name, new_body)
+        # if len(self.params) == 0:
+        #     new_body = self.body.eval(defs)
+        #     new_defs = defs.extend(self.name, new_body)
 
-        else:
-            new_defs = defs.extend(name, self)
+        #else:
+        new_defs = defs.extend(name, self)
 
         return new_defs
 

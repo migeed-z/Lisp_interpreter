@@ -7,7 +7,6 @@ class Structure:
         self.name = name
         self.tuples = tuples
 
-
     def __eq__(self, other):
 
         if not isinstance(other, Structure):
@@ -23,5 +22,8 @@ class Structure:
 
         return True
 
-
-
+    def __str__(self):
+        vals = ()
+        for v in self.tuples:
+            vals = vals + (v[0],)
+        return '%s(%s, %s)' % ('Structure', self.name, str(vals))

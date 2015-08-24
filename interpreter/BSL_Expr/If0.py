@@ -1,5 +1,7 @@
+import DirPaths
+
 from BSLExpr import BSLExpr
-from interpreter import BSLError
+from BSLError import BSLError
 
 class If0(BSLExpr):
     """

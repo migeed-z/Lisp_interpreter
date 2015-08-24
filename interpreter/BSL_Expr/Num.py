@@ -1,5 +1,7 @@
+import DirPaths
+
 from BSLExpr import BSLExpr
-from interpreter import BSLError
+from BSLError import BSLError
 
 class Num(BSLExpr):
     """
@@ -15,12 +17,6 @@ class Num(BSLExpr):
     def eval(self, defs):
         return self.num
 
-    def equals(self, other):
-        if not isinstance(other, Num):
-            return False
-        else:
-            return self.num == other.num
-
     def validate(self, num):
         if not isinstance(num, (complex, int, float)):
             raise BSLError('field must be a number')
@@ -32,3 +28,6 @@ class Num(BSLExpr):
             return False
         else:
             return other.num == self.num
+
+    def __str__(self):
+        return '%s(%s)' % ('Num', str(self.num))

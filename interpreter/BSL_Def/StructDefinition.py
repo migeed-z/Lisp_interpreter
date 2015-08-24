@@ -8,6 +8,10 @@ class StructDefinition(BSLDef):
     To represent (define-struct name (param ...))
     """
     def __init__(self, name, params):
+        """
+        :param name: String
+        :param params: [String]
+        """
         BSLDef.__init__(self, name, params)
 
     def update_scope(self, defs):
@@ -36,3 +40,10 @@ class StructDefinition(BSLDef):
         else:
             return self.name == other.name and self.params.__eq__(other.params)
 
+
+    def __str__(self):
+        params = ()
+        for param in self.params:
+            params = (param,) + params
+
+        return '%s(%s, %s)' %('StructureDefinition', self.name, params)

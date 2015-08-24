@@ -1,6 +1,8 @@
+import DirPaths
+
 from BSLDef import BSLDef
-from interpreter import Structure
-from interpreter import BSLError
+from Value import Structure
+from BSLError import BSLError
 
 class PredicateDef(BSLDef):
     """

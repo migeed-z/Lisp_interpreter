@@ -1,0 +1,22 @@
+from BSLExpr import BSLExpr
+
+class Boolean(BSLExpr):
+    """
+    To represent BSL Booleans
+    """
+
+    def __init__(self, boolean):
+        """
+        :param boolean: True or False
+        """
+        self.boolean = boolean
+
+    def eval(self, defs):
+        return self.boolean
+
+    def __eq__(self, other):
+        if not isinstance(other, Boolean):
+            return False
+
+        else:
+            return self.boolean == other.boolean

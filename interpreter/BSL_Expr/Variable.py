@@ -1,5 +1,7 @@
+import DirPaths
+
 from BSLExpr import BSLExpr
-from interpreter import BSLError
+from BSLError import BSLError
 
 
 class Variable(BSLExpr):
@@ -31,3 +33,6 @@ class Variable(BSLExpr):
             return False
         else:
             return other.name == self.name
+
+    def __str__(self):
+        return '%s(%s)' % ('Variable', self.name)
