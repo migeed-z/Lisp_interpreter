@@ -105,6 +105,8 @@ STEP 3:
  a Value is one of:
  - Python numbers
  - Structure("struct-name", [("param", value)])
+ - True
+ - False
    
   Once we have a make-struct, we create a structure with param-value tuples
 
