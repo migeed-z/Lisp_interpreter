@@ -1,21 +1,16 @@
 import DirPaths
 from BSLError import BSLError
+from PrimDef import PrimDef
 
-class DivideDef:
+class DivideDef(PrimDef):
     """
     To represent Primitive Operations
     """
 
-    def __init__(self):
-        pass
-
     def apply(self, name, args):
-        """
-        Divides all elements in args
-        :param name: 
-        :param vals: 
-        :return:
-        """
+
+        self.validate(args, (int, complex, float))
+
         if 1 == len(args):
             return 1 / args[0]
         else:

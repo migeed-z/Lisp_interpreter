@@ -1,3 +1,28 @@
+Done:
+
+- override str method for printing
+- override len method for sl lists
+
+-- reader
+Run tests on venv
+change reader to use raw input function to read lines
+add run file
+get the return value of eval from read seperately
+reader test (bug here)
+
+parser for: < > = and
+
+parser for if condition
+
+add equals and add parser (function application)
+add if condition
+ *modification to parser code to recognise sexpr* verify!
+
+*can we cancel if and else branch*
+
+finding datatype for string: issue here!!
+raw text??
+
 
 #TODO for reader
 -- Test for Read -- next time!!!

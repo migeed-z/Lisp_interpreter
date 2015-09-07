@@ -12,10 +12,6 @@ from Num import Num
 
 from Constants import Constants as c
 
-# from interpreter import Num, BSLlist, Variable
-# from Constants import Constants as c
-# from interpreter import BSLError
-
 
 def test_eval_num():
     assert Num(1).eval(c.defs1) == 1
@@ -30,6 +26,9 @@ def test_eval_empty():
 def test_eval_add():
     assert c.expradd1.eval(c.defs1) == 1
     assert c.expradd123.eval(c.defs1) == 6
+
+    # with pytest.raises(BSLError):
+    #     c.expradderror.eval(c.defs1)
 
 def test_eval_sub():
     assert c.exprsub1.eval(c.defs1) == -1
@@ -50,11 +49,13 @@ def test_eval_var():
     assert c.expraddx23.eval(c.defs1) == 6
 
 def test_equals():
-    assert not c.expradd1 == c.expradd123
+    assert c.expradd1 != c.expradd123
     assert c.expradd1 == c.expradd1
-    assert not c.func_def_varx == c.funcDef2
+    assert c.func_def_varx != c.funcDef2
     assert c.func_def_varx == c.func_def_varx
     assert c.func_def_varx == c.func_def_varx
+    assert c.and3 == c.and3
+    assert c.and3 != c.and2
 
 def test_funcAppEval():
     assert c.func_app_varx.eval(c.defs1) == 4
@@ -70,11 +71,6 @@ def test_bslError():
 
     with pytest.raises(BSLError):
         c.exprdiv403.eval(c.defs1)
-
-def test_if0():
-    assert c.if_012.eval(c.defs1) == 1
-    assert c.if_varx_varx_emptylist.eval(c.defs1) == c.func_app_emptylist.eval(c.defs1)
-    assert c.funcApp4.eval(c.defs1) == 6
 
 def test_struct():
     assert c.make_posn.eval(c.defs1) == c.value_posn
@@ -105,11 +101,26 @@ def test_and():
     with pytest.raises(BSLError):
         c.and3.eval(c.defs1)
 
+def test_equal():
+    assert not c.equals34.eval(c.defs1)
+    assert c.equals33.eval(c.defs1)
+    assert not c.equals_3_true.eval(c.defs1)
+
 def test_str():
     assert str(c.value_posn) == "Structure(posn, ('x', 'y'))"
     assert str(c.varx) == 'Variable(x)'
     assert str(Num(3)) == 'Num(3)'
     assert str(c.posn_def) == "StructureDefinition(posn, ('y', 'x'))"
 
+def test_if():
+    assert c.if_1.eval(c.defs1) == 4
+    assert c.if_2.eval(c.defs1) == 3
 
-    #assert str(c.defs1) == 'x'
+def test_bigger_and_less_than():
+    assert not c.biggerthan34.eval(c.defs1)
+    assert c.lessthan34.eval(c.defs1)
+
+    with pytest.raises(BSLError):
+        c.lessthan_error.eval(c.defs1)
+
+

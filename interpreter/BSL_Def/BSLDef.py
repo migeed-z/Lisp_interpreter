@@ -1,7 +1,6 @@
 import DirPaths
 from BSLError import BSLError
 
-
 class BSLDef:
     """
     To represent a BSL Defintion

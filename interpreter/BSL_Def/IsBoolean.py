@@ -1,6 +1,9 @@
+import DirPaths
+from BSLError import BSLError
+
 class IsBoolean:
     """
-
+    Determines if some class is a Boolean
     """
 
     def __init__(self):
@@ -12,7 +15,8 @@ class IsBoolean:
         :param vals: List of Values
         :return: True if vals[0] == True or False, and returns False otherwise
         """
-        #check len == 1
+        if len(vals) != 1:
+            raise BSLError('Length must = 1')
 
         if isinstance(vals[0], bool):
             return True

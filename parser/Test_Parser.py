@@ -1,11 +1,15 @@
 import DirPaths
 
 from Num import Num
+from And import And
+from If import If
+from Boolean import Boolean
 from Variable import Variable
 from BSLlist import BSLlist
 from FuncDefinition import FuncDefinition
 from FuncApplication import FuncApplication
 from StructDefinition import StructDefinition
+
 
 from Parser import exp_parser, func_def_parser, struct_def_parser, ParserError
 import pytest
@@ -20,18 +24,19 @@ class Test_parser:
         assert exp_parser(42, lang) == Num(42)
         assert exp_parser('xyz', lang).__eq__(Variable('xyz'))
 
+
     def test_not_bsl_expr(self):
+        assert not exp_parser([1], lang)
+        assert not exp_parser([1, '+'], lang)
+        assert not exp_parser([1,'+',1], lang)
+
+    def test_bsl_expr_error(self):
 
         with pytest.raises(ParserError):
             exp_parser([], lang)
 
-        assert not exp_parser([1], lang) #raise error
-        assert not exp_parser([1, '+'], lang)
-
         with pytest.raises(ParserError):
             exp_parser('+', lang)
-
-        assert not exp_parser([1,'+',1], lang) #raise an error!!!!
 
         with pytest.raises(ParserError):
             exp_parser(['+',1,[1,'+']], lang)
@@ -131,5 +136,24 @@ class Test_parser:
 
         assert not exp_parser(['define',['x',1],1], lang)
 
+    def test_and(self):
+        assert exp_parser(['and', 'True', 'True'], lang) == And(BSLlist([Boolean(True), Boolean(True)]))
 
+    def test_equals(self):
+        assert exp_parser(['=', 3, 3], lang) == FuncApplication('=', BSLlist([Num(3), Num(3)]))
 
+        with pytest.raises(ParserError):
+            exp_parser(['=', 3], lang)
+
+    def test_bigger_less_than(self):
+        assert exp_parser(['>', 3, 3], lang) == FuncApplication('>', BSLlist([Num(3), Num(3)]))
+
+        with pytest.raises(ParserError):
+            exp_parser(['>', 3], lang)
+
+    def test_exponent(self):
+        assert exp_parser(['^', 2, 3], lang) == FuncApplication('^', BSLlist([Num(2), Num(3)]))
+
+    def test_if(self):
+        assert exp_parser(['if', 1 , 'True', 'False'], lang) == \
+               If(BSLlist([Num(1), Boolean(True), Boolean(False)]))

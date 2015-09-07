@@ -9,13 +9,12 @@ from Variable import Variable
 from FuncDefinition import FuncDefinition
 from FuncApplication import FuncApplication
 from BSLlist import BSLlist
-from If0 import If0
+from If import If
 from Scope import Scope
 from Value import Structure
 from StructDefinition import StructDefinition
 from And import And
 from Boolean import Boolean
-
 
 
 class Constants:
@@ -28,6 +27,7 @@ class Constants:
     emptyList = BSLlist([])
     list123 = BSLlist([Num(1), Num(2), Num(3)])
     listadd123 = BSLlist([FuncApplication('+', list123), Num(-3)])
+    list12True = BSLlist([Num(1), Num(2), Boolean(True)])
 
     listaddsubtract123 = BSLlist([FuncApplication('-',list123), FuncApplication('+', list123)])
     listmultiply123 = BSLlist([FuncApplication('*', list123)])
@@ -41,6 +41,7 @@ class Constants:
     expradd1 = FuncApplication('+', BSLlist([Num(1)]))
     expradd123 = FuncApplication('+', list123)
     expradd43 = FuncApplication('+', list43)
+    expradderror = FuncApplication('+', list12True)
 
     exprsub1 = FuncApplication('-', BSLlist([Num(1)]))
     exprsub123 = FuncApplication('-', list123)
@@ -75,15 +76,7 @@ class Constants:
     func_app_varx_vary = FuncApplication('z', BSLlist([Num(7), Num(7)]))
     func_app_error_777 = FuncApplication('z', BSLlist([Num(7), Num(7), Num(7)]))
 
-    if_012 = If0(Num(0), Num(1), Num(2))
-    if_varx_varx_emptylist = If0(func_app_varx, func_app_varx, func_app_emptylist)
-    if_emptylist_42_varx = If0(func_app_emptylist, Num(42), func_app_varx)
-
-    funcApp4 = FuncApplication('z', BSLlist([if_emptylist_42_varx, Num(2)]))
-
     func_app_100 = FuncApplication('d', BSLlist([Num(100)]))
-
-
 
     defs1 = Scope(()).add_definitions()
     defs1 = defs1.extend('x', 1).extend('y',4)
@@ -101,10 +94,6 @@ class Constants:
     make_zeina = FuncApplication('make-posn', BSLlist([Num(10), Num(20)]))
 
     select_zeina_x = FuncApplication('zeina-x', BSLlist([make_zeina]))
-
-
-    # (define-struct zeina (x y))
-    # (zeina-x (make-posn 10 20))
 
     make_posn = FuncApplication('make-posn', BSLlist([Num(1), Num(2)]))
     make_posn_comp = FuncApplication('make-posn', BSLlist([make_posn, Num(2)]))
@@ -131,19 +120,27 @@ class Constants:
 
     select_posn_x_error = FuncApplication('posn-x', BSLlist([Num(3)]))
 
-
     ex1 = '(ex*'
     ex_abc = 'abc'
     ex_1 = '1'
-
     exx1 = ')'
     exx2 = ex_abc + exx1
 
     #And
-
     and1 = And(BSLlist([Boolean(True), Boolean(False)]))
     and2 = And(BSLlist([Boolean(False), FuncApplication('/', BSLlist([Num(1), Num(0)]))]))
     and3 = And(BSLlist([Boolean(True), FuncApplication('/', BSLlist([Num(1), Num(1)]))]))
 
+    #equals
+    equals34 = FuncApplication('=', BSLlist([Num(3), Num(4)]))
+    equals33 = FuncApplication('=', BSLlist([Num(3), Num(3)]))
+    equals_3_true = FuncApplication('=', BSLlist([Num(3), Boolean(False)]))
 
+    #bigger and less than
+    biggerthan34 = FuncApplication('>', BSLlist([Num(3), Num(4)]))
+    lessthan34 = FuncApplication('<', BSLlist([Num(3), Num(4)]))
+    lessthan_error = FuncApplication('>', BSLlist([Variable('xyz'), Num(4)]))
 
+    #if.
+    if_1 = If((equals34), Num(3), Num(4))
+    if_2 = If((equals33), Num(3), Num(4))

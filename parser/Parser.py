@@ -4,6 +4,9 @@ sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/BSL_Def')
 
 
 from Num import Num
+from Boolean import Boolean
+from And import And
+from If import If
 from Variable import Variable
 from BSLlist import BSLlist
 from FuncDefinition import FuncDefinition
@@ -23,7 +26,12 @@ def exp_parser(p, lang):
         return Num(p)
 
     elif isinstance(p, str):
-        if is_reserved(p):
+        if p == 'True':
+            return Boolean(True) #reader should see this????????
+        elif p == 'False':
+            return Boolean(False)
+
+        elif is_reserved(p):
             my_lang(lang)
         else:
             return Variable(p)
@@ -32,28 +40,47 @@ def exp_parser(p, lang):
 
     # now we know it is a parenthesize P-expression
     if p[0] == '+':
-        return parse_operation(p, 0, '+', lang)
+        return parse_operation(p, 0, lang)
 
     #Multiply expression
     elif p[0] == '*':
-        return parse_operation(p, 0, '*', lang)
+        return parse_operation(p, 0, lang)
 
     #Subtract expression
     elif p[0] == '-':
-        return parse_operation(p, 1, '-', lang)
+        return parse_operation(p, 1, lang)
 
     #Divide expression
     elif p[0] == '/':
-        return parse_operation(p, 1, '/', lang)
+        return parse_operation(p, 1, lang)
+
+    elif p[0] == '=':
+        return parse_operation(p, 2, lang)
+
+    elif p[0] == '>':
+        return parse_operation(p, 2, lang)
+
+    elif p[0] == '<':
+        return parse_operation(p, 2, lang)
+
+    elif p[0] == '^':
+        return parse_operation(p, 2, lang)
+
+    elif p[0] == 'and':
+        return parse_operation(p, 2, lang, And)
+
+    elif p[0] == 'if':
+        return parse_operation(p, 3, lang, If)
 
     #function application
     elif isinstance(p[0], str) and not is_reserved(p[0]):
-        name_of_function = p[0]
-        return parse_operation(p, 0, name_of_function, lang)
+        return parse_operation(p, 0, lang)
+
+
+    #(if test-expression then-expression else-expression)
 
     else:
         return False
-        # raise ParserError('Expected a function after the open parenthesis but recieved %s' %str(p[0]))
 
 def struct_def_parser(p, lang):
     """
@@ -149,13 +176,6 @@ def is_list_of_proper_names(expr):
         return False
     else:
         return expr
-# example: [] is string_list?
-
-# (define (f x y z) ...)
-# (define (f) 42)
-# (define-struct s (x y z))
-# (define-struct s ())
-
 
 def is_string_list(a_list):
     """
@@ -187,20 +207,22 @@ def is_reserved(word):
     :param word: String representing the variable
     :return: True if word is reserved and False otherwise
     """
-    return word == 'define' or word == '+' or word == '-' or word == '/' or word == '*' or word == 'define-struct'
+    return word == 'define' or word == '+' or word == '-' or word == '/' or word == '*' or word == 'define-struct' \
+           or word == 'and' or word == 'if'
 
-def parse_operation(p, n, name, lang):
+def parse_operation(p, n, lang, expr=None):
     """
     Parses Operation that needs at least n arguments
     :param p: p-expresson
-    :param name: name of operation
+    :param n: Number of args
+    :param lang: language used to parse
+    :param expr: if this is an expr, not a function application, set this value to the class
     :return: Operation
     """
-    p.pop(0)
+    name = p.pop(0)
 
     if len(p) < n:
         raise ParserError('expects at least %s argument, but found none' % str(n))
-
     else:
         result = []
         for element in p:
@@ -208,10 +230,17 @@ def parse_operation(p, n, name, lang):
             if not element_as_bsl_exp:
                 raise ParserError('expects s-expressions in the list of arguments')
             result.append(element_as_bsl_exp)
+    if expr:
+        return expr(BSLlist(result))
 
     return FuncApplication(name, BSLlist(result))
 
 def my_lang(lang):
+    """
+    Raises a parser error or returns false based on the selected language
+    :param lang:
+    :return:
+    """
     if lang == 'BSL':
         raise ParserError('This word is reserved')
     return False

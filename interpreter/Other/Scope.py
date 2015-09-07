@@ -1,6 +1,7 @@
 import copy
 import sys
 sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/BSL_Expr')
+sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/BSL_Def')
 
 from BSLError import BSLError
 from AddDef import AddDef
@@ -8,9 +9,9 @@ from SubtractDef import SubtractDef
 from MultiplyDef import MultiplyDef
 from DivideDef import DivideDef
 from ExponentDef import ExponentDef
-
-
-
+from EqualsDef import EqualsDef
+from LessThanDef import LessThanDef
+from BiggerThanDef import BiggerThanDef
 
 class Scope:
     """
@@ -54,10 +55,10 @@ class Scope:
         mul = sub.extend('*', MultiplyDef())
         div = mul.extend('/', DivideDef())
         exp = div.extend('^', ExponentDef())
+        equals = exp.extend('=', EqualsDef())
+        bigger_than = equals.extend('>', BiggerThanDef())
+        smaller_than = bigger_than.extend('<', LessThanDef())
+        return smaller_than
 
-        return exp
-
-    # def __str__(self):
-    #     return '%s(%s)' %('Value', self.defs)
 
 

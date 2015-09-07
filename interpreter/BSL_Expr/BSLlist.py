@@ -35,6 +35,8 @@ class BSLlist:
 
             return result
 
+    def __len__(self):
+        return len(self.sl)
 
 
 

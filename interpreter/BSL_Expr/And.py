@@ -27,7 +27,11 @@ class And(BSLExpr):
         return True
 
     def __eq__(self, other):
-        pass
+        if not isinstance(other, And):
+            return False
+        else:
+            return self.sl == other.sl
+
 
     def is_boolean(self, vals):
         """

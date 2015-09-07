@@ -1,21 +1,17 @@
 from math import pow
+import DirPaths
+from BSLError import BSLError
+from PrimDef import PrimDef
 
-class ExponentDef:
+class ExponentDef(PrimDef):
     """
-
+    To represent the exponent definition
     """
-
-    def __init__(self):
-        pass
-
     def apply(self, name, vals):
-        """
+        self.validate(vals, (int, complex, float))
 
-        :param vals:
-        :param name:
-        :return:
-        """
-        #check len == 2
+        if not len(vals) == 2:
+            raise BSLError('Must only have two arguments')
 
         base = vals[0]
         power = vals[1]

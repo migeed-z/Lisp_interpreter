@@ -28,12 +28,6 @@ class FuncDefinition(BSLDef):
         :return: New scope
         """
         name = self.name
-
-        # if len(self.params) == 0:
-        #     new_body = self.body.eval(defs)
-        #     new_defs = defs.extend(self.name, new_body)
-
-        #else:
         new_defs = defs.extend(name, self)
 
         return new_defs

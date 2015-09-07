@@ -19,9 +19,6 @@ class SelectorDef(BSLDef):
         if vals[0].name != self.name:
             raise BSLError('Expects a %s, given a %s' % (self.name, vals[0].name))
 
-        # (define-struct zeina (x y))
-        # (zeina-x (make-posn 10 20))
-
         tuples = vals[0].tuples
         param = self.params[0]
 

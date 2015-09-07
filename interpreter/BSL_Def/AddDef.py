@@ -1,19 +1,12 @@
-class AddDef:
+from PrimDef import PrimDef
+
+class AddDef(PrimDef):
     """
     To represent Primitive Operations
     """
-
-    def __init__(self):
-        pass
-
-
     def apply(self, name, args):
-        """
-        Adds all elements in args
-        :param name:
-        :param vals:
-        :return:
-        """
+
+        self.validate(args, (int, complex, float))
         total = 0
         for element in args:
             total = total + element

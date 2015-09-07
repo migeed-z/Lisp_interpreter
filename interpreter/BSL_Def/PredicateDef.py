@@ -1,5 +1,4 @@
 import DirPaths
-
 from BSLDef import BSLDef
 from Value import Structure
 from BSLError import BSLError
