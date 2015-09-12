@@ -2,6 +2,24 @@ PARSER
 
 -- P-expression -> AST, False, or raise an Exception
 
+BSL_Pexpr is one of:
+Numbers
+Function Application
+And expr
+if expr
+Boolean expr
+
+P-expressions accepted by parsers:
+Numbers
+Boolean expr: 'true'/'false'
+Struct definitions: ['define-struct', String, [String]]
+Selector: ['structname-structfield', ['make-structname', *BSL_Pexpr]] 
+Predicate: ['structname?', ['make-structname', *BSL_Pexpr]]
+Function Definition: ['define', *String, [BSL_Pexpr]] 
+Function Application: [String, *BSL_Pexpr]
+And expr: ['and', *Boolean]
+if expr: ['if', BSL_Pexpr, BSL_Pexpr, BSL_Pexpr]
+
 An AST is one of:
 - BSLDef
 - PrimDef
@@ -30,21 +48,18 @@ A BSLExpr is one of:
 - Variable
 
 
-
-Parser.
-8.  Document which kind of P-expressions become which kind of ASTs. Do it in 2 columns.
-
-BOTH:
-9. Also write down the subset of S-expressions for which the parse will construct an AST.
-
-HINT to 1:  An S-expression is ...
-   ‘(‘ token …
-        [And yes, I wrote this down for you when I launched you on the reader.]
-
-Hint to 9:
-   A Program consists of a DefSeq followed by an Expr.
-   A DefSeq consists of a Def followed by a DefSeq — or nothing
-  A Def is (define Head Expr)
+|    P-expressions     |         AST         |
+|----------------------|---------------------|
+| Number               | Num                 |
+| Struct definitions   | StructDef           |
+| Make struct          | FunctionApplication |
+| Selector             | FunctionApplication |
+| Predicate            | FunctionApplication |
+| Function Definition  | FuncDef             |
+| Function Application | FuncApplication     |
+| And exp              | And                 |
+| Boolean expr         | Boolean             |
+| If expr If           |                     |
 
 
 Notes:

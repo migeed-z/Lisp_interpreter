@@ -98,8 +98,8 @@ class Constants:
     make_posn = FuncApplication('make-posn', BSLlist([Num(1), Num(2)]))
     make_posn_comp = FuncApplication('make-posn', BSLlist([make_posn, Num(2)]))
 
-    is_posn = FuncApplication('is-posn', BSLlist([make_posn]))
-    is_not_posn = FuncApplication('is-posn', BSLlist([Num(3)]))
+    is_posn = FuncApplication('posn?', BSLlist([make_posn]))
+    is_not_posn = FuncApplication('posn?', BSLlist([Num(3)]))
 
     select_posn_x = FuncApplication('posn-x', BSLlist([make_posn]))
     select_posn_y = FuncApplication('posn-y', BSLlist([make_posn]))

@@ -2,24 +2,6 @@ READER
 
 -- S-expression -> P-expression
 
-
-An S-expression is one of:
-- Atom
-- [S-expression]
-
-An Atom is one of:
-- Number
-- String
-
-
-A P-expression is one of:
-- Atom
-- [P-expression]
-
-An Atom is one of:
-- Python Number
-- Python String
-
 An S-expression has the following textual representation:
 - Token
 - '(' followed by Seq
@@ -31,13 +13,18 @@ A Seq is one of:
 A Token is one of:
 - Any sequence of characters not including '(', ')' up to an Empty string
 
+An P-expression is one of
+- Atom
+- [P-expressions]
 
-|   S-expression   |  P-expression  |
-|------------------|----------------|
-| Number           | Python Number  |  
-| String           | Python String  | 
-| [S-expression]   | [P-expression] |
+An Atom is:
+- Any sequence of characters 
 
+
+|     S-expression     |  P-expression   |
+|----------------------|-----------------|
+| Token                | Atom            |
+| '(' followed by Seq  | [P-expressions] |
 
 
 Notes:

@@ -26,9 +26,9 @@ def exp_parser(p, lang):
         return Num(p)
 
     elif isinstance(p, str):
-        if p == 'True':
+        if p == 'true':
             return Boolean(True) #reader should see this????????
-        elif p == 'False':
+        elif p == 'false':
             return Boolean(False)
 
         elif is_reserved(p):

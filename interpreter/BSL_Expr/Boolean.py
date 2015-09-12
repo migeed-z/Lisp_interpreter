@@ -20,3 +20,9 @@ class Boolean(BSLExpr):
 
         else:
             return self.boolean == other.boolean
+
+    def __str__(self):
+        if self.boolean:
+            return 'true'
+        else:
+            return 'false'
