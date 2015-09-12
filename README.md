@@ -126,7 +126,8 @@ Notes:
 
 _____________________________________________
 
-Interpreter
+I N T E R P R E T E R
+
 AST -> Value
 
 A Value is one of:
