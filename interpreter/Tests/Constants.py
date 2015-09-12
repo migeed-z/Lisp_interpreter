@@ -6,13 +6,13 @@ sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/Other')
 
 from Num import Num
 from Variable import Variable
-from FuncDefinition import FuncDefinition
+from FuncDef import FuncDef
 from FuncApplication import FuncApplication
 from BSLlist import BSLlist
 from If import If
 from Scope import Scope
-from Value import Structure
-from StructDefinition import StructDefinition
+from Structure import Structure
+from StructDef import StructDef
 from And import And
 from Boolean import Boolean
 
@@ -61,34 +61,34 @@ class Constants:
     expsub_expraddx23_expradd3 = FuncApplication('-', BSLlist([expraddx23, expraddy3]))
 
     #functions
-    func_def_varx = FuncDefinition("f", ["x"], Variable("x"))
+    func_def_varx = FuncDef("f", ["x"], Variable("x"))
     func_app_varx = FuncApplication('f', BSLlist([Num(4)]))
 
     list_func_app_varx = BSLlist([func_app_varx, Num(2)])
     expradd_func_app_varx = FuncApplication('+', list_func_app_varx)
 
-    funcDef2 = FuncDefinition('g',[], expradd_func_app_varx)
+    funcDef2 = FuncDef('g',[], expradd_func_app_varx)
     func_app_emptylist = FuncApplication('g', BSLlist([])) ###############
 
     expradd_varx_vary = FuncApplication('+', BSLlist([varx, vary]))
 
-    func_def_add_varx_vary = FuncDefinition('z', ['x', 'y'], expradd_varx_vary)
+    func_def_add_varx_vary = FuncDef('z', ['x', 'y'], expradd_varx_vary)
     func_app_varx_vary = FuncApplication('z', BSLlist([Num(7), Num(7)]))
     func_app_error_777 = FuncApplication('z', BSLlist([Num(7), Num(7), Num(7)]))
 
     func_app_100 = FuncApplication('d', BSLlist([Num(100)]))
 
     defs1 = Scope(()).add_definitions()
-    defs1 = defs1.extend('x', 1).extend('y',4)
+    defs1 = defs1.extend('x', Num(1)).extend('y', Num(4))
     defs1 = func_def_varx.update_func(defs1)
     defs1 = funcDef2.update_func(defs1)
     defs1 = func_def_add_varx_vary.update_func(defs1)
 
     #structs
-    posn_def = StructDefinition('posn', ['x', 'y'])
+    posn_def = StructDef('posn', ['x', 'y'])
     defs1 = posn_def.update_scope(defs1)
 
-    zeina_def = StructDefinition('zeina', ['x', 'y'])
+    zeina_def = StructDef('zeina', ['x', 'y'])
     defs1 = zeina_def.update_scope(defs1)
 
     make_zeina = FuncApplication('make-posn', BSLlist([Num(10), Num(20)]))
@@ -107,14 +107,14 @@ class Constants:
     select_posn_x_comp = FuncApplication('posn-x', BSLlist([make_posn_comp]))
     select_posn_y_comp = FuncApplication('posn-y', BSLlist([make_posn_comp]))
 
-    value_posn = Structure('posn', [('x', 1), ('y', 2)])
-    value_posn_comp = Structure('posn', [('x', value_posn), ('y', 2)])
+    value_posn = Structure('posn', [('x', Num(1)), ('y', Num(2))])
+    value_posn_comp = Structure('posn', [('x', value_posn), ('y', Num(2))])
 
     #functions using struct
     make_posn_func = FuncApplication('make-posn', BSLlist([func_app_varx, Num(1)]))
     func_app_varx_1 = FuncApplication('f', BSLlist([make_posn_func]))
 
-    value_posn_func = Structure('posn', [('x', 4), ('y', 1)])
+    value_posn_func = Structure('posn', [('x', Num(4)), ('y', Num(1))])
 
     posn_x_func_app_varx_1 = FuncApplication('posn-x', BSLlist([func_app_varx_1]))
 
@@ -142,5 +142,5 @@ class Constants:
     lessthan_error = FuncApplication('>', BSLlist([Variable('xyz'), Num(4)]))
 
     #if.
-    if_1 = If((equals34), Num(3), Num(4))
-    if_2 = If((equals33), Num(3), Num(4))
+    if_1 = If(BSLlist([equals34, Num(3), Num(4)]))
+    if_2 = If(BSLlist([equals33, Num(3), Num(4)]))

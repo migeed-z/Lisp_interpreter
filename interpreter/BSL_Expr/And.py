@@ -2,6 +2,7 @@ import DirPaths
 
 from BSLExpr import BSLExpr
 from BSLError import BSLError
+from Boolean import Boolean
 
 class And(BSLExpr):
     """
@@ -18,13 +19,13 @@ class And(BSLExpr):
 
         for element in list:
             result = element.eval(defs)
-            if not isinstance(result, bool):
+            if not isinstance(result, Boolean):
                 raise BSLError('Not a boolean')
 
             if not result:
-                return False
+                return Boolean(False)
 
-        return True
+        return Boolean(True)
 
     def __eq__(self, other):
         if not isinstance(other, And):
@@ -42,7 +43,7 @@ class And(BSLExpr):
 
         for element in vals:
             if not isinstance(element, bool):
-                return False
+                return Boolean(False)
 
-        return True
+        return Boolean(True)
 

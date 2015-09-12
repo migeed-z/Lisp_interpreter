@@ -11,6 +11,7 @@ def test_read_defs():
 
 def test_read_and():
     with mock.patch('__builtin__.raw_input', return_value='(define x 3)'):
-        time.sleep(1)
+        pass
+    
     with mock.patch('__builtin__.raw_input', return_value='x'):
         assert read_loop() == 3

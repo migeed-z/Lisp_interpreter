@@ -9,9 +9,9 @@ from And import And
 from If import If
 from Variable import Variable
 from BSLlist import BSLlist
-from FuncDefinition import FuncDefinition
+from FuncDef import FuncDef
 from FuncApplication import FuncApplication
-from StructDefinition import StructDefinition
+from StructDef import StructDef
 from ParserError import ParserError
 
 
@@ -110,7 +110,7 @@ def struct_def_parser(p, lang):
         if check_on_fields == False:
             raise ParserError('Not a list of field names')
 
-        return StructDefinition(p[1], p[2])
+        return StructDef(p[1], p[2])
 
 def func_def_parser(p, lang):
     """
@@ -133,7 +133,7 @@ def func_def_parser(p, lang):
             raise ParserError('Wrong function name')
         else:
             body = exp_parser(p[2], lang)
-            return FuncDefinition(name, [], body)
+            return FuncDef(name, [], body)
 
     elif isinstance(name_or_params, list):
 
@@ -148,7 +148,7 @@ def func_def_parser(p, lang):
         if parsed_name == False or parsed_params == False:
             raise ParserError('Wrong name or params')
         else:
-            return FuncDefinition(parsed_name, parsed_params, body)
+            return FuncDef(parsed_name, parsed_params, body)
 
 
 def parse_name_from_string(expr):
@@ -217,7 +217,7 @@ def parse_operation(p, n, lang, expr=None):
     :param n: Number of args
     :param lang: language used to parse
     :param expr: if this is an expr, not a function application, set this value to the class
-    :return: Operation
+    :return: FuncApplication or BSLExpr
     """
     name = p.pop(0)
 

@@ -2,6 +2,7 @@ import DirPaths
 
 from BSLExpr import BSLExpr
 from BSLError import BSLError
+from Num import Num
 
 
 class Variable(BSLExpr):

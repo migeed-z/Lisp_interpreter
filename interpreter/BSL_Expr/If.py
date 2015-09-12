@@ -1,5 +1,4 @@
 import DirPaths
-
 from BSLExpr import BSLExpr
 from BSLError import BSLError
 
@@ -8,20 +7,19 @@ class If(BSLExpr):
     To represent an if-statement
     """
 
-    def __init__(self, test, if_branch, else_branch):
+    def __init__(self, sl):
         """
-        :param test: BSLExpr
-        :param if_branch: BSLExpr
-        :param else_branch: BSLExpr
+        :param sl: [BSLexpr]
         """
-        self.test = test
-        self.if_branch = if_branch
-        self.else_branch = else_branch
+        self.test = sl.sl[0]
+        self.if_branch = sl.sl[1]
+        self.else_branch = sl.sl[2]
 
     def eval(self, defs):
 
         self.validate()
-        if self.test.eval(defs):
+
+        if self.test.eval(defs).boolean:
             return self.if_branch.eval(defs)
         else:
             return self.else_branch.eval(defs)
@@ -33,3 +31,10 @@ class If(BSLExpr):
             raise BSLError('if_branch must be a BSL expression')
         elif not isinstance(self.else_branch, BSLExpr):
             raise BSLError('else_branch must be a BSL expression')
+
+    def __eq__(self, other):
+        if not isinstance(other, If):
+            return False
+        else:
+            return self.test == other.test and self.if_branch == other.if_branch and\
+                   self.else_branch == other.else_branch

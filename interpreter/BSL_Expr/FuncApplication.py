@@ -1,4 +1,5 @@
 from BSLExpr import BSLExpr
+from Num import Num
 
 class FuncApplication(BSLExpr):
     """
@@ -15,9 +16,7 @@ class FuncApplication(BSLExpr):
 
     def eval(self, defs):
         vals = self.sl.helper_eval(defs)
-
         definition = defs.get(self.name)
-
         return definition.apply(defs, vals)
 
     def __eq__(self, other):

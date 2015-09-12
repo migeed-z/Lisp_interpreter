@@ -1,13 +1,16 @@
 import DirPaths
 from BSLError import BSLError
 
-class IsBoolean:
+class IsClsDef:
     """
-    Determines if some class is a Boolean
+    Determines if some class is a Prim
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, cls):
+        """
+        :param cls: Subclass name
+        """
+        self.cls = cls
 
     def apply(self, vals):
         """
@@ -18,7 +21,7 @@ class IsBoolean:
         if len(vals) != 1:
             raise BSLError('Length must = 1')
 
-        if isinstance(vals[0], bool):
+        if isinstance(vals[0], self.cls):
             return True
         else:
             return False

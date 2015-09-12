@@ -3,7 +3,7 @@ from ConstructorDef import ConstructorDef
 from PredicateDef import PredicateDef
 from SelectorDef import SelectorDef
 
-class StructDefinition(BSLDef):
+class StructDef(BSLDef):
     """
     To represent (define-struct name (param ...))
     """
@@ -34,7 +34,7 @@ class StructDefinition(BSLDef):
         return defs_plus_selectors
 
     def __eq__(self, other):
-        if not isinstance(other, StructDefinition):
+        if not isinstance(other, StructDef):
             return False
 
         else:

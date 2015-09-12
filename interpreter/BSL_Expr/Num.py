@@ -13,9 +13,10 @@ class Num(BSLExpr):
         :param num: Number
         """
         self.num = self.validate(num)
+        #self.num = num
 
     def eval(self, defs):
-        return self.num
+        return self
 
     def validate(self, num):
         if not isinstance(num, (complex, int, float)):
@@ -30,4 +31,4 @@ class Num(BSLExpr):
             return other.num == self.num
 
     def __str__(self):
-        return '%s(%s)' % ('Num', str(self.num))
+        return str(self.num)

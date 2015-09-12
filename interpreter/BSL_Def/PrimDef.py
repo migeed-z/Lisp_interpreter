@@ -24,7 +24,8 @@ class PrimDef:
         Ensure that list of args are of type type
         :param args: List of values
         :param type: type that args need to be
-        :return: True if elements are of type type and false otherwise
+        :return: True if elements are of type type
+        :raise: BSLError if an arg is of the wrong type
         """
         for arg in args:
             if not isinstance(arg, type):

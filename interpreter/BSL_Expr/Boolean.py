@@ -12,7 +12,7 @@ class Boolean(BSLExpr):
         self.boolean = boolean
 
     def eval(self, defs):
-        return self.boolean
+        return self
 
     def __eq__(self, other):
         if not isinstance(other, Boolean):

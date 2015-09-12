@@ -3,7 +3,7 @@ import DirPaths
 
 from BSLDef import BSLDef
 from BSLError import BSLError
-from Value import Structure
+from Structure import Structure
 
 
 class ConstructorDef(BSLDef):

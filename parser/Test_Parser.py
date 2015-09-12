@@ -6,9 +6,9 @@ from If import If
 from Boolean import Boolean
 from Variable import Variable
 from BSLlist import BSLlist
-from FuncDefinition import FuncDefinition
+from FuncDef import FuncDef
 from FuncApplication import FuncApplication
-from StructDefinition import StructDefinition
+from StructDef import StructDef
 
 
 from Parser import exp_parser, func_def_parser, struct_def_parser, ParserError
@@ -23,6 +23,7 @@ class Test_parser:
     def test_nums_and_vars(self):
         assert exp_parser(42, lang) == Num(42)
         assert exp_parser('xyz', lang).__eq__(Variable('xyz'))
+        assert exp_parser(['+', 'a', 'b'], lang) == FuncApplication('+', BSLlist([Variable('a'), Variable('b')]))
 
 
     def test_not_bsl_expr(self):
@@ -90,15 +91,15 @@ class Test_parser:
     def test_function_definition(self):
 
         assert func_def_parser(['define', ['add', 'x', 'y', 'z'], ['+', 1, 3]], lang)\
-            .__eq__(FuncDefinition('add', ['x', 'y', 'z'], FuncApplication('+', BSLlist([Num(1), Num(3)]))))
+            .__eq__(FuncDef('add', ['x', 'y', 'z'], FuncApplication('+', BSLlist([Num(1), Num(3)]))))
 
         assert func_def_parser(['define', 'add', ['+', 1, 3]], lang)\
-            .__eq__(FuncDefinition('add', [], FuncApplication('+', BSLlist([Num(1), Num(3)]))))
+            .__eq__(FuncDef('add', [], FuncApplication('+', BSLlist([Num(1), Num(3)]))))
 
     def test_struct_definition(self):
 
-        assert struct_def_parser(['define-struct', 'posn', ['x', 'y']], lang) == (StructDefinition('posn', ['x', 'y']))
-        assert struct_def_parser(['define-struct', 'add', ['x', 'y', 'z']], lang) == StructDefinition('add', ['x', 'y', 'z'])
+        assert struct_def_parser(['define-struct', 'posn', ['x', 'y']], lang) == (StructDef('posn', ['x', 'y']))
+        assert struct_def_parser(['define-struct', 'add', ['x', 'y', 'z']], lang) == StructDef('add', ['x', 'y', 'z'])
 
         assert not exp_parser(['define-struct', 'add', ['x', 'y', 'z']], lang)
 
@@ -157,3 +158,10 @@ class Test_parser:
     def test_if(self):
         assert exp_parser(['if', 1 , 'True', 'False'], lang) == \
                If(BSLlist([Num(1), Boolean(True), Boolean(False)]))
+
+        assert exp_parser(['if', 'False', ['/', 1, 0], 9], lang) == \
+               If(BSLlist([Boolean(False), FuncApplication('/', BSLlist([Num(1), Num(0)])), Num(9)]))
+
+
+
+

@@ -6,7 +6,7 @@ from BSLError import BSLError
 from BSLDef import BSLDef
 
 
-class FuncDefinition(BSLDef):
+class FuncDef(BSLDef):
 
     """
     To represent function definitions
@@ -68,7 +68,7 @@ class FuncDefinition(BSLDef):
 
     def __eq__(self, other):
 
-        if not isinstance(other, FuncDefinition):
+        if not isinstance(other, FuncDef):
             return False
         else:
             return other.name == self.name and other.params == self.params and (other.body).__eq__(self.body)
