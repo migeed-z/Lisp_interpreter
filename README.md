@@ -24,7 +24,7 @@ An Atom is:
 |     S-expression     |  P-expression   |
 |----------------------|-----------------|
 | Token                | Atom            |
-| '(' followed by Seq  | [P-expressions] |
+| '(' followed by Seq  | [P-expression]  |
 
 
 Notes:
