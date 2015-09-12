@@ -29,7 +29,6 @@ An Atom is:
 
 Notes:
 A p-expression must have the following properties:
-
 -- Well-balanced parens
    EX: (). Reader will continue to read if parens are not balanced.
 -- The expression must be well-formed
@@ -50,15 +49,18 @@ Boolean expr
 
 P-expressions accepted by parsers:
 
-Numbers
-Boolean expr: 'true'/'false'
-Struct definitions: ['define-struct', String, [String]]
-Selector: ['structname-structfield', ['make-structname', *BSL_Pexpr]] 
-Predicate: ['structname?', ['make-structname', *BSL_Pexpr]]
-Function Definition: ['define', *String, [BSL_Pexpr]] 
-Function Application: [String, *BSL_Pexpr]
-And expr: ['and', *Boolean]
-if expr: ['if', BSL_Pexpr, BSL_Pexpr, BSL_Pexpr]
+|      Reference       |                    Textual Representation                    |
+|----------------------|--------------------------------------------------------------|
+| Numbers              | -                                                            |
+| Boolean expr         | 'true'/'false'                                               |
+| Struct definitions   | ['define-struct', String, [String]]                          |
+| Selector             | ['structname-structfield', ['make-structname', *BSL_Pexpr]]  |
+| Predicate            | ['structname?', ['make-structname', *BSL_Pexpr]]             |
+| Function Definition  | ['define', *String, [BSL_Pexpr]]                             |
+| Function Application | [String, *BSL_Pexpr]                                         |
+| And expr             | ['and', *Boolean]                                            |
+| if expr              | ['if', BSL_Pexpr, BSL_Pexpr, BSL_Pexpr]                      |
+
 
 An AST is one of:
 - BSLDef
@@ -151,6 +153,9 @@ Values produced from calling the eval() method on a FunctionApplication based on
 | PredicateDef     | Boolean     |
 | SelectorDef      | Value       |
 | ConstructorDef   | Structure   |
+
+
+
 
 
 
