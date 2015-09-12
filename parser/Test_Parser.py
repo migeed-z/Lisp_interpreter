@@ -138,7 +138,7 @@ class Test_parser:
         assert not exp_parser(['define',['x',1],1], lang)
 
     def test_and(self):
-        assert exp_parser(['and', 'True', 'True'], lang) == And(BSLlist([Boolean(True), Boolean(True)]))
+        assert exp_parser(['and', 'true', 'true'], lang) == And(BSLlist([Boolean(True), Boolean(True)]))
 
     def test_equals(self):
         assert exp_parser(['=', 3, 3], lang) == FuncApplication('=', BSLlist([Num(3), Num(3)]))
@@ -156,10 +156,10 @@ class Test_parser:
         assert exp_parser(['^', 2, 3], lang) == FuncApplication('^', BSLlist([Num(2), Num(3)]))
 
     def test_if(self):
-        assert exp_parser(['if', 1 , 'True', 'False'], lang) == \
+        assert exp_parser(['if', 1 , 'true', 'false'], lang) == \
                If(BSLlist([Num(1), Boolean(True), Boolean(False)]))
 
-        assert exp_parser(['if', 'False', ['/', 1, 0], 9], lang) == \
+        assert exp_parser(['if', 'false', ['/', 1, 0], 9], lang) == \
                If(BSLlist([Boolean(False), FuncApplication('/', BSLlist([Num(1), Num(0)])), Num(9)]))
 
 
