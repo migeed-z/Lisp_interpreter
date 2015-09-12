@@ -29,6 +29,7 @@ An Atom is:
 
 Notes:
 A p-expression must have the following properties:
+
 -- Well-balanced parens
    EX: (). Reader will continue to read if parens are not balanced.
 -- The expression must be well-formed
@@ -48,6 +49,7 @@ if expr
 Boolean expr
 
 P-expressions accepted by parsers:
+
 Numbers
 Boolean expr: 'true'/'false'
 Struct definitions: ['define-struct', String, [String]]
