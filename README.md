@@ -101,7 +101,7 @@ A BSLExpr is one of:
 | Function Application | FuncApplication     |
 | And exp              | And                 |
 | Boolean expr         | Boolean             |
-| If expr If           |                     |
+| If expr              | If                  |
 
 
 Notes:
