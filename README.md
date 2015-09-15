@@ -1,151 +1,142 @@
-R E A D E R
 
--- S-expression -> P-expression
+This project implements an evaluator for a small subset of Racket, called Beginning Student Language (BSL). 
+
+The context-free grammar of BSL is defined as follows: 
+
+A BSLProgram is a sequence of BSLdefinitions followed by a BSLexpression. 
+A BSLDefiition is one of: 
+  -- (define (Variable Variable ...) BSLexpression)
+  -- (define-struct Variable (Variable ...))
+  -- (define Variable BSLexpression)
+A BSLexpressions is one of: 
+  -- PythonNumber  | Num(PythonNumber)
+  -- true          | Boolean(true)
+  -- false         | Boolean(false)
+  -- Variable      | Var(String)
+  -- (FunctionName BSLExpression ...)
+  -- (PrimitiveName BSLExpression ...) 
+  -- (if BSLExpression BSLexpression BSLexpression)
+  -- (and BSLExpression BSLExpression BSLExpression ...)
+A Variable is a Token (that is not a PrimitiveName or a Literal token or a PythonNumber)
+A FunctionaName is a Token (that is not a PrimitiveName or a Literal token or a PythonNumber)
+A PrimitiveName is one of: 
+  -- +
+  -- - 
+  -- * 
+  -- /
+  -- >
+  -- <
+  -- = 
+The LiteralTokens are: define, define-struct, if, and
+
+A Token is a sequence of characters not including '(', ')' and whitespace (' ')
+All whitespace between tokens and ( and ) is ignored. 
+  
+  ----------------------------------------
+
+R E A D E R: -> P-expression
+reads one S-expression from STDIN 
 
 An S-expression has the following textual representation:
 - Token
-- '(' followed by Seq
+- OpenParen 
+
+An OpenParen is 
+ '(' followed by Seq
 
 A Seq is one of:
 - ')'
 - S-expression followed by Seq
 
-A Token is one of:
-- Any sequence of characters not including '(', ')' up to an Empty string
+
 
 An P-expression is one of
 - Atom
-- [P-expressions]
+- [Listof P-expression]
 
 An Atom is:
 - Any sequence of characters 
-
+ 
 
 |     S-expression     |  P-expression   |
 |----------------------|-----------------|
 | Token                | Atom            |
-| '(' followed by Seq  | [P-expression]  |
-
-
-Notes:
-A p-expression must have the following properties:
--- Well-balanced parens
-   EX: (). Reader will continue to read if parens are not balanced.
--- The expression must be well-formed
-   EX: ('+', a, b, c) is well-formed. )( is not, and Reader will raise an exception.
+| OpenParen            | [Listof P-expression]  |
 
 _____________________________________________
 
-P A R S E R
-
--- P-expression -> AST, False, or raise an Exception
-
-BSL_Pexpr is one of:
-Numbers
-Function Application
-And expr
-if expr
-Boolean expr
-
-P-expressions accepted by parsers:
-
-|      Reference       |                    Textual Representation                    |
-|----------------------|--------------------------------------------------------------|
-| Numbers              | -                                                            |
-| Boolean expr         | 'true'/'false'                                               |
-| Struct definitions   | ['define-struct', String, [String]]                          |
-| Selector             | ['structname-structfield', ['make-structname', *BSL_Pexpr]]  |
-| Predicate            | ['structname?', ['make-structname', *BSL_Pexpr]]             |
-| Function Definition  | ['define', *String, [BSL_Pexpr]]                             |
-| Function Application | [String, *BSL_Pexpr]                                         |
-| And expr             | ['and', *Boolean]                                            |
-| if expr              | ['if', BSL_Pexpr, BSL_Pexpr, BSL_Pexpr]                      |
-
+P A R S E R: P-expression -> AST 
 
 An AST is one of:
-- BSLDef
-- PrimDef
-- IsPrimDef
+- BSLDef(String, [Listof String])
+- IsClsDef
 - BSLExpr
+- ComparisonDef([Num ... -> bool or float or complex or int],
+                [bool of float or complex or int -> Value]
+                Value)  %% but not Structure 
+
 
 A BSLDef is one of:
-- StructDef
+- StructDef 
 - ConstructorDef
 - SelectorDef
 - PredicateDef
-- FunctionDef
-
-A PrimDef is one of:
-- ComparisonDef
+- FunctionDef(BSLExpr)
 
 An IsClsDef is one of:
 - IsBooleanDef
 
 A BSLExpr is one of:
-- And
-- Boolean
-- FunctionApplication
-- If
-- Num
-- Variable
+- And(BSLlist)
+- Boolean(bool)
+- FunctionApplication(String, BSLlist)
+- If(BSLlist)
+- Num((int or complex or float))
+- Variable(String)
 
-
-|    P-expressions     |         AST         |
-|----------------------|---------------------|
-| Number               | Num                 |
-| Struct definitions   | StructDef           |
-| Make struct          | FunctionApplication |
-| Selector             | FunctionApplication |
-| Predicate            | FunctionApplication |
-| Function Definition  | FuncDef             |
-| Function Application | FuncApplication     |
-| And exp              | And                 |
-| Boolean expr         | Boolean             |
-| If expr              | If                  |
+A BSLlist is wrapper for the python list
 
 
 Notes:
 
--- The parser will create an AST for any p-expression that does not contain context free errors.
-
--- Parser catches context free errors only.
+-- The parser will create an AST for P-expression whose original S-expression satisfies the context-free grammar of BSL.
    EX: A parser will not catch the following error: ['define', ['add', 'x', 'x', 'z'], ['+', 1, 3]]
-       because it is not context free. It will catch the following error: ['define', ['f', 'x', 1, 'y'], 42]
-       because we know that we do not need context to determine that function arguments cannot be numbers.
+       because the repetition of 'x' is not context free. 
+   EX: It will catch the following error: ['define', ['f', 'x', 1, 'y'], 42]
+       because 1 is not a variable 
+   EX: It will catch the following error: ['define', ['f', 'x', '+', 'y'], 42]
+       because '+' is not a variable 
+       
+  | S-expression  | AST                |
+  |---------------|--------------------|
+  | PythonNumber  | Num(PythonNumber)
+  | true          | Boolean(true)
+         -- false         | Boolean(false)
+         -- Variable      | Var(String)
 
--- For a given function in the parser, the function could return  return false or raise an exception.
-
--- A function raises an exception if the parser cannot produce a valid AST from the given p-expression using any
-    of the functions in the parser.
-    EX: expr-parser will raise an exception here: [+, +, +] since we know that the list of parameters to a function
-        application must be a list of valid BSLExpressions, without needing context.
-
--- A function will produce false if it cannot parse the expression but does not have enough information to determine
-   if the given p-expression can be parsed.
-   EX: [1, '+', 1]
 
 _____________________________________________
 
-I N T E R P R E T E R
-
-AST -> Value
+I N T E R P R E T E R: AST -> Value
 
 A Value is one of:
-- Boolean
-- Num
-- Structure
+- Boolean(bool)
+- Num(PythonNumber)
+- Structure(String, [Listof (String, Value)])
 
-Subset of AST for which the interpreter produces a Value
+For StructDef and FuncDef, eval does not exist. 
+For AST that come from BSLexpr, the following table explains eval: 
 
-|         AST          |  Value  |  
+| Expression ASTs      |  Value  |  
 |----------------------|---------|
 | And                  | Boolean |  
 | Boolean              | Boolean |  
 | Num                  | Num     |  
 | FunctionApplication  | Value   |  
-| If                   | Value   | 
+| If                   | Value   |
+| Variable             | Value   |
 
-Values produced from calling the eval() method on a FunctionApplication based on the given Definition
+Values produced from calling the apply method on some Definition
 
 |    Definition    |    Value    |
 |------------------|-------------|
@@ -154,6 +145,7 @@ Values produced from calling the eval() method on a FunctionApplication based on
 | PredicateDef     | Boolean     |
 | SelectorDef      | Value       |
 | ConstructorDef   | Structure   |
+| FuncDef          | Value       |
 
 
 

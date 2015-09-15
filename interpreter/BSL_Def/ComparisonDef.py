@@ -1,9 +1,9 @@
 import DirPaths
 from BSLError import BSLError
 from Num import Num
-from PrimDef import PrimDef
+#from PrimDef import PrimDef
 
-class ComparisonDef(PrimDef):
+class ComparisonDef():
     """
     To represent > operation
     """
@@ -13,7 +13,6 @@ class ComparisonDef(PrimDef):
         :param cls: class to wrap around the result
         :param argcls: the type that args need to be
         """
-        PrimDef.__init__(self)
         self.comp = comp
         self.cls = cls
         self.argcls = argcls
@@ -22,3 +21,15 @@ class ComparisonDef(PrimDef):
         self.validate(args, self.argcls)
 
         return self.cls(apply(self.comp, args))
+
+    def validate(self, args, type):
+        """
+        Ensure that list of args are of type type
+        :param args: List of values
+        :param type: type that args need to be
+        :return: True if elements are of type type
+        :raise: BSLError if an arg is of the wrong type
+        """
+        for arg in args:
+            if not isinstance(arg, type):
+                raise BSLError('Arguments are of incorrect type.')

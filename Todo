@@ -1,3 +1,10 @@
+1) fix parser (see racket file) and make big parser
+2) fix tables
+3) make lambda
+4) print readme and fix changes
+
+
+
 TODO:
 fix operations
 wrap values: issue with zero divisiton
@@ -24,14 +31,3 @@ $ cat my_interpreter_in_bsl_for_bsl > ./Read.py
 # in your Python interpreter you use Add([Num(1),NUm(1)])
 # what do you use in your BSL interpreter, the one you write in YOUR bsl
 
-
-
-
-
-Exercise 332. Formulate a data definition for the class of values to which a representation of a BSL expression can evaluate. image
-
-Exercise 333. Design eval-expression. The function consumes a representation of a BSL expression (according to exercise 331) and computes its value. image
-
-Exercise 334. Develop a data representation for boolean BSL expressions constructed from #true, #false, and, or, and not. Then design eval-bool-expression. The function consumes a representative of boolean BSL expression and computes its value. What is the value of a Boolean expression? image
-
-Exercise 335. S-expressions offer a convenient way to express BSL:

@@ -8,6 +8,7 @@ class BSLDef:
 
     def __init__(self, name, params):
         """
+        :param name: String
         :param params: [String]
         """
         if len(params) != len(set(params)):
