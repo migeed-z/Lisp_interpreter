@@ -31,7 +31,7 @@ class Test_Reader:
         assert read_f10.reader() == ["f", 10]
         assert read_f_of_g10.reader() == ["f",["g",10]]
 
-        assert read_blank.reader() == ["token0",["token1"]]
+        assert read_blank.reader() == ["token0", ["token1"]]
 
         assert read_function_definition.reader() == ['define', ['add', 'x', 'y', 'z'], ['+', 1, 3]]
         assert read_function_definition_no_params.reader() == ['define', 'add', ['+', 1, 3]]

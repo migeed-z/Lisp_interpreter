@@ -1,15 +1,17 @@
+issues:
+(/ 2.0 2)
+(define x 3) --> x --> x (not defined)
+
+
 1) fix parser (see racket file) and make big parser
 2) fix tables
 3) make lambda
 4) print readme and fix changes
 
 
-
 TODO:
 fix operations
 wrap values: issue with zero divisiton
-
-
 
 
 #TODO for reader

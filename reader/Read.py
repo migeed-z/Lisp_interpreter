@@ -2,11 +2,14 @@ import DirPaths
 import sys
 from sys import stdin, stdout
 from Reader import Reader
-from Parser import exp_parser, func_def_parser, struct_def_parser
+from Parser import parse
+from ParserError import ParserError
 from BSLError import BSLError
+from BSLExpr import BSLExpr
+from FuncDef import FuncDef
+from StructDef import StructDef
 from Scope import Scope
 
-lang = 'BSL'
 
 def has_equal_parens(line):
     """
@@ -44,29 +47,23 @@ def read_loop():
             print ('Reader Error')
 
         try:
-            is_p_expr_a_bsl_expr = exp_parser(p_expr, lang)
-
-            if not is_p_expr_a_bsl_expr:
-
-                func_def = func_def_parser(p_expr, lang)
-                if func_def:
-                    if isinstance(p_expr[1], str):
-                        s = s.extend(func_def.name, func_def.body.eval(s))
-                    else:
-                        s = func_def.update_func(s)
-
-                else:
-                    struct_def = struct_def_parser(p_expr, lang)
-                    if struct_def:
-                        s = struct_def.update_scope(s)
-            else:
+            ast = parse(p_expr)
+            if isinstance(ast, BSLExpr):
                 try:
-                    result = is_p_expr_a_bsl_expr.eval(s)
-                    return result
+                    return ast.eval(s)
                 except BSLError:
-                    print('an eval exception happened')
-        except:
-            print ('BSL parse error')
+                    print 'Interpreter Error'
+
+            elif isinstance(ast, FuncDef):
+                if not ast.params:
+                    s = s.extend(ast.name, ast.body.eval(s))
+                else:
+                    s = ast.update_func(s)
+
+            elif isinstance(ast, StructDef):
+                s = ast.update_scope(s)
+        except ParserError:
+            print ('bla bla bla')
 
 
 def read_lines():
