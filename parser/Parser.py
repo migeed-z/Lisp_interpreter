@@ -11,6 +11,7 @@ from BSLlist import BSLlist
 from FuncDef import FuncDef
 from FuncApplication import FuncApplication
 from StructDef import StructDef
+from Lambda import Lambda
 from ParserError import ParserError
 
 def parse(p):
@@ -52,10 +53,8 @@ def token_parser(p):
 
         elif is_reserved(p):
             raise ParserError('This word is reserved')
-
         else:
             return Variable(p)
-
     else:
         return False
 
@@ -170,6 +169,44 @@ def func_def_parser(p):
             body = exp_parser(p[2])
             return FuncDef(name, params, body)
 
+
+def lambda_parser(p):
+    """
+    Parses Lambda expressions
+    :param p: P-expression
+    :return: Lambda
+    """
+    if len(p) < 2:
+        return False
+    else:
+        first = p[0]
+        args = p[1:]
+
+        if not isinstance(p[0], list):
+            return False
+
+        if len(first) != 3:
+            return False
+
+        elif first[0] != 'lambda':
+            return False
+
+        elif len(first[1]) < 1:
+            raise ParserError('no params')
+
+        elif not is_list_of_proper_names(first[1]):
+            raise ParserError('wrong params')
+
+        else:
+            body = exp_parser(first[2])
+            params = first[1]
+            args = parse_expr_list(args)
+            func_def = func_def_parser(['define', ['lambda']+params, body])
+
+            func_app = exp_parser(['lambda' + args])
+            return Lambda(func_def, func_app)
+
+
 def is_list_of_proper_names(expr):
     """
     Checks that expr is a list of strings and that no string is a reserved string
@@ -231,14 +268,24 @@ def parse_operation(p, n, expr=None):
     if len(p) < n:
         raise ParserError('expects at least %s argument, but found none' % str(n))
     else:
-        result = []
-        for element in p:
-            element_as_bsl_exp = exp_parser(element)
-            if not element_as_bsl_exp:
-                raise ParserError('expects s-expressions in the list of arguments')
-            result.append(element_as_bsl_exp)
+        result = parse_expr_list(p)
+
     if expr:
         return expr(BSLlist(result))
 
     return FuncApplication(name, BSLlist(result))
 
+
+def parse_expr_list(lst):
+    """
+    Parses a list of expressions
+    :param lst: List of P-expressions
+    :return: List of BSLExpr
+    """
+    result = []
+    for element in lst:
+        element_as_bsl_exp = exp_parser(element)
+        if not element_as_bsl_exp:
+            raise ParserError('expects s-expressions in the list of arguments')
+        result.append(element_as_bsl_exp)
+    return result

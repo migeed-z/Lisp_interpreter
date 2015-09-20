@@ -58,10 +58,12 @@ An Atom is:
 - Any sequence of characters 
  
 
-|     S-expression     |  P-expression   |
-|----------------------|-----------------|
-| Token                | Atom            |
-| OpenParen            | [Listof P-expression]  |
++--------------+---------------------+
+| S-expression |    P-expression     |
++--------------+---------------------+
+| Token        | Atom                |
+| OpenParen    | Listof P-expression |
++--------------+---------------------+
 
 _____________________________________________
 
@@ -107,13 +109,13 @@ Notes:
    EX: It will catch the following error: ['define', ['f', 'x', '+', 'y'], 42]
        because '+' is not a variable 
        
-  | S-expression  | AST                |
-  |---------------|--------------------|
-  | PythonNumber  | Num(PythonNumber)
-  | true          | Boolean(true)
-         -- false         | Boolean(false)
-         -- Variable      | Var(String)
-
++--------------+-------------------+
+| S-expression |        AST        |
++--------------+-------------------+
+| PythonNumber | Num(PythonNumber) |
+| true         | Boolean(true)     |
+| false        | Boolean(false)    |
+| Variable     | Var(String)       |
 
 _____________________________________________
 

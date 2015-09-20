@@ -8,6 +8,7 @@ from BSLError import BSLError
 from BSLExpr import BSLExpr
 from FuncDef import FuncDef
 from StructDef import StructDef
+from Lambda import Lambda
 from Scope import Scope
 
 
@@ -62,6 +63,11 @@ def read_loop():
 
             elif isinstance(ast, StructDef):
                 s = ast.update_scope(s)
+
+            elif isinstance(ast, Lambda):
+                s = ast.func_def.update_func(s)
+                return ast.func_app.eval(s)
+
         except ParserError:
             print ('bla bla bla')
 

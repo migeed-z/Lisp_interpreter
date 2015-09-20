@@ -3,10 +3,10 @@ issues:
 (define x 3) --> x --> x (not defined)
 
 
-1) fix parser (see racket file) and make big parser
-2) fix tables
+1) fix parser (see racket file) and make big parser -- ok (with issues)
+2) fix tables (as in visually)
 3) make lambda
-4) print readme and fix changes
+4) print readme and apply new changes
 
 
 TODO:

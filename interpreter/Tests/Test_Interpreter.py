@@ -7,6 +7,7 @@ sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/Other')
 from BSLlist import BSLlist
 from Variable import Variable
 from BSLError import BSLError
+from Lambda import Lambda
 from Num import Num
 from Boolean import Boolean
 from Constants import Constants as c
@@ -119,6 +120,12 @@ def test_bigger_and_less_than(): #this test occassionally fails???????????
 
     with pytest.raises(BSLError):
         c.lessthan_error.eval(c.defs1)
+
+def test_lambda():
+    assert c.lambdaexpr1.eval(c.defs1) == Num(4)
+
+
+
 
 
 # >       assert c.lessthan34.eval(c.defs1) == Boolean(True)
