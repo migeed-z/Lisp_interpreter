@@ -18,6 +18,7 @@ class Variable(BSLExpr):
 
     def eval(self, defs):
         val = defs.get(self.name)
+        print (defs)
         if not val:
             raise BSLError('Variable not defined')
         else:

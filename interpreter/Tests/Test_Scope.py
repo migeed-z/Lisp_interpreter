@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '/Users/zeina/Lisp_interpreter/interpreter/Other')
+sys.path.insert(0, '/Users/zeinamigeed/Lisp_interpreter/interpreter/Other')
 
 from Scope import Scope
 
@@ -12,9 +12,14 @@ class Test_scope:
         defs3 = defs.extend('f', 3)
 
         assert defs2.get('x') == 3
+        assert defs2.get('x') == 3
         assert defs3.get('f') == 3
         assert defs.get('x') == 3
 
+        defs_a = Scope(())
+        defs_b = defs_a.extend('x',0)
+        assert(defs_b.get('x') == 0)
+        assert(defs_b.get('x') == 0)
 
 
 

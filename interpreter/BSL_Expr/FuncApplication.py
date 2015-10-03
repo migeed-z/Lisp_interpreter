@@ -1,5 +1,4 @@
 from BSLExpr import BSLExpr
-from Num import Num
 
 class FuncApplication(BSLExpr):
     """

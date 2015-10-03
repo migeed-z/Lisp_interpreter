@@ -12,50 +12,39 @@ from Lambda import Lambda
 from Scope import Scope
 
 
-def has_equal_parens(line):
+def read():
     """
-    Returns True if number of right parens is equal to the number of left parens, and returns False otherwise
-    :param line: String
-    :return:
+    Reads a line from the IP and instantiates a Reader using the IP
+    and returns the resulting p-expression
+    :return: p_expr
     """
-    left = 0
-    right = 0
-    for char in line:
-        if char == '(':
-            left +=1
-        elif char == ')':
-            right +=1
+    try:
+        ip = read_lines()
+        r = Reader(ip)
+        p_expr = r.reader()
+        return p_expr
 
-    if left == right:
-        return True
+    except:
+        print ('Reader Error')
+
 
 def read_loop():
-
+    """
+    read S-expression, parse and evaluate, print, REPEAT
+    :return: None
+    """
     s = Scope([]).add_definitions()
 
     while True:
-        userinput = read_lines()
 
         try:
-            r = Reader(userinput)
-
-            p_expr = r.reader()
-            print p_expr
-
+            p_expr = read()
             if not p_expr:
                 break
-        except:
-            print ('Reader Error')
 
-        try:
             ast = parse(p_expr)
-            if isinstance(ast, BSLExpr):
-                try:
-                    return ast.eval(s)
-                except BSLError:
-                    print 'Interpreter Error'
 
-            elif isinstance(ast, FuncDef):
+            if isinstance(ast, FuncDef):
                 if not ast.params:
                     s = s.extend(ast.name, ast.body.eval(s))
                 else:
@@ -64,9 +53,11 @@ def read_loop():
             elif isinstance(ast, StructDef):
                 s = ast.update_scope(s)
 
-            elif isinstance(ast, Lambda):
-                s = ast.func_def.update_func(s)
-                return ast.func_app.eval(s)
+            else:
+                try:
+                    print str(ast.eval(s))
+                except BSLError:
+                    print 'Interpreter Error'
 
         except ParserError:
             print ('bla bla bla')
@@ -88,11 +79,25 @@ def read_lines():
         if has_equal_parens(all_input):
             return all_input
 
-def read():
+def has_equal_parens(line):
     """
-    Reads text from stdin
-    :return: s-expression
+    Returns True if number of right parens is equal to the number of left parens, and returns False otherwise
+    :param line: String
+    :return:
     """
-    while True:
-        result = read_loop()
-        print result
+    left = 0
+    right = 0
+    for char in line:
+        if char == '(':
+            left +=1
+        elif char == ')':
+            right +=1
+
+    if left == right:
+        return True
+
+
+print("Zeina's BSL intepreter, v.006\n")
+read_loop()
+
+

@@ -7,6 +7,7 @@ from ComparisonDef import ComparisonDef
 from Num import Num
 from Boolean import Boolean
 from BSLExpr import BSLExpr
+from copy import copy
 
 class Scope:
     """

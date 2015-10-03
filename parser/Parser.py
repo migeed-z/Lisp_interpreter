@@ -1,6 +1,6 @@
 import DirPaths
 import sys
-sys.path.insert(0, '/Users/Zeina/Lisp_interpreter/interpreter/BSL_Expr')
+sys.path.insert(0, '/Users/ZeinaMigeed/Lisp_interpreter/interpreter/BSL_Expr')
 
 from Num import Num
 from Boolean import Boolean
@@ -149,8 +149,9 @@ def func_def_parser(p):
     elif len(p) != 3:
         raise ParserError('p-expression must have length >= 3')
 
-    #Here, we know it is a constant
+
     elif isinstance(p[1], str):
+        #Here, we know it is a constant
         if is_reserved(p[1]):
             raise ParserError('Variable cannot be a reserved word')
         else:
