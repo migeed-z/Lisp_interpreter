@@ -21,6 +21,12 @@ class FuncDef(BSLDef):
         BSLDef.__init__(self, name, params)
         self.body = body
 
+    def eval(ast,s):
+        if not ast.params:
+            return s.extend(ast.name, ast.body.eval(s))
+        else:
+           return ast.update_func(s)
+
     def update_func(self, defs):
         """
         Updates the current scope with this function definition

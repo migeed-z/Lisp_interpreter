@@ -14,6 +14,9 @@ class StructDef(BSLDef):
         """
         BSLDef.__init__(self, name, params)
 
+    def eval(ast,s):
+        return ast.update_scope(s)
+
     def update_scope(self, defs):
         """
         Extends the scope with new definitions for make-name, name_param, ..., is_name

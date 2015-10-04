@@ -1,14 +1,11 @@
 import DirPaths
-import sys
 from sys import stdin, stdout
 from Reader import Reader
 from Parser import parse
 from ParserError import ParserError
 from BSLError import BSLError
-from BSLExpr import BSLExpr
 from FuncDef import FuncDef
 from StructDef import StructDef
-from Lambda import Lambda
 from Scope import Scope
 
 
@@ -44,18 +41,12 @@ def read_loop():
 
             ast = parse(p_expr)
 
-            if isinstance(ast, FuncDef):
-                if not ast.params:
-                    s = s.extend(ast.name, ast.body.eval(s))
-                else:
-                    s = ast.update_func(s)
-
-            elif isinstance(ast, StructDef):
-                s = ast.update_scope(s)
-
+            if isinstance(ast, FuncDef) or isinstance(ast,StructDef):
+                s = ast.eval(s) #S IS A SCOPE
             else:
                 try:
-                    print str(ast.eval(s))
+                    x = ast.eval(s) #X IS A VALUE
+                    print str(x)
                 except BSLError:
                     print 'Interpreter Error'
 
