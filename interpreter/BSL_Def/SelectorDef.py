@@ -11,6 +11,9 @@ class SelectorDef(BSLDef):
         """
         BSLDef.__init__(self, name, params)
 
+    def update(ast,s):
+        return s.extend('%s-%s' % (ast.name, ast.params[0]), ast)
+
     def apply(self, defs, vals):
 
         if not isinstance(vals[0], Structure):

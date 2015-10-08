@@ -21,6 +21,9 @@ class ConstructorDef(BSLDef):
 
         return Structure(self.name, self.make_tuples(self.params, vals))
 
+    def update(ast,s):
+        return s.extend('make-%s' % ast.name, ast)
+
     def make_tuples(self, params, vals):
         """
         returns a list of tupes of params and vals

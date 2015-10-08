@@ -15,9 +15,6 @@ class StructDef(BSLDef):
         """
         BSLDef.__init__(self, name, params)
 
-    def eval(ast,s):
-        return [None,ast.update(s)]
-
     def update(self, defs):
         """
         Extends the scope with new definitions for make-name, name_param, ..., is_name
@@ -28,12 +25,12 @@ class StructDef(BSLDef):
         constructor = ConstructorDef(self.name, self.params)
         predicate = PredicateDef(self.name, self.params)
 
-        defs_plus_constructor = defs.extend('make-%s' % self.name, constructor)
-        defs_plus_predicate = defs_plus_constructor.extend('%s?' % self.name, predicate)
+        defs_plus_constructor = constructor.update(defs)
+        defs_plus_predicate = predicate.update(defs_plus_constructor)
         defs_plus_selectors = defs_plus_predicate
         for param in self.params:
             selector = SelectorDef(self.name, [param])
-            defs_plus_selectors = defs_plus_selectors.extend('%s-%s' % (self.name, param), selector)
+            defs_plus_selectors = selector.update(defs_plus_selectors)
 
         return defs_plus_selectors
 

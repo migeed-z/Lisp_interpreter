@@ -17,11 +17,19 @@ class BSLDef:
         self.params = params
         self.name = name
 
-    @abstractmethod
     def eval(self, s):
         """
         evaluates this expression by updating the current scope to new_scope
         :param s: current scope
         :return: [None, new_scope]
         """
-        raise NotImplementedError('This method is not yet implemented')
+        return [None,self.update(s)]
+
+    @abstractmethod
+    def update(self, s):
+        """
+        Updates the current scope with the new definition
+        :param s: Current scope
+        :return: New scope
+        """
+        raise NotImplementedError('Method not yet implemented')

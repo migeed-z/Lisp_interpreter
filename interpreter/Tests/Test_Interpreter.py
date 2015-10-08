@@ -76,7 +76,7 @@ def test_struct():
     assert c.make_posn.eval_internal(c.defs1) == c.value_posn
     assert c.make_posn_comp.eval_internal(c.defs1) == (c.value_posn_comp)
     assert c.is_posn.eval_internal(c.defs1)
-    assert not c.is_not_posn.eval_internal(c.defs1)
+    assert c.is_not_posn.eval_internal(c.defs1) == Boolean(False)
     assert c.select_posn_x.eval_internal(c.defs1) == Num(1)
     assert c.select_posn_y.eval_internal(c.defs1) == Num(2)
     assert c.select_posn_y_comp.eval_internal(c.defs1) == Num(2)

@@ -1,6 +1,8 @@
 
 - update bashrc so we can call read.py without the path (done)
-- fix github
+- fix github (done)
+- Abstract over eval & update - (done)
+- Fix true/false in predicates. Function did not use our booleans. (done)
 - introduce lambda
 
 
@@ -8,7 +10,8 @@
 
 issues:
 (/ 2.0 2)
-(define x 3) --> x --> x (not defined)
+hitting enter multiple times exits the program!!
+
 
 
 1) fix parser (see racket file) and make big parser -- ok (with issues)

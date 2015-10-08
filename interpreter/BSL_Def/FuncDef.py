@@ -24,7 +24,7 @@ class FuncDef(BSLDef):
         if not ast.params:
             return [None,s.extend(ast.name, ast.body.eval_internal(s))]
         else:
-           return [None,ast.update(s)]
+            ast.eval(s)
 
     def update(self, defs):
         """
