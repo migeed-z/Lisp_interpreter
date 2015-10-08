@@ -1,15 +1,15 @@
 
 This project implements an evaluator for a small subset of Racket, called Beginning Student Language (BSL). 
 
-The context-free grammar of BSL is defined as follows: 
-
+The context-free grammar of BSL is defined as follows: <br />
 A BSLProgram is a sequence of BSLdefinitions followed by a BSLexpression. 
+
 **A BSLDefiition is one of:** 
 - (define (Variable Variable ...) BSLexpression)
 - (define-struct Variable (Variable ...))
 - (define Variable BSLexpression)
 
-**A BSLexpressions is one of: **
+**A BSLexpression is one of:**
 - PythonNumber  | Num(PythonNumber)
 - true          | Boolean(true)
 - false         | Boolean(false)
@@ -19,9 +19,9 @@ A BSLProgram is a sequence of BSLdefinitions followed by a BSLexpression.
 - (if BSLExpression BSLexpression BSLexpression)
 - (and BSLExpression BSLExpression BSLExpression ...)
 
-**A Variable:** is a Token (that is not a PrimitiveName or a Literal token or a PythonNumber)
-**A FunctionaName:** is a Token (that is not a PrimitiveName or a Literal token or a PythonNumber)
-**A PrimitiveName is one of:** 
+**A Variable:** is a Token (that is not a PrimitiveName or a Literal token or a PythonNumber)<br/>
+**A FunctionaName:** is a Token (that is not a PrimitiveName or a Literal token or a PythonNumber)<br/>
+**A PrimitiveName is one of:** <br/>
 - +
 - - 
 - * 
@@ -103,14 +103,14 @@ P A R S E R: P-expression -> AST
 *A BSLlist is wrapper for the python list*
 
 
-Notes:
-*The parser will create an AST for P-expression whose original S-expression satisfies the context-free grammar of BSL.*
-   EX: A parser will not catch the following error: ['define', ['add', 'x', 'x', 'z'], ['+', 1, 3]]
-       because the repetition of 'x' is not context free. 
-   EX: It will catch the following error: ['define', ['f', 'x', 1, 'y'], 42]
-       because 1 is not a variable 
-   EX: It will catch the following error: ['define', ['f', 'x', '+', 'y'], 42]
-       because '+' is not a variable 
+Notes:<br />
+*The parser will create an AST for P-expression whose original S-expression satisfies the context-free grammar of BSL.*<br />
+   * EX: A parser will not catch the following error: ['define', ['add', 'x', 'x', 'z'], ['+', 1, 3]]
+       because the repetition of 'x' is not context free. <br />
+   * EX: It will catch the following error: ['define', ['f', 'x', 1, 'y'], 42]
+       because 1 is not a variable <br />
+   * EX: It will catch the following error: ['define', ['f', 'x', '+', 'y'], 42]
+       because '+' is not a variable <br />
        
 
 | S-expression |        AST        |
