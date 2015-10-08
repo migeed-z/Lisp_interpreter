@@ -16,3 +16,7 @@ class BSLDef:
         self.params = params
         self.name = name
 
+
+    def eval(self, s):
+        
+

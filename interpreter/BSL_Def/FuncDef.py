@@ -22,6 +22,11 @@ class FuncDef(BSLDef):
         self.body = body
 
     def eval(ast,s):
+        """
+        Updates the current scope with this definition
+        :param s: Current scope
+        :return: A list containing the new scope in the 2nd position
+        """
         if not ast.params:
             return [None,s.extend(ast.name, ast.body.eval_internal(s))]
         else:
