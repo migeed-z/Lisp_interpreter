@@ -105,7 +105,7 @@ def test_equal():
     assert c.equals_3_true.eval_internal(c.defs1) == Boolean(False)
 
 def test_str():
-    assert str(c.value_posn) == "Structure(posn, ('x', 'y'))"
+    assert str(c.value_posn) == "(posn, 1,2)"
     assert str(c.varx) == 'Variable(x)'
     assert str(Num(3)) == '3'
     assert str(c.posn_def) == "StructureDefinition(posn, ('y', 'x'))"

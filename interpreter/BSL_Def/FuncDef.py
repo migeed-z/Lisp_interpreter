@@ -1,7 +1,6 @@
 import copy
 import sys
 import DirPaths
-
 from BSLError import BSLError
 from BSLDef import BSLDef
 
@@ -22,17 +21,12 @@ class FuncDef(BSLDef):
         self.body = body
 
     def eval(ast,s):
-        """
-        Updates the current scope with this definition
-        :param s: Current scope
-        :return: A list containing the new scope in the 2nd position
-        """
         if not ast.params:
             return [None,s.extend(ast.name, ast.body.eval_internal(s))]
         else:
-           return [None,ast.update_func(s)]
+           return [None,ast.update(s)]
 
-    def update_func(self, defs):
+    def update(self, defs):
         """
         Updates the current scope with this function definition
         :param defs: Current scope
@@ -40,7 +34,6 @@ class FuncDef(BSLDef):
         """
         name = self.name
         new_defs = defs.extend(name, self)
-
         return new_defs
 
     def apply(self, defs, vals):

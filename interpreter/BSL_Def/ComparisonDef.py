@@ -1,6 +1,9 @@
 import DirPaths
+import operator
 from BSLError import BSLError
 from Num import Num
+from Boolean import Boolean
+from BSLExpr import BSLExpr
 #from PrimDef import PrimDef
 
 class ComparisonDef():
@@ -33,3 +36,23 @@ class ComparisonDef():
         for arg in args:
             if not isinstance(arg, type):
                 raise BSLError('Arguments are of incorrect type.')
+
+    def update(self, defs):
+        """
+        :param defs:
+        :return:
+        """
+        add = defs.extend('+', ComparisonDef(lambda *args: reduce(operator.__add__, (arg.num for arg in args)), Num, Num))
+        sub = add.extend('-', ComparisonDef(lambda *args: (-1 * args[0].num if len(args) == 1 else
+                                                           reduce(operator.__sub__, (arg.num for arg in args))), Num, Num))
+        mul = sub.extend('*',ComparisonDef(lambda *args: reduce(operator.__mul__, (arg.num for arg in args)), Num, Num))
+        div = mul.extend('/', ComparisonDef(lambda *args: reduce(operator.__div__, (arg.num for arg in args)), Num, Num))
+        exp = div.extend('^', ComparisonDef((lambda x, y: pow(x,y)), Num, Num))
+        equals = exp.extend('=', ComparisonDef((lambda x, y: x == y), Boolean, BSLExpr))
+        bigger_than = equals.extend('>', ComparisonDef((lambda x, y: x > y), Boolean, Num))
+        smaller_than = bigger_than.extend('<', ComparisonDef((lambda x, y: x < y), Boolean, Num))
+        return smaller_than
+
+
+
+

@@ -3,6 +3,7 @@ from ConstructorDef import ConstructorDef
 from PredicateDef import PredicateDef
 from SelectorDef import SelectorDef
 
+
 class StructDef(BSLDef):
     """
     To represent (define-struct name (param ...))
@@ -15,9 +16,9 @@ class StructDef(BSLDef):
         BSLDef.__init__(self, name, params)
 
     def eval(ast,s):
-        return [None,ast.update_scope(s)]
+        return [None,ast.update(s)]
 
-    def update_scope(self, defs):
+    def update(self, defs):
         """
         Extends the scope with new definitions for make-name, name_param, ..., is_name
         (name-param (make-name ... p ...)) = p

@@ -1,5 +1,6 @@
 import DirPaths
 from BSLError import BSLError
+from abc import abstractmethod
 
 class BSLDef:
     """
@@ -16,7 +17,11 @@ class BSLDef:
         self.params = params
         self.name = name
 
-
+    @abstractmethod
     def eval(self, s):
-        
-
+        """
+        evaluates this expression by updating the current scope to new_scope
+        :param s: current scope
+        :return: [None, new_scope]
+        """
+        raise NotImplementedError('This method is not yet implemented')

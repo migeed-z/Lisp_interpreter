@@ -81,16 +81,16 @@ class Constants:
 
     defs1 = Scope(()).add_definitions()
     defs1 = defs1.extend('x', Num(1)).extend('y', Num(4))
-    defs1 = func_def_varx.update_func(defs1)
-    defs1 = funcDef2.update_func(defs1)
-    defs1 = func_def_add_varx_vary.update_func(defs1)
+    defs1 = func_def_varx.update(defs1)
+    defs1 = funcDef2.update(defs1)
+    defs1 = func_def_add_varx_vary.update(defs1)
 
     #structs
     posn_def = StructDef('posn', ['x', 'y'])
-    defs1 = posn_def.update_scope(defs1)
+    defs1 = posn_def.update(defs1)
 
     zeina_def = StructDef('zeina', ['x', 'y'])
-    defs1 = zeina_def.update_scope(defs1)
+    defs1 = zeina_def.update(defs1)
 
     make_zeina = FuncApplication('make-posn', BSLlist([Num(10), Num(20)]))
 
