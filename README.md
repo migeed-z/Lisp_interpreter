@@ -4,12 +4,12 @@ This project implements an evaluator for a small subset of Racket, called Beginn
 The context-free grammar of BSL is defined as follows: 
 
 A BSLProgram is a sequence of BSLdefinitions followed by a BSLexpression. 
-A BSLDefiition is one of: 
+**A BSLDefiition is one of:** 
 - (define (Variable Variable ...) BSLexpression)
 - (define-struct Variable (Variable ...))
 - (define Variable BSLexpression)
 
-A BSLexpressions is one of: 
+**A BSLexpressions is one of: **
 - PythonNumber  | Num(PythonNumber)
 - true          | Boolean(true)
 - false         | Boolean(false)
@@ -19,9 +19,9 @@ A BSLexpressions is one of:
 - (if BSLExpression BSLexpression BSLexpression)
 - (and BSLExpression BSLExpression BSLExpression ...)
 
-A Variable is a Token (that is not a PrimitiveName or a Literal token or a PythonNumber)
-A FunctionaName is a Token (that is not a PrimitiveName or a Literal token or a PythonNumber)
-A PrimitiveName is one of: 
+**A Variable:** is a Token (that is not a PrimitiveName or a Literal token or a PythonNumber)
+**A FunctionaName:** is a Token (that is not a PrimitiveName or a Literal token or a PythonNumber)
+**A PrimitiveName is one of:** 
 - +
 - - 
 - * 
@@ -30,34 +30,38 @@ A PrimitiveName is one of:
 - <
 - = 
 
-The LiteralTokens are: define, define-struct, if, and
+**The LiteralTokens are:**
+- define
+- define-struct
+- if
+- and
 
-A Token is a sequence of characters not including '(', ')' and whitespace (' ')
-All whitespace between tokens and ( and ) is ignored. 
+**A Token:** is a sequence of characters not including '(', ')' and whitespace (' ')
+*All whitespace between tokens and ( and ) is ignored.*
   
   ----------------------------------------
 
 R E A D E R: -> P-expression
-reads one S-expression from STDIN 
+*reads one S-expression from STDIN* 
 
-An S-expression has the following textual representation:
+**An S-expression has the following textual representation:**
 - Token
 - OpenParen 
 
-An OpenParen is 
+**An OpenParen is:** 
  '(' followed by Seq
 
-A Seq is one of:
+**A Seq is one of:**
 - ')'
 - S-expression followed by Seq
 
 
 
-An P-expression is one of
+**An P-expression is one of:**
 - Atom
 - [Listof P-expression]
 
-An Atom is:
+**An Atom is:**
 - Any sequence of characters 
 
 | S-expression |    P-expression     |
@@ -69,7 +73,7 @@ _____________________________________________
 
 P A R S E R: P-expression -> AST 
 
-An AST is one of:
+**An AST is one of:**
 - BSLDef(String, [Listof String])
 - IsClsDef
 - BSLExpr
@@ -78,17 +82,17 @@ An AST is one of:
                 Value)  %% but not Structure 
 
 
-A BSLDef is one of:
+**A BSLDef is one of:**
 - StructDef 
 - ConstructorDef
 - SelectorDef
 - PredicateDef
 - FunctionDef(BSLExpr)
 
-An IsClsDef is one of:
+**An IsClsDef is one of:**
 - IsBooleanDef
 
-A BSLExpr is one of:
+**A BSLExpr is one of:**
 - And(BSLlist)
 - Boolean(bool)
 - FunctionApplication(String, BSLlist)
@@ -96,12 +100,11 @@ A BSLExpr is one of:
 - Num((int or complex or float))
 - Variable(String)
 
-A BSLlist is wrapper for the python list
+*A BSLlist is wrapper for the python list*
 
 
 Notes:
-
--- The parser will create an AST for P-expression whose original S-expression satisfies the context-free grammar of BSL.
+*The parser will create an AST for P-expression whose original S-expression satisfies the context-free grammar of BSL.*
    EX: A parser will not catch the following error: ['define', ['add', 'x', 'x', 'z'], ['+', 1, 3]]
        because the repetition of 'x' is not context free. 
    EX: It will catch the following error: ['define', ['f', 'x', 1, 'y'], 42]
@@ -121,7 +124,7 @@ _____________________________________________
 
 I N T E R P R E T E R: AST -> Value
 
-A Value is one of:
+**A Value is one of:**
 - Boolean(bool)
 - Num(PythonNumber)
 - Structure(String, [Listof (String, Value)])
