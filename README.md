@@ -130,8 +130,8 @@ I N T E R P R E T E R: AST -> Value
 - Num(PythonNumber)
 - Structure(String, [Listof (String, Value)])
 
-For StructDef and FuncDef, eval does not exist. 
-For AST that come from BSLexpr, the following table explains eval: 
+For StructDef and FuncDef, eval_internal does not exist. 
+For AST that come from BSLexpr, the following table explains eval_internal: 
 
 | Expression ASTs      |  Value  |  
 |----------------------|---------|
