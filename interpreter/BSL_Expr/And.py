@@ -14,11 +14,11 @@ class And(BSLExpr):
         """
         self.sl = sl
 
-    def eval(self, defs):
+    def eval_internal(self, defs):
         list = self.sl.sl
 
         for element in list:
-            result = element.eval(defs)
+            result = element.eval_internal(defs)
             if not isinstance(result, Boolean):
                 raise BSLError('Not a boolean')
 

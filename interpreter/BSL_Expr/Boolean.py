@@ -11,7 +11,7 @@ class Boolean(BSLExpr):
         """
         self.boolean = boolean
 
-    def eval(self, defs):
+    def eval_internal(self, defs):
         return self
 
     def __eq__(self, other):

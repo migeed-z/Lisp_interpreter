@@ -16,7 +16,7 @@ Subset of AST for which the interpreter produces a Value
 | FunctionApplication  | Value   |  
 | If                   | Value   | 
 
-Values produced from calling the eval() method on a FunctionApplication based on the given Definition
+Values produced from calling the eval_internal() method on a FunctionApplication based on the given Definition
 
 |    Definition    |    Value    |
 |------------------|-------------|

@@ -15,7 +15,7 @@ class StructDef(BSLDef):
         BSLDef.__init__(self, name, params)
 
     def eval(ast,s):
-        return ast.update_scope(s)
+        return [None,ast.update_scope(s)]
 
     def update_scope(self, defs):
         """

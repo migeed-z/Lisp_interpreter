@@ -23,9 +23,9 @@ class FuncDef(BSLDef):
 
     def eval(ast,s):
         if not ast.params:
-            return s.extend(ast.name, ast.body.eval(s))
+            return [None,s.extend(ast.name, ast.body.eval_internal(s))]
         else:
-           return ast.update_func(s)
+           return [None,ast.update_func(s)]
 
     def update_func(self, defs):
         """
@@ -49,7 +49,7 @@ class FuncDef(BSLDef):
         params = copy.copy(self.params)
         defs = self.helper_extend(defs, params, vals)
 
-        return body.eval(defs)
+        return body.eval_internal(defs)
 
     def helper_extend(self, defs, params, vals):
         """

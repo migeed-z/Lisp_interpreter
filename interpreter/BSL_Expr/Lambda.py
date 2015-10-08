@@ -13,6 +13,6 @@ class Lambda(BSLExpr):
         self.func_def = func_def
         self.func_app = func_app
 
-    def eval(self, defs):
+    def eval_internal(self, defs):
         new_defs = defs.extend('lambda', self.func_def)
-        return self.func_app.eval(new_defs)
+        return self.func_app.eval_internal(new_defs)

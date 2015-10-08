@@ -8,24 +8,7 @@ from FuncDef import FuncDef
 from StructDef import StructDef
 from Scope import Scope
 
-
-def read():
-    """
-    Reads a line from the IP and instantiates a Reader using the IP
-    and returns the resulting p-expression
-    :return: p_expr
-    """
-    try:
-        ip = read_lines()
-        r = Reader(ip)
-        p_expr = r.reader()
-        return p_expr
-
-    except:
-        print ('Reader Error')
-
-
-def read_loop():
+def read_eval_print_loop():
     """
     read S-expression, parse and evaluate, print, REPEAT
     :return: None
@@ -36,22 +19,34 @@ def read_loop():
 
         try:
             p_expr = read()
-            if not p_expr:
+            if p_expr == False:
                 break
-
+            elif not p_expr:
+                continue
             ast = parse(p_expr)
-
-            if isinstance(ast, FuncDef) or isinstance(ast,StructDef):
-                s = ast.eval(s) #S IS A SCOPE
-            else:
-                try:
-                    x = ast.eval(s) #X IS A VALUE
-                    print str(x)
-                except BSLError:
-                    print 'Interpreter Error'
-
+            [the_value,s] = ast.eval(s)
+            if the_value:
+                print str(the_value)
         except ParserError:
             print ('bla bla bla')
+
+
+def read():
+    """
+    Reads a line from the IP and instantiates a Reader using the IP
+    and returns the resulting p-expression
+    :return: p_expr
+    """
+    try:
+        ip = read_lines()
+        if not ip:
+            return False
+        r = Reader(ip)
+        p_expr = r.reader()
+        return p_expr
+
+    except:
+        return None
 
 
 def read_lines():
@@ -60,15 +55,21 @@ def read_lines():
     :return: List containing input seperated by space
     """
     input_list = []
+    stdout.write("> ")
+    stdout.flush()
 
     while True:
-        stdout.write("> ")
-        stdout.flush()
-        userinput = raw_input()
-        input_list.append(userinput)
-        all_input = ' '.join(input_list)
-        if has_equal_parens(all_input):
-            return all_input
+        try:
+            userinput = raw_input()
+            input_list.append(userinput)
+            all_input = ' '.join(input_list)
+            if has_equal_parens(all_input):
+                return all_input
+
+        except (EOFError):
+            return None
+
+
 
 def has_equal_parens(line):
     """
@@ -88,7 +89,7 @@ def has_equal_parens(line):
         return True
 
 
-print("Zeina's BSL intepreter, v.006\n")
-read_loop()
+print("Zeina's BSL intepreter, v.06\n")
+read_eval_print_loop()
 
 

@@ -1,4 +1,9 @@
 
+- update bashrc so we can call read.py without the path (done)
+- fix github
+- introduce lambda
+
+
 
 
 issues:

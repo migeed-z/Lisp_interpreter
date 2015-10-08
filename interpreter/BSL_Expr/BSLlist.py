@@ -16,7 +16,7 @@ class BSLlist:
         """
         result = []
         for sexpr in self.sl:
-            result.append(sexpr.eval(defs))
+            result.append(sexpr.eval_internal(defs))
 
         return result
 

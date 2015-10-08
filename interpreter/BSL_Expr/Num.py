@@ -15,7 +15,7 @@ class Num(BSLExpr):
         self.num = self.validate(num)
         #self.num = num
 
-    def eval(self, defs):
+    def eval_internal(self, defs):
         return self
 
     def validate(self, num):

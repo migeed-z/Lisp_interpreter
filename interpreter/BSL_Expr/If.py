@@ -15,14 +15,14 @@ class If(BSLExpr):
         self.if_branch = sl.sl[1]
         self.else_branch = sl.sl[2]
 
-    def eval(self, defs):
+    def eval_internal(self, defs):
 
         self.validate()
 
-        if self.test.eval(defs).boolean:
-            return self.if_branch.eval(defs)
+        if self.test.eval_internal(defs).boolean:
+            return self.if_branch.eval_internal(defs)
         else:
-            return self.else_branch.eval(defs)
+            return self.else_branch.eval_internal(defs)
 
     def validate(self):
         if not isinstance(self.test, BSLExpr):

@@ -23,7 +23,9 @@ class Structure:
         return True
 
     def __str__(self):
-        vals = ()
-        for v in self.tuples:
-            vals = vals + (v[0],)
-        return '%s(%s, %s)' % ('Structure', self.name, str(vals))
+        z = self.tuples[0]
+        vals = str(z[1])
+        for v in self.tuples[1:]:
+            x = str(v[1])
+            vals = vals + "," + x
+        return '(%s, %s)' % (self.name, vals)
