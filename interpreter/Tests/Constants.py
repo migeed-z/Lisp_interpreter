@@ -14,7 +14,6 @@ from Scope import Scope
 from Structure import Structure
 from StructDef import StructDef
 from And import And
-from Lambda import Lambda
 from Boolean import Boolean
 
 
@@ -146,5 +145,3 @@ class Constants:
     if_1 = If(BSLlist([equals34, Num(3), Num(4)]))
     if_2 = If(BSLlist([equals33, Num(3), Num(4)]))
 
-    #lambda
-    lambdaexpr1 = Lambda(FuncDef("lambda", ["x"], Variable("x")), FuncApplication('lambda', BSLlist([Num(4)])))

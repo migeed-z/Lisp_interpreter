@@ -9,8 +9,7 @@ from BSLlist import BSLlist
 from FuncDef import FuncDef
 from FuncApplication import FuncApplication
 from StructDef import StructDef
-from Lambda import Lambda
-from Parser import token_parser, exp_parser, func_def_parser, struct_def_parser, parse, lambda_parser
+from Parser import token_parser, exp_parser, func_def_parser, struct_def_parser, parse
 from ParserError import ParserError
 
 import pytest

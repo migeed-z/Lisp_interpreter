@@ -7,7 +7,6 @@ sys.path.insert(0, '/Users/zeinamigeed/Lisp_interpreter/interpreter/Other')
 from BSLlist import BSLlist
 from Variable import Variable
 from BSLError import BSLError
-from Lambda import Lambda
 from Num import Num
 from Boolean import Boolean
 from Constants import Constants as c
