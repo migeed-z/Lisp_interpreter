@@ -1,6 +1,5 @@
 import DirPaths
 from BSLError import BSLError
-from Closure import Closure
 from abc import abstractmethod
 
 class BSLDef:
@@ -24,7 +23,7 @@ class BSLDef:
         :param s: current scope
         :return: [None, new_scope]
         """
-        return Closure(None,self.update(s))
+        return [None,self.update(s)]
 
     @abstractmethod
     def update(self, s):

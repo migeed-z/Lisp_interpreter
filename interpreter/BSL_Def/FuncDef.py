@@ -3,7 +3,6 @@ import sys
 import DirPaths
 from BSLError import BSLError
 from BSLDef import BSLDef
-from Closure import Closure
 
 
 class FuncDef(BSLDef):
@@ -23,9 +22,9 @@ class FuncDef(BSLDef):
 
     def eval(ast,s):
         if not ast.params:
-            return Closure(ast,s.extend(ast.name, ast.body.eval_internal(s)))
+            return [None,s.extend(ast.name, ast.body.eval_internal(s))]
         else:
-            return Closure(ast, ast.update(s))
+            return [None,ast.update(s)]
 
     def update(self, defs):
         """
@@ -70,7 +69,6 @@ class FuncDef(BSLDef):
             defs = defs.extend(name, val)
 
         return defs
-
 
     def __eq__(self, other):
 

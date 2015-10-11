@@ -25,6 +25,7 @@ def test_eval_empty():
 def test_eval_add():
     assert c.expradd1.eval_internal(c.defs1) == Num(1)
     assert c.expradd123.eval_internal(c.defs1) == Num(6)
+    assert c.expradd123.eval(c.defs1) == [Num(6), c.defs1]
 
     with pytest.raises(BSLError):
         c.expradderror.eval_internal(c.defs1)
