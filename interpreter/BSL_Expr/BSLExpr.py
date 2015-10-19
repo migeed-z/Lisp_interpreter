@@ -9,7 +9,7 @@ class BSLExpr:
             return [ast.eval_internal(s),s] #X IS A VALUE
         except BSLError:
             print 'Interpreter Error'
-            return [None,s]
+            return [None, s]
 
     @abstractmethod
     def eval_internal(self, defs):

@@ -9,7 +9,8 @@ from BSLlist import BSLlist
 from FuncDef import FuncDef
 from FuncApplication import FuncApplication
 from StructDef import StructDef
-from Parser import token_parser, exp_parser, func_def_parser, struct_def_parser, parse
+from LambdaExpr import LambdaExpr
+from Parser import token_parser, exp_parser, func_def_parser, struct_def_parser, parse, parse_lambda
 from ParserError import ParserError
 
 import pytest
@@ -164,6 +165,5 @@ class Test_parser:
         assert exp_parser(['if', 'false', ['/', 1, 0], 9]) == \
                If(BSLlist([Boolean(False), FuncApplication('/', BSLlist([Num(1), Num(0)])), Num(9)]))
 
-    # def test_parser(self):
-    #     assert lambda_parser([['lambda', 'x', ['x'], 1]]) == \
-    #            Lambda(FuncDef('lambda',['x'] , Variable('x')), FuncApplication('lambda', BSLlist([Num(1)])))
+    def test_lambda(self):
+        assert parse_lambda(['lambda', ['x'], 'x']) == LambdaExpr(['x'], Variable('x'))

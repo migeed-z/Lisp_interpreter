@@ -7,13 +7,15 @@ from BSLError import BSLError
 from FuncDef import FuncDef
 from StructDef import StructDef
 from Scope import Scope
+from Global_Scope import foo
+
 
 def read_eval_print_loop():
     """
     read S-expression, parse and evaluate, print, REPEAT
     :return: None
     """
-    s = Scope([]).add_definitions()
+    global_s = foo
 
     while True:
 
@@ -24,7 +26,8 @@ def read_eval_print_loop():
             elif not p_expr:
                 continue
             ast = parse(p_expr)
-            [the_value,s] = ast.eval(s)
+            [the_value,s] = ast.eval(global_s.getter())
+            global_s.setter(s)
             if the_value:
                 print str(the_value)
         except ParserError:

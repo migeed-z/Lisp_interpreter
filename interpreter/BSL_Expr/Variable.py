@@ -2,8 +2,7 @@ import DirPaths
 
 from BSLExpr import BSLExpr
 from BSLError import BSLError
-from Num import Num
-
+from Global_Scope import foo
 
 class Variable(BSLExpr):
     """
@@ -19,7 +18,11 @@ class Variable(BSLExpr):
     def eval_internal(self, defs):
         val = defs.get(self.name)
         if not val:
-            raise BSLError('Variable not defined')
+            val_again = foo.getter().get(self.name)
+            if not val_again:
+                raise BSLError('Variable not defined')
+            else:
+                return val_again
         else:
             return val
 

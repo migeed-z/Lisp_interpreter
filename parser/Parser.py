@@ -1,6 +1,6 @@
 import DirPaths
 import sys
-sys.path.insert(0, '/Users/ZeinaMigeed/Lisp_interpreter/interpreter/BSL_Expr')
+sys.path.insert(0, '/Users/zeinamigeed/Lisp_interpreter/interpreter/BSL_Expr')
 
 from Num import Num
 from Boolean import Boolean
@@ -10,6 +10,7 @@ from Variable import Variable
 from BSLlist import BSLlist
 from FuncDef import FuncDef
 from FuncApplication import FuncApplication
+from LambdaExpr import LambdaExpr
 from StructDef import StructDef
 from ParserError import ParserError
 
@@ -103,11 +104,23 @@ def exp_parser(p):
     elif p[0] == 'if':
         return parse_operation(p, 3, If)
 
+    elif p[0] == 'lambda':
+        return parse_lambda(p)
+
     elif isinstance(p[0], str) and not is_reserved(p[0]):
         return parse_operation(p, 0)
 
     else:
         return False
+
+def parse_lambda(p):
+    if len(p) != 3:
+        raise ParserError('Lambda expr error')
+
+    else:
+        list_of_params = parse_params(p[1])
+        body = exp_parser(p[2])
+        return LambdaExpr(list_of_params, body)
 
 def struct_def_parser(p):
     """
@@ -148,7 +161,6 @@ def func_def_parser(p):
     elif len(p) != 3:
         raise ParserError('p-expression must have length >= 3')
 
-
     elif isinstance(p[1], str):
         #Here, we know it is a constant
         if is_reserved(p[1]):
@@ -156,18 +168,12 @@ def func_def_parser(p):
         else:
             body = exp_parser(p[2])
             return FuncDef(p[1], [], body)
-
-    #Here we know the function has params
-    elif isinstance(p[1], list):
-        lst = p[1] #name and params
-        if not is_list_of_proper_names(lst):
-            raise ParserError('All names must be strings')
-
-        else:
-            name = lst[0]
-            params = lst[1:]
-            body = exp_parser(p[2])
-            return FuncDef(name, params, body)
+    else:
+        lst = parse_params(p[1])
+        name = lst[0]
+        params = lst[1:]
+        body = exp_parser(p[2])
+        return FuncDef(name, params, body)
 
 
 def is_list_of_proper_names(expr):
@@ -252,3 +258,14 @@ def parse_expr_list(lst):
             raise ParserError('expects s-expressions in the list of arguments')
         result.append(element_as_bsl_exp)
     return result
+
+
+def parse_params(a_list):
+    """
+    :param a_list: Some list
+    """
+    if isinstance(a_list, list):
+        lst = a_list #name and params
+        if not is_list_of_proper_names(lst):
+            raise ParserError('All names must be strings')
+    return a_list

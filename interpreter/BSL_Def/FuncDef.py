@@ -2,6 +2,7 @@ import copy
 import sys
 import DirPaths
 from BSLError import BSLError
+from Binding import Binding
 from BSLDef import BSLDef
 
 
