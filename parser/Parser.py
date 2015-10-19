@@ -167,13 +167,13 @@ def func_def_parser(p):
             raise ParserError('Variable cannot be a reserved word')
         else:
             body = exp_parser(p[2])
-            return FuncDef(p[1], [], body)
+            return FuncDef(p[1], LambdaExpr([], body))
     else:
         lst = parse_params(p[1])
         name = lst[0]
         params = lst[1:]
         body = exp_parser(p[2])
-        return FuncDef(name, params, body)
+        return FuncDef(name, LambdaExpr (params, body))
 
 
 def is_list_of_proper_names(expr):

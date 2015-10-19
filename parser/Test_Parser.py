@@ -96,10 +96,10 @@ class Test_parser:
     def test_function_definition(self):
 
         assert func_def_parser(['define', ['add', 'x', 'y', 'z'], ['+', 1, 3]]) == \
-               (FuncDef('add', ['x', 'y', 'z'], FuncApplication('+', BSLlist([Num(1), Num(3)]))))
+               FuncDef('add', LambdaExpr(['x', 'y', 'z'], FuncApplication('+', BSLlist([Num(1), Num(3)]))))
 
         assert func_def_parser(['define', 'add', ['+', 1, 3]]) == \
-               (FuncDef('add', [], FuncApplication('+', BSLlist([Num(1), Num(3)]))))
+               (FuncDef('add', LambdaExpr([], FuncApplication('+', BSLlist([Num(1), Num(3)])))))
 
     def test_struct_definition(self):
 

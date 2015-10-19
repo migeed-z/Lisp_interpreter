@@ -1,31 +1,27 @@
 import copy
 import sys
 import DirPaths
+from LambdaExpr import LambdaExpr
 from BSLError import BSLError
 from Binding import Binding
 from BSLDef import BSLDef
 
 
-class FuncDef(BSLDef):
+class FuncDef(Binding):
 
     """
     To represent function definitions
     """
 
-    def __init__(self, name, params, body):
-        """
-        :param name: String to represent the name of the function
-        :param body: BSLexpr
-        :param params: [String]
-        """
-        BSLDef.__init__(self, name, params)
-        self.body = body
+    def __init__(self, name, expr):
+        Binding.__init__(self, name, expr)
+
 
     def eval(ast,s):
-        if not ast.params:
-            return [None,s.extend(ast.name, ast.body.eval_internal(s))]
+        if not ast.expr.params:
+            return [None,s.extend(ast.name, ast.expr.body.eval_internal(s))]
         else:
-            return [None,ast.update(s)]
+            return [None, ast.update(s)]
 
     def update(self, defs):
         """
@@ -44,8 +40,8 @@ class FuncDef(BSLDef):
         :param sl: [BSLExpr]
         :return: Value
         """
-        body = self.body
-        params = copy.copy(self.params)
+        body = self.expr.body
+        params = copy.copy(self.expr.params)
         defs = self.helper_extend(defs, params, vals)
 
         return body.eval_internal(defs)
@@ -76,6 +72,7 @@ class FuncDef(BSLDef):
         if not isinstance(other, FuncDef):
             return False
         else:
-            return other.name == self.name and other.params == self.params and (other.body).__eq__(self.body)
+            return other.name == self.name and other.expr.params == self.expr.params and \
+                   (other.expr.body).__eq__(self.expr.body)
 
 
