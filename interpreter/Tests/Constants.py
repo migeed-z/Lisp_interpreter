@@ -15,6 +15,7 @@ from Structure import Structure
 from StructDef import StructDef
 from And import And
 from Boolean import Boolean
+from LambdaExpr import LambdaExpr
 
 
 class Constants:
@@ -61,18 +62,18 @@ class Constants:
     expsub_expraddx23_expradd3 = FuncApplication('-', BSLlist([expraddx23, expraddy3]))
 
     #functions
-    func_def_varx = FuncDef("f", ["x"], Variable("x"))
+    func_def_varx = FuncDef("f", LambdaExpr(["x"], Variable("x")))
     func_app_varx = FuncApplication('f', BSLlist([Num(4)]))
 
     list_func_app_varx = BSLlist([func_app_varx, Num(2)])
     expradd_func_app_varx = FuncApplication('+', list_func_app_varx)
 
-    funcDef2 = FuncDef('g',[], expradd_func_app_varx)
+    funcDef2 = FuncDef('g',LambdaExpr([], expradd_func_app_varx))
     func_app_emptylist = FuncApplication('g', BSLlist([])) ###############
 
     expradd_varx_vary = FuncApplication('+', BSLlist([varx, vary]))
 
-    func_def_add_varx_vary = FuncDef('z', ['x', 'y'], expradd_varx_vary)
+    func_def_add_varx_vary = FuncDef('z', LambdaExpr(['x', 'y'], expradd_varx_vary))
     func_app_varx_vary = FuncApplication('z', BSLlist([Num(7), Num(7)]))
     func_app_error_777 = FuncApplication('z', BSLlist([Num(7), Num(7), Num(7)]))
 
