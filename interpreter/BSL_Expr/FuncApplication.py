@@ -15,7 +15,7 @@ class FuncApplication(BSLExpr):
 
     def eval_internal(self, defs):
         vals = self.sl.helper_eval(defs)
-        definition = defs.get(self.name)
+        definition = self.name.eval_internal(defs)
         return definition.apply(defs, vals)
 
     def __eq__(self, other):

@@ -3,10 +3,6 @@ from sys import stdin, stdout
 from Reader import Reader
 from Parser import parse
 from ParserError import ParserError
-from BSLError import BSLError
-from FuncDef import FuncDef
-from StructDef import StructDef
-from Scope import Scope
 from Global_Scope import foo
 
 
@@ -21,6 +17,7 @@ def read_eval_print_loop():
 
         try:
             p_expr = read()
+            # print p_expr
             if p_expr == False:
                 break
             elif not p_expr:

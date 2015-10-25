@@ -6,7 +6,7 @@ class Global:
 
     def setter(self,s):
         self.global_scope = s
-        #print('helo')
+        # print str(self.global_scope)
 
     def getter(self):
         #print('ggg')

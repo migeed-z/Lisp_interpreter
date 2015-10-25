@@ -22,6 +22,9 @@ class Scope:
         """
         self.defs = defs
 
+    def __str__(self):
+        return self.defs[0]
+
     def extend(self, name, val):
         """
         Expends this Scope with name and val

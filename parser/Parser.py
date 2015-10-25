@@ -26,7 +26,7 @@ def parse(p):
         return exp
 
     func_def = func_def_parser(p)
-    if func_def_parser(p):
+    if func_def:
         return func_def
 
     struct_def = struct_def_parser(p)
@@ -107,7 +107,7 @@ def exp_parser(p):
     elif p[0] == 'lambda':
         return parse_lambda(p)
 
-    elif isinstance(p[0], str) and not is_reserved(p[0]):
+    elif not is_reserved(p[0]):
         return parse_operation(p, 0)
 
     else:
@@ -121,6 +121,8 @@ def parse_lambda(p):
         list_of_params = parse_params(p[1])
         body = exp_parser(p[2])
         return LambdaExpr(list_of_params, body)
+
+
 
 def struct_def_parser(p):
     """
@@ -151,7 +153,8 @@ def struct_def_parser(p):
 
 def func_def_parser(p):
     """
-    Parses Function Definitions
+    Parses Function Definitions ['define',[f x ...], p-body]
+    generates BSL_Def f is bound to (lambda (x ...) exp-body)
     :param p: P-expression
     :return: FuncDefinition
     """
@@ -219,8 +222,8 @@ def is_reserved(word):
     :param word: String representing the variable
     :return: True if word is reserved and False otherwise
     """
-    return word == 'define' or word == '+' or word == '-' or word == '/' or word == '*' or word == 'define-struct' \
-           or word == 'and' or word == 'if'
+    lorw = ['define','define-struct','if','and','or']
+    return word in lorw
 
 
 def parse_operation(p, n, expr=None):
@@ -232,7 +235,7 @@ def parse_operation(p, n, expr=None):
     :param expr: if this is an expr, not a function application, set this value to the class
     :return: FuncApplication or BSLExpr
     """
-    name = p.pop(0)
+    name = exp_parser(p.pop(0))
 
     if len(p) < n:
         raise ParserError('expects at least %s argument, but found none' % str(n))

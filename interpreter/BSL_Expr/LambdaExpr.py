@@ -23,6 +23,7 @@ class LambdaExpr(BSLExpr):
         """
         return Closure(self, defs)
 
+
     def __eq__(self, other):
         if not isinstance(other, LambdaExpr):
             return False

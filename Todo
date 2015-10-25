@@ -1,46 +1,11 @@
-
-- update bashrc so we can call read.py without the path (done)
-- fix github (done)
-- Abstract over eval & update - (done)
-- Fix true/false in predicates. Function did not use our booleans. (done)
-- introduce lambda
-
-
-
-
 issues:
 (/ 2.0 2)
 hitting enter multiple times exits the program!!
 
 
 
-1) fix parser (see racket file) and make big parser -- ok (with issues)
-2) fix tables (as in visually)
-3) make lambda
-4) print readme and apply new changes
-
-
 TODO:
 fix operations
 wrap values: issue with zero divisiton
 
-
-#TODO for reader
--- Test for Read -- next time!!!
-
-#TODO for parser
-- find a datatype for strings
-
-
-#TODO:
-
-$ cat my_interpreter_in_bsl_for_bsl > ./Read.py
-# in my_interpre ..
-# ;; RepresentationOfBsLExpression -> Number
-# (define (evaluator e)
-#     ...)
-# (evaluator (make-posn "+" (make-posn 1 (make-posn 1 EMPTY))))
-# how do you represent (+ 1 1)
-# in your Python interpreter you use Add([Num(1),NUm(1)])
-# what do you use in your BSL interpreter, the one you write in YOUR bsl
 
