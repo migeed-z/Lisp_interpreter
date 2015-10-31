@@ -169,14 +169,18 @@ def func_def_parser(p):
         if is_reserved(p[1]):
             raise ParserError('Variable cannot be a reserved word')
         else:
-            body = exp_parser(p[2])
-            return FuncDef(p[1], LambdaExpr([], body))
+            # deals with (define x 3)
+            # deals with (define x (lambda (y) y))
+            name = p[1]
+            rhs = exp_parser(p[2])
+            return FuncDef(name, rhs)
     else:
+        # deals with (define (f x ...) e)
+        # as if it were (define f (lambda (x ...) e))
         lst = parse_params(p[1])
         name = lst[0]
-        params = lst[1:]
-        body = exp_parser(p[2])
-        return FuncDef(name, LambdaExpr (params, body))
+        rhs = LambdaExpr (lst[1:], exp_parser(p[2]))
+        return FuncDef(name, rhs)
 
 
 def is_list_of_proper_names(expr):
@@ -222,7 +226,7 @@ def is_reserved(word):
     :param word: String representing the variable
     :return: True if word is reserved and False otherwise
     """
-    lorw = ['define','define-struct','if','and','or']
+    lorw = ['define','define-struct']
     return word in lorw
 
 

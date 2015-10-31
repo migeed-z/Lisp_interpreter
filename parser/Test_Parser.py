@@ -22,84 +22,69 @@ class Test_parser:
     """
 
     def test_parse(self):
-        with pytest.raises(ParserError):
-            parse(['+', 1, [1, '+']])
-        assert parse(['+', 'a', 'b']) == FuncApplication('+', BSLlist([Variable('a'), Variable('b')]))
+        assert parse(['+', 1, [1, '+']]) == \
+               FuncApplication(Variable('+'), BSLlist([Num(1), FuncApplication(Num(1), BSLlist([Variable('+')]))]))
+
+        assert parse(['+', 1, 2]) == FuncApplication( Variable('+'), BSLlist([Num(1), Num(2)]))
         assert parse(['define-struct', 'posn', ['x', 'y']]) == (StructDef('posn', ['x', 'y']))
+        with pytest.raises(ParserError):
+            parse(exp_parser([]))
+
 
     def test_token(self):
         assert token_parser(42) == Num(42)
         assert token_parser('x') == Variable('x')
-
-        with pytest.raises(ParserError):
-            token_parser('+')
+        assert token_parser('+')  == Variable('+')
 
     def test_expr_parser(self):
-        assert exp_parser(['+', 'a', 'b']) == FuncApplication('+', BSLlist([Variable('a'), Variable('b')]))
-        assert not exp_parser([1])
-        assert not exp_parser([1, '+'])
-        assert not exp_parser([1, '+', 1])
-
-    def test_bsl_expr_error(self):
-
-        with pytest.raises(ParserError):
-            exp_parser([])
-
-        with pytest.raises(ParserError):
-            exp_parser('+')
-
-        with pytest.raises(ParserError):
-            exp_parser(['+', 1, [1, '+']])
+        assert exp_parser(['+', 'a', 'b']) == FuncApplication(Variable('+'), BSLlist([Variable('a'), Variable('b')]))
+        assert exp_parser([1]) == FuncApplication(Num(1), BSLlist([]))
+        assert exp_parser([1, '+', 1]) == FuncApplication(Num(1), BSLlist([Variable('+'), Num(1)]))
 
         with pytest.raises(ParserError):
             exp_parser('define')
 
         with pytest.raises(ParserError):
-            exp_parser(['+', '+', 1, 3])
-
-        with pytest.raises(ParserError):
             exp_parser(['-'])
 
     def test_add_bsl_expr(self):
-        assert exp_parser(['+']) == FuncApplication('+', BSLlist([]))
-        assert exp_parser(['+', 1]) == FuncApplication('+', BSLlist([ Num(1)]))
-        assert exp_parser(['+', 1, 1]) == FuncApplication('+', BSLlist([Num(1), Num(1)]))
-        assert exp_parser(['+', 1,['+', 1]]) == \
-               (FuncApplication('+', BSLlist([Num(1), FuncApplication('+', BSLlist([Num(1)]))])))
+        assert exp_parser(['+']) == FuncApplication(Variable('+'), BSLlist([]))
+        assert exp_parser(['+', 1]) == FuncApplication(Variable('+'), BSLlist([ Num(1)]))
+        assert exp_parser(['+', 1, 1]) == FuncApplication(Variable('+'), BSLlist([Num(1), Num(1)]))
+        assert exp_parser(['+', 1, '+', 1]) == \
+               FuncApplication(Variable('+'), BSLlist([Num(1), Variable('+'), Num(1)]))
 
     def test_mult_bsl_expr(self):
-        assert exp_parser(['*', 1, 1]) == (FuncApplication('*', BSLlist([Num(1), Num(1)])))
-        assert exp_parser(['*']) == (FuncApplication('*', BSLlist([])))
-        assert exp_parser(['*', 1, ['*', 1]]) == \
-               (FuncApplication('*', BSLlist([Num(1), FuncApplication('*', BSLlist([Num(1)]))])))
+        assert exp_parser(['*', 1, 1]) == (FuncApplication(Variable('*'), BSLlist([Num(1), Num(1)])))
+        assert exp_parser(['*']) == (FuncApplication(Variable('*'), BSLlist([])))
 
     def test_subtract_bsl_expr(self):
-        assert exp_parser(['-', 1, 1]) == (FuncApplication('-', BSLlist([Num(1), Num(1)])))
-
+        assert exp_parser(['-', 1, 1]) == (FuncApplication(Variable('-'), BSLlist([Num(1), Num(1)])))
         assert exp_parser(['-', 1,['-', 1]]) ==\
-               (FuncApplication('-', BSLlist([Num(1), FuncApplication('-', BSLlist([Num(1)]))])))
-        assert exp_parser(['-', 1]) == FuncApplication('-', BSLlist([Num(1)]))
+               (FuncApplication(Variable('-'), BSLlist([Num(1), FuncApplication(Variable('-'), BSLlist([Num(1)]))])))
+        assert exp_parser(['-', 1]) == FuncApplication(Variable('-'), BSLlist([Num(1)]))
 
     def test_divide_bsl_expr(self):
-        assert exp_parser(['/', 1, 1]) == (FuncApplication('/', BSLlist([Num(1), Num(1)])))
+        assert exp_parser(['/', 1, 1]) == (FuncApplication(Variable('/'), BSLlist([Num(1), Num(1)])))
         assert exp_parser(['/', 1,['-', 1]]) ==\
-               (FuncApplication('/', BSLlist([Num(1), FuncApplication('-', BSLlist([Num(1)]))])))
-        assert exp_parser(['/', 1]) == (FuncApplication('/', BSLlist([Num(1)])))
+               (FuncApplication(Variable('/'), BSLlist([Num(1), FuncApplication(Variable('-'), BSLlist([Num(1)]))])))
+        assert exp_parser(['/', 1]) == (FuncApplication(Variable('/'), BSLlist([Num(1)])))
+
 
     def test_composite_bsl_expr(self):
         assert exp_parser(['*', 1,['+', 1]]) == \
-               (FuncApplication('*', BSLlist([Num(1), FuncApplication('+', BSLlist([Num(1)]))])))
+               (FuncApplication(Variable('*'), BSLlist([Num(1), FuncApplication(Variable('+'), BSLlist([Num(1)]))])))
 
-        assert exp_parser(['*', 1, ['-', 2, 2], ['/', 1]]) == (FuncApplication('*', BSLlist([Num(1), FuncApplication('-', BSLlist([Num(2),
-                                                                            Num(2)])), FuncApplication('/', BSLlist([Num(1)]))])))
+        assert exp_parser(['*', 1, ['-', 2, 2], ['/', 1]]) == (FuncApplication(Variable('*'), BSLlist([Num(1), FuncApplication(Variable('-'), BSLlist([Num(2),
+                                                                            Num(2)])), FuncApplication(Variable('/'), BSLlist([Num(1)]))])))
 
     def test_function_definition(self):
 
         assert func_def_parser(['define', ['add', 'x', 'y', 'z'], ['+', 1, 3]]) == \
-               FuncDef('add', LambdaExpr(['x', 'y', 'z'], FuncApplication('+', BSLlist([Num(1), Num(3)]))))
+               FuncDef('add', LambdaExpr(['x', 'y', 'z'], FuncApplication(Variable('+'), BSLlist([Num(1), Num(3)]))))
 
         assert func_def_parser(['define', 'add', ['+', 1, 3]]) == \
-               (FuncDef('add', LambdaExpr([], FuncApplication('+', BSLlist([Num(1), Num(3)])))))
+               FuncDef('add', FuncApplication(Variable('+'), BSLlist([Num(1), Num(3)])))
 
     def test_struct_definition(self):
 
@@ -123,20 +108,13 @@ class Test_parser:
             func_def_parser(['define', 'add'])
             func_def_parser(['define', ['+', 1, 3]])
             func_def_parser(['define', ['Add', '+', 'y', 'z'], ['+', 1, 3]])
-
-        with pytest.raises(ParserError):
-            func_def_parser(['define', ['+', 'x', 'y', 'z'], ['+', 1, 3]])
-
-        with pytest.raises(ParserError):
-            func_def_parser(['define', ['Add', 'x', 'y', 'z'], ['+', '+', 3]])
-
         assert not func_def_parser(['a', ['add', 'x', 'y', 'z'], ['+', '+', 3]])
 
     def test_function_application(self):
 
-        assert exp_parser(['f', 1]) == (FuncApplication('f', BSLlist([Num(1)])))
-        assert exp_parser(['f', 1, 2]).__eq__(FuncApplication('f', BSLlist([Num(1), Num(2)])))
-        assert exp_parser(['x',1]).__eq__(FuncApplication('x',BSLlist([Num(1)])))
+        assert exp_parser(['f', 1]) == (FuncApplication(Variable('f'), BSLlist([Num(1)])))
+        assert exp_parser(['f', 1, 2]).__eq__(FuncApplication(Variable('f'), BSLlist([Num(1), Num(2)])))
+        assert exp_parser(['x',1]).__eq__(FuncApplication(Variable('x'),BSLlist([Num(1)])))
 
         assert not exp_parser(['define',['x',1],1])
 
@@ -144,26 +122,26 @@ class Test_parser:
         assert exp_parser(['and', 'true', 'true']) == And(BSLlist([Boolean(True), Boolean(True)]))
 
     def test_equals(self):
-        assert exp_parser(['=', 3, 3]) == FuncApplication('=', BSLlist([Num(3), Num(3)]))
+        assert exp_parser(['=', 3, 3]) == FuncApplication(Variable('='), BSLlist([Num(3), Num(3)]))
 
         with pytest.raises(ParserError):
             exp_parser(['=', 3])
 
     def test_bigger_less_than(self):
-        assert exp_parser(['>', 3, 3]) == FuncApplication('>', BSLlist([Num(3), Num(3)]))
+        assert exp_parser(['>', 3, 3]) == FuncApplication(Variable('>'), BSLlist([Num(3), Num(3)]))
 
         with pytest.raises(ParserError):
             exp_parser(['>', 3])
 
     def test_exponent(self):
-        assert exp_parser(['^', 2, 3]) == FuncApplication('^', BSLlist([Num(2), Num(3)]))
+        assert exp_parser(['^', 2, 3]) == FuncApplication(Variable('^'), BSLlist([Num(2), Num(3)]))
 
     def test_if(self):
         assert exp_parser(['if', 1 , 'true', 'false']) == \
                If(BSLlist([Num(1), Boolean(True), Boolean(False)]))
 
         assert exp_parser(['if', 'false', ['/', 1, 0], 9]) == \
-               If(BSLlist([Boolean(False), FuncApplication('/', BSLlist([Num(1), Num(0)])), Num(9)]))
+               If(BSLlist([Boolean(False), FuncApplication(Variable('/'), BSLlist([Num(1), Num(0)])), Num(9)]))
 
     def test_lambda(self):
         assert parse_lambda(['lambda', ['x'], 'x']) == LambdaExpr(['x'], Variable('x'))
