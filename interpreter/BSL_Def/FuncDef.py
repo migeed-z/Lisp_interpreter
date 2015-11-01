@@ -18,17 +18,7 @@ class FuncDef(Binding):
 
 
     def eval(ast,s):
-        return [None,s.extend(ast.name, ast.expr.eval_internal(s))]
-
-    def update(self, defs):
-        """
-        Updates the current scope with this function definition
-        :param defs: Current scope
-        :return: New scope
-        """
-        name = self.name
-        new_defs = defs.extend(name, self)
-        return new_defs
+        return [None, s.extend(ast.name, ast.expr.eval_internal(s))]
 
 
     def __eq__(self, other):
@@ -36,7 +26,6 @@ class FuncDef(Binding):
         if not isinstance(other, FuncDef):
             return False
         else:
-            return other.name == self.name and other.expr.params == self.expr.params and \
-                   (other.expr.body).__eq__(self.expr.body)
+            return other.name == self.name and other.expr == other.expr
 
 

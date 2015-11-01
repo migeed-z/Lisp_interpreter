@@ -23,7 +23,7 @@ def read_eval_print_loop():
             elif not p_expr:
                 continue
             ast = parse(p_expr)
-            [the_value,s] = ast.eval(global_s.getter())
+            [the_value, s] = ast.eval(global_s.getter())
             global_s.setter(s)
             if the_value:
                 print str(the_value)

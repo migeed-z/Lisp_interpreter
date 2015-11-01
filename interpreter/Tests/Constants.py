@@ -27,63 +27,65 @@ class Constants:
 
     emptyList = BSLlist([])
     list123 = BSLlist([Num(1), Num(2), Num(3)])
-    listadd123 = BSLlist([FuncApplication('+', list123), Num(-3)])
+    listadd123 = BSLlist([FuncApplication(Variable('+'), list123), Num(-3)])
     list12True = BSLlist([Num(1), Num(2), Boolean(True)])
 
-    listaddsubtract123 = BSLlist([FuncApplication('-',list123), FuncApplication('+', list123)])
-    listmultiply123 = BSLlist([FuncApplication('*', list123)])
+    listaddsubtract123 = BSLlist([FuncApplication(Variable('-'),list123), FuncApplication('+', list123)])
+    listmultiply123 = BSLlist([FuncApplication(Variable('*'), list123)])
     list84 = BSLlist([Num(8), Num(4)])
-    listdivide84 = BSLlist([FuncApplication('/', list84)])
+    listdivide84 = BSLlist([FuncApplication(Variable('/'), list84)])
     listx23 = BSLlist([varx, Num(2), Num(3)])
     listy3 = BSLlist([vary, Num(3)])
     list43 = BSLlist([Num(4), Num(3)])
     list403 = BSLlist([Num(4), Num(0), Num(3)])
 
-    expradd1 = FuncApplication('+', BSLlist([Num(1)]))
-    expradd123 = FuncApplication('+', list123)
-    expradd43 = FuncApplication('+', list43)
-    expradderror = FuncApplication('+', list12True)
+    expradd1 = FuncApplication(Variable('+'), BSLlist([Num(1)]))
+    expradd123 = FuncApplication(Variable('+'), list123)
+    expradd43 = FuncApplication(Variable('+'), list43)
+    expradderror = FuncApplication(Variable('+'), list12True)
 
-    exprsub1 = FuncApplication('-', BSLlist([Num(1)]))
-    exprsub123 = FuncApplication('-', list123)
-    exprsub_add123_add123 = FuncApplication('-', BSLlist([expradd123, expradd43]))
+    exprsub1 = FuncApplication(Variable('-'), BSLlist([Num(1)]))
+    exprsub123 = FuncApplication(Variable('-'), list123)
+    exprsub_add123_add123 = FuncApplication(Variable('-'), BSLlist([expradd123, expradd43]))
 
-    exprdiv1 = FuncApplication('/', BSLlist([Num(1)]))
-    exprdiv84 = FuncApplication('/', list84)
-    exprdiv403 = FuncApplication('/', list403)
+    exprdiv1 = FuncApplication(Variable('/'), BSLlist([Num(1)]))
+    exprdiv84 = FuncApplication(Variable('/'), list84)
+    exprdiv403 = FuncApplication(Variable('/'), list403)
 
-    exprmul1 = FuncApplication('*', BSLlist([Num(1)]))
-    exprmul84 = FuncApplication('*', list84)
+    exprmul1 = FuncApplication(Variable('*'), BSLlist([Num(1)]))
+    exprmul84 = FuncApplication(Variable('*'), list84)
 
-    expradd_expradd123_exprdiv84 = FuncApplication('+', BSLlist([expradd123, exprdiv84]))
+    expradd_expradd123_exprdiv84 = FuncApplication(Variable('+'), BSLlist([expradd123, exprdiv84]))
 
-    expraddx23 = FuncApplication('+', listx23)
-    expraddy3 = FuncApplication('+', listy3)
-    expsub_expraddx23_expradd3 = FuncApplication('-', BSLlist([expraddx23, expraddy3]))
+    expraddx23 = FuncApplication(Variable('+'), listx23)
+    expraddy3 = FuncApplication(Variable('+'), listy3)
+    expsub_expraddx23_expradd3 = FuncApplication(Variable('-'), BSLlist([expraddx23, expraddy3]))
 
     #functions
     func_def_varx = FuncDef("f", LambdaExpr(["x"], Variable("x")))
-    func_app_varx = FuncApplication('f', BSLlist([Num(4)]))
+    func_app_varx = FuncApplication(Variable('f'), BSLlist([Num(4)]))
 
     list_func_app_varx = BSLlist([func_app_varx, Num(2)])
-    expradd_func_app_varx = FuncApplication('+', list_func_app_varx)
+    expradd_func_app_varx = FuncApplication(Variable('+'), list_func_app_varx)
 
     funcDef2 = FuncDef('g',LambdaExpr([], expradd_func_app_varx))
-    func_app_emptylist = FuncApplication('g', BSLlist([])) ###############
+    func_app_emptylist = FuncApplication(Variable('g'), BSLlist([])) ###############
 
-    expradd_varx_vary = FuncApplication('+', BSLlist([varx, vary]))
+    expradd_varx_vary = FuncApplication(Variable('+'), BSLlist([varx, vary]))
 
     func_def_add_varx_vary = FuncDef('z', LambdaExpr(['x', 'y'], expradd_varx_vary))
-    func_app_varx_vary = FuncApplication('z', BSLlist([Num(7), Num(7)]))
-    func_app_error_777 = FuncApplication('z', BSLlist([Num(7), Num(7), Num(7)]))
+    func_app_varx_vary = FuncApplication(Variable('z'), BSLlist([Num(7), Num(7)]))
+    func_app_error_777 = FuncApplication(Variable('z'), BSLlist([Num(7), Num(7), Num(7)]))
 
-    func_app_100 = FuncApplication('d', BSLlist([Num(100)]))
+    func_app_100 = FuncApplication(Variable('d'), BSLlist([Num(100)]))
 
     defs1 = Scope(()).add_definitions()
     defs1 = defs1.extend('x', Num(1)).extend('y', Num(4))
-    defs1 = func_def_varx.update(defs1)
-    defs1 = funcDef2.update(defs1)
-    defs1 = func_def_add_varx_vary.update(defs1)
+
+    #set the scope by mutating to second arg of the tuple
+    defs1 = func_def_varx.eval(defs1)[1]
+    defs1 = funcDef2.eval(defs1)[1]
+    defs1 = func_def_add_varx_vary.eval(defs1)[1]
 
     #structs
     posn_def = StructDef('posn', ['x', 'y'])
@@ -92,34 +94,34 @@ class Constants:
     zeina_def = StructDef('zeina', ['x', 'y'])
     defs1 = zeina_def.update(defs1)
 
-    make_zeina = FuncApplication('make-posn', BSLlist([Num(10), Num(20)]))
+    make_zeina = FuncApplication(Variable('make-posn'), BSLlist([Num(10), Num(20)]))
 
-    select_zeina_x = FuncApplication('zeina-x', BSLlist([make_zeina]))
+    select_zeina_x = FuncApplication(Variable('zeina-x'), BSLlist([make_zeina]))
 
-    make_posn = FuncApplication('make-posn', BSLlist([Num(1), Num(2)]))
-    make_posn_comp = FuncApplication('make-posn', BSLlist([make_posn, Num(2)]))
+    make_posn = FuncApplication(Variable('make-posn'), BSLlist([Num(1), Num(2)]))
+    make_posn_comp = FuncApplication(Variable('make-posn'), BSLlist([make_posn, Num(2)]))
 
-    is_posn = FuncApplication('posn?', BSLlist([make_posn]))
-    is_not_posn = FuncApplication('posn?', BSLlist([Num(3)]))
+    is_posn = FuncApplication(Variable('posn?'), BSLlist([make_posn]))
+    is_not_posn = FuncApplication(Variable('posn?'), BSLlist([Num(3)]))
 
-    select_posn_x = FuncApplication('posn-x', BSLlist([make_posn]))
-    select_posn_y = FuncApplication('posn-y', BSLlist([make_posn]))
+    select_posn_x = FuncApplication(Variable('posn-x'), BSLlist([make_posn]))
+    select_posn_y = FuncApplication(Variable('posn-y'), BSLlist([make_posn]))
 
-    select_posn_x_comp = FuncApplication('posn-x', BSLlist([make_posn_comp]))
-    select_posn_y_comp = FuncApplication('posn-y', BSLlist([make_posn_comp]))
+    select_posn_x_comp = FuncApplication(Variable('posn-x'), BSLlist([make_posn_comp]))
+    select_posn_y_comp = FuncApplication(Variable('posn-y'), BSLlist([make_posn_comp]))
 
     value_posn = Structure('posn', [('x', Num(1)), ('y', Num(2))])
     value_posn_comp = Structure('posn', [('x', value_posn), ('y', Num(2))])
 
     #functions using struct
-    make_posn_func = FuncApplication('make-posn', BSLlist([func_app_varx, Num(1)]))
-    func_app_varx_1 = FuncApplication('f', BSLlist([make_posn_func]))
+    make_posn_func = FuncApplication(Variable('make-posn'), BSLlist([func_app_varx, Num(1)]))
+    func_app_varx_1 = FuncApplication(Variable('f'), BSLlist([make_posn_func]))
 
     value_posn_func = Structure('posn', [('x', Num(4)), ('y', Num(1))])
 
-    posn_x_func_app_varx_1 = FuncApplication('posn-x', BSLlist([func_app_varx_1]))
+    posn_x_func_app_varx_1 = FuncApplication(Variable('posn-x'), BSLlist([func_app_varx_1]))
 
-    select_posn_x_error = FuncApplication('posn-x', BSLlist([Num(3)]))
+    select_posn_x_error = FuncApplication(Variable('posn-x'), BSLlist([Num(3)]))
 
     ex1 = '(ex*'
     ex_abc = 'abc'
@@ -129,18 +131,18 @@ class Constants:
 
     #And
     and1 = And(BSLlist([Boolean(True), Boolean(False)]))
-    and2 = And(BSLlist([Boolean(False), FuncApplication('/', BSLlist([Num(1), Num(0)]))]))
-    and3 = And(BSLlist([Boolean(True), FuncApplication('/', BSLlist([Num(1), Num(1)]))]))
+    and2 = And(BSLlist([Boolean(False), FuncApplication(Variable('/'), BSLlist([Num(1), Num(0)]))]))
+    and3 = And(BSLlist([Boolean(True), FuncApplication(Variable('/'), BSLlist([Num(1), Num(1)]))]))
 
     #equals
-    equals34 = FuncApplication('=', BSLlist([Num(3), Num(4)]))
-    equals33 = FuncApplication('=', BSLlist([Num(3), Num(3)]))
-    equals_3_true = FuncApplication('=', BSLlist([Num(3), Boolean(False)]))
+    equals34 = FuncApplication(Variable('='), BSLlist([Num(3), Num(4)]))
+    equals33 = FuncApplication(Variable('='), BSLlist([Num(3), Num(3)]))
+    equals_3_true = FuncApplication(Variable('='), BSLlist([Num(3), Boolean(False)]))
 
     #bigger and less than
-    biggerthan34 = FuncApplication('>', BSLlist([Num(3), Num(4)]))
-    lessthan34 = FuncApplication('<', BSLlist([Num(3), Num(4)]))
-    lessthan_error = FuncApplication('>', BSLlist([Variable('xyz'), Num(4)]))
+    biggerthan34 = FuncApplication(Variable('>'), BSLlist([Num(3), Num(4)]))
+    lessthan34 = FuncApplication(Variable('<'), BSLlist([Num(3), Num(4)]))
+    lessthan_error = FuncApplication(Variable('>'), BSLlist([Variable('xyz'), Num(4)]))
 
     #if.
     if_1 = If(BSLlist([equals34, Num(3), Num(4)]))

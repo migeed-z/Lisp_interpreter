@@ -15,8 +15,9 @@ class FuncApplication(BSLExpr):
 
     def eval_internal(self, defs):
         vals = self.sl.helper_eval(defs)
-        definition = self.name.eval_internal(defs)
-        return definition.apply(defs, vals)
+        fun = self.name.eval_internal(defs)
+        # if fun is not a primitive function or a Closure, ERRRO!
+        return fun.apply(defs, vals)
 
     def __eq__(self, other):
         if not isinstance(other, FuncApplication):
