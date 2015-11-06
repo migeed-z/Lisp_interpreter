@@ -17,19 +17,17 @@ def read_eval_print_loop():
 
         try:
             p_expr = read()
-            # print p_expr
+            print p_expr
             if p_expr == False:
                 break
-            elif not p_expr:
-                continue
+            #why did we continue when p-expr is the empty list?
             ast = parse(p_expr)
             [the_value, s] = ast.eval(global_s.getter())
             global_s.setter(s)
             if the_value:
                 print str(the_value)
-        except ParserError:
-            print ('bla bla bla')
-
+        except ParserError, e:
+            print str(e)
 
 def read():
     """
@@ -89,7 +87,7 @@ def has_equal_parens(line):
         return True
 
 
-print("Zeina's BSL intepreter, v.06\n")
+print("Zeina's BSL intepreter, v.6\n")
 read_eval_print_loop()
 
 

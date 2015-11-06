@@ -78,7 +78,7 @@ P A R S E R: P-expression -> AST
 - BSLDef(String, [Listof String])
 - IsClsDef
 - BSLExpr
-- ComparisonDef([Num ... -> bool or float or complex or int],
+- PrimitiveFunc([Num ... -> bool or float or complex or int],
                 [bool of float or complex or int -> Value]
                 Value)  %% but not Structure 
 
@@ -96,7 +96,7 @@ P A R S E R: P-expression -> AST
 **A BSLExpr is one of:**
 - And(BSLlist)
 - Boolean(bool)
-- FunctionApplication(String, BSLlist)
+- FunctionApplication(BSLexpr, BSLlist)
 - If(BSLlist)
 - Num((int or complex or float))
 - Variable(String)
@@ -146,7 +146,7 @@ Values produced from calling the apply method on some Definition
 
 |    Definition    |    Value    |
 |------------------|-------------|
-| ComparisonDef    | Num/Boolean |
+| PrimitiveFunc    | Num/Boolean |
 | IsClsDef         | Boolean     |
 | PredicateDef     | Boolean     |
 | SelectorDef      | Value       |

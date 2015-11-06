@@ -76,6 +76,7 @@ class Constants:
     func_def_add_varx_vary = FuncDef('z', LambdaExpr(['x', 'y'], expradd_varx_vary))
     func_app_varx_vary = FuncApplication(Variable('z'), BSLlist([Num(7), Num(7)]))
     func_app_error_777 = FuncApplication(Variable('z'), BSLlist([Num(7), Num(7), Num(7)]))
+    func_app_num = FuncApplication(Num(2), BSLlist([Num(1)]))
 
     func_app_100 = FuncApplication(Variable('d'), BSLlist([Num(100)]))
 
@@ -117,6 +118,7 @@ class Constants:
     make_posn_func = FuncApplication(Variable('make-posn'), BSLlist([func_app_varx, Num(1)]))
     func_app_varx_1 = FuncApplication(Variable('f'), BSLlist([make_posn_func]))
 
+
     value_posn_func = Structure('posn', [('x', Num(4)), ('y', Num(1))])
 
     posn_x_func_app_varx_1 = FuncApplication(Variable('posn-x'), BSLlist([func_app_varx_1]))
@@ -147,4 +149,11 @@ class Constants:
     #if.
     if_1 = If(BSLlist([equals34, Num(3), Num(4)]))
     if_2 = If(BSLlist([equals33, Num(3), Num(4)]))
+    if_3 = If(BSLlist([Boolean(True),
+                       LambdaExpr(['x'], Num(1)),
+                       LambdaExpr(['x'], Num(2))]))
+
+    if_lambda_func_app = FuncApplication (if_3, BSLlist(Num(9999)))
+
+
 

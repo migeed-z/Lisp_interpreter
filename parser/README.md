@@ -35,7 +35,7 @@ A BSLDef is one of:
 - FunctionDef
 
 A PrimDef is one of:
-- ComparisonDef
+- PrimitiveFunc
 
 An IsClsDef is one of:
 - IsBooleanDef

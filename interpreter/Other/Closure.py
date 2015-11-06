@@ -1,9 +1,10 @@
 import DirPaths
 import copy
+from Applicable import Applicable
 
 from BSLError import BSLError
 
-class Closure:
+class Closure(Applicable):
     """
     To represent the value of the function and the current scope
     """

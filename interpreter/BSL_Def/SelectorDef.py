@@ -1,15 +1,27 @@
 import DirPaths
-from BSLDef import BSLDef
 from BSLError import BSLError
 from Structure import Structure
+from Applicable import Applicable
 
-class SelectorDef(BSLDef):
+class SelectorDef(Applicable):
 
     def __init__(self, name, params):
         """
-        :param params:[string] representing only one param to be selected
+        :param name: String
+        :param params: [String]
         """
-        BSLDef.__init__(self, name, params)
+        if len(params) != len(set(params)):
+            raise BSLError('Duplicate Params are not allowed in Function definitions')
+        self.params = params
+        self.name = name
+
+    def eval(self, s):
+        """
+        evaluates this expression by updating the current scope to new_scope
+        :param s: current scope
+        :return: [None, new_scope]
+        """
+        return [None, self.update(s)]
 
     def update(ast,s):
         return s.extend('%s-%s' % (ast.name, ast.params[0]), ast)

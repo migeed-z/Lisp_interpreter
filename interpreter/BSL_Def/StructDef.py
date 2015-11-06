@@ -1,10 +1,11 @@
-from BSLDef import BSLDef
+import DirPaths
+from BSLError import BSLError
 from ConstructorDef import ConstructorDef
 from PredicateDef import PredicateDef
 from SelectorDef import SelectorDef
 
 
-class StructDef(BSLDef):
+class StructDef:
     """
     To represent (define-struct name (param ...))
     """
@@ -13,7 +14,11 @@ class StructDef(BSLDef):
         :param name: String
         :param params: [String]
         """
-        BSLDef.__init__(self, name, params)
+        if len(params) != len(set(params)):
+            raise BSLError('Duplicate Params are not allowed in Function definitions')
+        self.params = params
+        self.name = name
+
 
     def update(self, defs):
         """
@@ -41,6 +46,13 @@ class StructDef(BSLDef):
         else:
             return self.name == other.name and self.params.__eq__(other.params)
 
+    def eval(self, s):
+        """
+        evaluates this expression by updating the current scope to new_scope
+        :param s: current scope
+        :return: [None, new_scope]
+        """
+        return [None, self.update(s)]
 
     def __str__(self):
         params = ()

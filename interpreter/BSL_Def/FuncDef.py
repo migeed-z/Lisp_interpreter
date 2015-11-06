@@ -3,23 +3,20 @@ import sys
 import DirPaths
 from LambdaExpr import LambdaExpr
 from BSLError import BSLError
-from Binding import Binding
-from BSLDef import BSLDef
 
 
-class FuncDef(Binding):
+class FuncDef:
 
     """
     To represent function definitions
     """
 
     def __init__(self, name, expr):
-        Binding.__init__(self, name, expr)
-
+        self.name = name
+        self.expr = expr
 
     def eval(ast,s):
         return [None, s.extend(ast.name, ast.expr.eval_internal(s))]
-
 
     def __eq__(self, other):
 

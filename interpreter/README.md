@@ -20,7 +20,7 @@ Values produced from calling the eval_internal() method on a FunctionApplication
 
 |    Definition    |    Value    |
 |------------------|-------------|
-| ComparisonDef    | Num/Boolean |
+| PrimitiveFunc    | Num/Boolean |
 | IsClsDef         | Boolean     |
 | PredicateDef     | Boolean     |
 | SelectorDef      | Value       |

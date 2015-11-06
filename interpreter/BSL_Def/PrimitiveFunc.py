@@ -1,11 +1,9 @@
 import DirPaths
-import operator
 from BSLError import BSLError
-from Num import Num
-from Boolean import Boolean
-from BSLExpr import BSLExpr
+from Applicable import Applicable
 
-class ComparisonDef():
+
+class PrimitiveFunc(Applicable):
     """
     To represent > operation
     """

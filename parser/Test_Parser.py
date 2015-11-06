@@ -28,7 +28,7 @@ class Test_parser:
         assert parse(['+', 1, 2]) == FuncApplication( Variable('+'), BSLlist([Num(1), Num(2)]))
         assert parse(['define-struct', 'posn', ['x', 'y']]) == (StructDef('posn', ['x', 'y']))
         with pytest.raises(ParserError):
-            parse(exp_parser([]))
+            parse([])
 
 
     def test_token(self):

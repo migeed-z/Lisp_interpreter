@@ -61,6 +61,8 @@ def test_funcAppEval():
     assert c.func_app_varx.eval_internal(c.defs1) == Num(4)
     assert c.func_app_emptylist.eval_internal(c.defs1) == Num(6)
     assert c.func_app_varx_vary.eval_internal(c.defs1) == Num(14)
+    assert c.if_lambda_func_app.eval_internal(c.defs1) == Num(9999)
+
 
 def test_bslError():
     with pytest.raises(BSLError):
@@ -69,8 +71,8 @@ def test_bslError():
     with pytest.raises(BSLError):
         c.func_app_error_777.eval_internal(c.defs1)
 
-    # with pytest.raises(BSLError):
-    #     c.exprdiv403.eval_internal(c.defs1)
+    with pytest.raises(BSLError):
+        c.func_app_num.eval_internal(c.defs1)
 
 def test_struct():
     assert c.make_posn.eval_internal(c.defs1) == c.value_posn

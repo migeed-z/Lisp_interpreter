@@ -3,7 +3,7 @@ import DirPaths
 import operator
 
 from BSLError import BSLError
-from ComparisonDef import ComparisonDef
+from PrimitiveFunc import PrimitiveFunc
 from Num import Num
 from Boolean import Boolean
 from BSLExpr import BSLExpr
@@ -49,14 +49,12 @@ class Scope:
                 return old_self.get(key)
 
     def add_definitions(self):
-        add = self.extend('+', ComparisonDef(lambda *args: reduce(operator.__add__, (arg.num for arg in args)), Num, Num))
-        sub = add.extend('-', ComparisonDef(lambda *args: (-1 * args[0].num if len(args) == 1 else reduce(operator.__sub__, (arg.num for arg in args))), Num, Num))
-        mul = sub.extend('*',ComparisonDef(lambda *args: reduce(operator.__mul__, (arg.num for arg in args)), Num, Num))
-        div = mul.extend('/', ComparisonDef(lambda *args: reduce(operator.__div__, (arg.num for arg in args)), Num, Num))
-        exp = div.extend('^', ComparisonDef((lambda x, y: pow(x,y)), Num, Num))
-        equals = exp.extend('=', ComparisonDef((lambda x, y: x == y), Boolean, BSLExpr))
-        bigger_than = equals.extend('>', ComparisonDef((lambda x, y: x > y), Boolean, Num))
-        smaller_than = bigger_than.extend('<', ComparisonDef((lambda x, y: x < y), Boolean, Num))
+        add = self.extend('+', PrimitiveFunc(lambda *args: reduce(operator.__add__, (arg.num for arg in args), 0), Num, Num))
+        sub =  add.extend('-', PrimitiveFunc(lambda *args: (-1 * args[0].num if len(args) == 1 else reduce(operator.__sub__, (arg.num for arg in args))), Num, Num))
+        mul =  sub.extend('*', PrimitiveFunc(lambda *args: reduce(operator.__mul__, (arg.num for arg in args), 1), Num, Num))
+        div =  mul.extend('/', PrimitiveFunc(lambda *args: reduce(operator.__div__, (arg.num for arg in args)), Num, Num))
+        exp =  div.extend('^', PrimitiveFunc((lambda x, y: pow(x,y)), Num, Num))
+        equals       = exp.extend('=',         PrimitiveFunc((lambda x, y: x == y), Boolean, Num))
+        bigger_than  = equals.extend('>',      PrimitiveFunc((lambda x, y: x > y),  Boolean, Num))
+        smaller_than = bigger_than.extend('<', PrimitiveFunc((lambda x, y: x < y),  Boolean, Num))
         return smaller_than
-
-

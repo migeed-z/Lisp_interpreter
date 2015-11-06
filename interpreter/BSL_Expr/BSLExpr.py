@@ -7,8 +7,8 @@ class BSLExpr:
     def eval(ast, s):
         try:
             return [ast.eval_internal(s),s] #X IS A VALUE
-        except BSLError:
-            print 'Interpreter Error'
+        except BSLError, e:
+            print str(e)
             return [None, s]
 
     @abstractmethod

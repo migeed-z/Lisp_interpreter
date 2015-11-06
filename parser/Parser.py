@@ -34,7 +34,7 @@ def parse(p):
         return struct_def
 
     else:
-        raise ParserError('Wrong Expression')
+        raise ParserError('Bad syntax in %s' % p)
 
 def token_parser(p):
     """
@@ -52,7 +52,7 @@ def token_parser(p):
             return Boolean(False)
 
         elif is_reserved(p):
-            raise ParserError('This word is reserved')
+            raise ParserError('Bad syntax in %s' % p)
         else:
             return Variable(p)
     else:
@@ -71,7 +71,7 @@ def exp_parser(p):
     if token:
         return token
     elif p == []:
-        raise ParserError('Expected a function after open paren but found nothing.')
+        raise ParserError('Bad syntax in %s' %p)
 
     # now we know it is a parenthesize P-expression
     if p[0] == '+':
@@ -115,7 +115,7 @@ def exp_parser(p):
 
 def parse_lambda(p):
     if len(p) != 3:
-        raise ParserError('Lambda expr error')
+        raise ParserError('lambda: bad syntax in: %s' % p)
 
     else:
         list_of_params = parse_params(p[1])
@@ -134,19 +134,23 @@ def struct_def_parser(p):
         return False
 
     elif len(p) != 3:
-        raise ParserError('length of p-expression must have length >= 3')
+        raise ParserError('%s: Bad syntax in %s' % (p[0], p))
 
     elif not isinstance(p[1], str):
-        raise ParserError('Struct name must be a string')
+        raise ParserError('%s: bad syntax; expected <id>'
+                          ' for structure-type name or (<id> <id>) for '
+                          'name and supertype name in %s' % (p[0], p[1]))
 
     elif is_reserved(p[1]):
-        raise ParserError('Struct name is a reserved word')
+        raise ParserError('%s: Bad syntax in %s' % (p[0], p))
 
     elif not isinstance(p[2], list):
-        raise ParserError('Expects a list of parameters')
+        raise ParserError('%s: bad syntax; '
+                          'expected a parenthesized sequence of'
+                          ' field descriptions in: %s' % (p[0], p[2]))
 
     elif not is_list_of_proper_names(p[2]):
-        raise ParserError('Not a proper list of field names')
+        raise ParserError('%s: bad syntax in %s' % (p[0], p[2]))
 
     else:
         return StructDef(p[1], p[2])
@@ -162,12 +166,12 @@ def func_def_parser(p):
         return False
 
     elif len(p) != 3:
-        raise ParserError('p-expression must have length >= 3')
+        raise ParserError('%s: Bad syntax in %s' % (p[0], p))
 
     elif isinstance(p[1], str):
         #Here, we know it is a constant
         if is_reserved(p[1]):
-            raise ParserError('Variable cannot be a reserved word')
+            raise ParserError('%s: Bad syntax in %s' % (p[0], p))
         else:
             # deals with (define x 3)
             # deals with (define x (lambda (y) y))
@@ -242,7 +246,8 @@ def parse_operation(p, n, expr=None):
     name = exp_parser(p.pop(0))
 
     if len(p) < n:
-        raise ParserError('expects at least %s argument, but found none' % str(n))
+        raise ParserError('%s: arity mismatch; expected: at least %s; given %s'
+                          % (p, str(n), len(p)))
     else:
         result = parse_expr_list(p)
 
@@ -262,7 +267,7 @@ def parse_expr_list(lst):
     for element in lst:
         element_as_bsl_exp = exp_parser(element)
         if not element_as_bsl_exp:
-            raise ParserError('expects s-expressions in the list of arguments')
+            raise ParserError('Bad syntax in %s; expression cannot be reduced' % str(element))
         result.append(element_as_bsl_exp)
     return result
 
@@ -274,5 +279,6 @@ def parse_params(a_list):
     if isinstance(a_list, list):
         lst = a_list #name and params
         if not is_list_of_proper_names(lst):
-            raise ParserError('All names must be strings')
+            raise ParserError('%s is not a proper list of identifiers' % lst)
     return a_list
+
