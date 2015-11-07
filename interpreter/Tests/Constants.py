@@ -153,7 +153,7 @@ class Constants:
                        LambdaExpr(['x'], Num(1)),
                        LambdaExpr(['x'], Num(2))]))
 
-    if_lambda_func_app = FuncApplication (if_3, BSLlist(Num(9999)))
+    if_lambda_func_app = FuncApplication (if_3, BSLlist([Num(9999)]))
 
 
 
