@@ -1,9 +1,9 @@
 import DirPaths
-
+import copy
+from collections import Counter
 from BSLExpr import BSLExpr
 from BSLError import BSLError
 from Applicable import Applicable
-
 
 class FuncApplication(BSLExpr):
     """
@@ -12,7 +12,7 @@ class FuncApplication(BSLExpr):
 
     def __init__(self, fuction_position, sl):
         """
-        :param name: Name of the function
+        :param name: LambdaExpr
         :param sl: [BSLexpr]
         """
         self.function_position = fuction_position
@@ -31,3 +31,28 @@ class FuncApplication(BSLExpr):
 
         else:
             return self.function_position == other.function_position and self.sl.__eq__(other.sl)
+
+    def type_of(self, acc):
+        """
+        Assume that we get lambda exressions here.
+        :param acc:
+        :return:
+        """
+        func = self.function_position
+        t = func.type_of(acc)
+        if t.frm_list == self.type_of_helper(acc):
+           return t.to_type
+
+    def type_of_helper(self, acc):
+        """
+        Calculates the types of a list of parameters
+        :param acc:
+        :return: [Types]
+        """
+        type_list = []
+        my_list = self.sl.sl
+        for element in my_list:
+            t = element.type_of(acc)
+            type_list.append(t)
+        return type_list
+

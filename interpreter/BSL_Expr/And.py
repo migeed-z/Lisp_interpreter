@@ -1,5 +1,6 @@
 import DirPaths
 
+from BoolType import BoolType
 from BSLExpr import BSLExpr
 from BSLError import BSLError
 from Boolean import Boolean
@@ -33,7 +34,6 @@ class And(BSLExpr):
         else:
             return self.sl == other.sl
 
-
     def is_boolean(self, vals):
         """
         Return True if vals is a list of booleans and false otherwise
@@ -46,4 +46,5 @@ class And(BSLExpr):
                 return Boolean(False)
 
         return Boolean(True)
+
 

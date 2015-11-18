@@ -1,3 +1,4 @@
+from BoolType import BoolType
 from BSLExpr import BSLExpr
 
 class Boolean(BSLExpr):
@@ -13,6 +14,9 @@ class Boolean(BSLExpr):
 
     def eval_internal(self, defs):
         return self
+
+    def type_of(self, acc):
+        return BoolType()
 
     def __eq__(self, other):
         if not isinstance(other, Boolean):

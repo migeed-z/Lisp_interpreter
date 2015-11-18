@@ -1,13 +1,11 @@
 import copy
 import DirPaths
 import operator
-
 from BSLError import BSLError
 from PrimitiveFunc import PrimitiveFunc
 from Num import Num
 from Boolean import Boolean
 from BSLExpr import BSLExpr
-from copy import copy
 
 class Scope:
     """
@@ -48,6 +46,9 @@ class Scope:
             else:
                 return old_self.get(key)
 
+
+
+
     def add_definitions(self):
         add = self.extend('+', PrimitiveFunc(lambda *args: reduce(operator.__add__, (arg.num for arg in args), 0), Num, Num))
         sub =  add.extend('-', PrimitiveFunc(lambda *args: (-1 * args[0].num if len(args) == 1 else reduce(operator.__sub__, (arg.num for arg in args))), Num, Num))
@@ -58,3 +59,5 @@ class Scope:
         bigger_than  = equals.extend('>',      PrimitiveFunc((lambda x, y: x > y),  Boolean, Num))
         smaller_than = bigger_than.extend('<', PrimitiveFunc((lambda x, y: x < y),  Boolean, Num))
         return smaller_than
+
+

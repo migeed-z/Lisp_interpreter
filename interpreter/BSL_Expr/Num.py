@@ -1,7 +1,7 @@
-import DirPaths
-
 from BSLExpr import BSLExpr
 from BSLError import BSLError
+from NumType import NumType
+
 
 class Num(BSLExpr):
     """
@@ -17,6 +17,9 @@ class Num(BSLExpr):
 
     def eval_internal(self, defs):
         return self
+
+    def type_of(self, acc):
+        return NumType()
 
     def validate(self, num):
         if not isinstance(num, (complex, int, float)):

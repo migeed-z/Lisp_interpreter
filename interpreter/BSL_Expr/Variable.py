@@ -26,6 +26,12 @@ class Variable(BSLExpr):
         else:
             return val
 
+    def type_of(self, acc):
+        type = acc.get(self.name)
+        if type:
+            return type
+        else: raise ('Type is not declared.')
+
     def equals(self, other):
         if not isinstance(other, Variable):
             return False

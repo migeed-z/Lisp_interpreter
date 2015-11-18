@@ -87,7 +87,7 @@ def has_equal_parens(line):
         return True
 
 
-print("Zeina's BSL intepreter, v.6\n")
+print("Zeina's BSL intepreter, v.7\n")
 read_eval_print_loop()
 
 

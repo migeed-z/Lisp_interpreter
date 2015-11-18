@@ -1,16 +1,53 @@
-issues:
-(/ 2.0 2)
-hitting enter multiple times exits the program!!
+1. Hobby
 
-check parser errors
-- and or are no longer reserved
+2. See below for a running version
 
+Above the line, we write the conditions for the bottom line to hold
 
-TODO:
-Introduce types (see racket file)
+   ----------- const
+   Γ ⊢ 1 : int
 
 
-fix operations
-wrap values: issue with zero divisiton
+   ----------- var
+   Γ ⊢ x : Γ(x)
+
+       ;What we have in the enviroment currently
+   Γ_1 =  Γ+(t_dom x)
+   Γ_1 ⊢ e : t_ran
+   --------------------------------------- ->-intro
+   Γ ⊢ (λ (t_dom x) e) : t_dom -> t_ran
+
+   Γ ⊢ e_arg : t_dom
+   Γ ⊢ e_fun : t_dom -> t_ran
+   --------------------------------------- ->-elim
+   Γ ⊢ (e_fun e_arg) : t_ran
 
 
+Γ ⊢ e : t
+in type environment Γ, e has type t
+(type environment) Γ proves (that expression) e has (type) t
+
+
+Γ ⊢ (λ (int y) e) : int -> int
+-------------------------------------------------
+Γ ⊢(λ (int y) x) : t_dom
+Γ ⊢(λ ([int -> int] x) (x 1)) : t_dom -> int
+-------------------------------------------------
+((λ ([int -> int] x) (x 1)) (λ (int y) x)) : int
+
+e_fun: (λ ([int -> int] x) (x 1))
+e_arg: (λ (int y) x)
+t_ran: int
+t_dom: t_dom -> int
+e: {(x 1)}
+
+
+
+
+3. t < t
+
+4. Reticulated
+
+
+1) http://www.ccs.neu.edu/racket/pubs/popl16-tfgnvf.pdf  <--- read this paper
+2) finish proofs & fix test (see notes)

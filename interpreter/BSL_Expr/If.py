@@ -38,3 +38,6 @@ class If(BSLExpr):
         else:
             return self.test == other.test and self.if_branch == other.if_branch and\
                    self.else_branch == other.else_branch
+
+
+        #type of an if condition??? how to deduce without evaluating

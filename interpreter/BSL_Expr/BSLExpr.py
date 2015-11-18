@@ -1,5 +1,5 @@
-from abc import abstractmethod
 import DirPaths
+from abc import abstractmethod
 from BSLError import BSLError
 
 class BSLExpr:
@@ -20,5 +20,12 @@ class BSLExpr:
         """
         raise NotImplementedError('Method not yet implemented')
 
+    @abstractmethod
+    def type_of(self, acc):
+        """
+        Determines the type of this expression
+        :return: Type
+        """
+        raise NotImplementedError('Method not yet implemented')
 
 
