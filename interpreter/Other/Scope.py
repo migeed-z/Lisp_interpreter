@@ -46,8 +46,23 @@ class Scope:
             else:
                 return old_self.get(key)
 
+    def helper_extend(self, params, vals):
+        """
+        Extends this scope with params and vals
+        :param params: [String]
+        :param vals: [Type]
+        :return: Scope
+        :raises: BSLError if len(params) not equal len(vals)
+        """
 
-
+        if len(params) != len(vals):
+            raise BSLError("params and vals must be equal")
+        new_vals = copy.copy(vals)
+        new_params = copy.copy(params)
+        while len(new_params) != 0:
+            name = new_params.pop()
+            val = new_vals.pop()
+            return self.extend(name, val)
 
     def add_definitions(self):
         add = self.extend('+', PrimitiveFunc(lambda *args: reduce(operator.__add__, (arg.num for arg in args), 0), Num, Num))

@@ -29,9 +29,7 @@ class LambdaExpr(BSLExpr):
         return Closure(self, defs)
 
     def type_of(self, acc):
-        #Assumes types != None
-        return FuncType(self.types, self.body.type_of(self.helper_extend(acc, self.params, self.types)))
-       # return FuncType(self.types[0], self.body.type_of([[self.params[0],self.types[0]]]+acc))
+        return FuncType(self.types, self.body.type_of(acc.helper_extend(self.params, self.types)))
 
     def __eq__(self, other):
         if not isinstance(other, LambdaExpr):
@@ -41,23 +39,3 @@ class LambdaExpr(BSLExpr):
                    and (self.body == other.body)
 
 
-    def helper_extend(self, defs, params, types):
-        """
-        Extends defs with params and vals
-        :param defs: Scope representing the definitions
-        :param params: [String]
-        :param vals: [Type]
-        :return: Scope
-        :raises: BSLError if len(params) not equal len(vals)
-        """
-
-        if len(params) != len(types):
-            raise BSLError("params and vals must be equal")
-        new_vals = copy.copy(types)
-        new_params = copy.copy(params)
-        while len(new_params) != 0:
-            name = new_params.pop()
-            val = new_vals.pop()
-            defs = defs.extend(name, val)
-
-        return defs

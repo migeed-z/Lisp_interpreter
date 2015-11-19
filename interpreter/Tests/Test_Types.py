@@ -14,6 +14,7 @@ from Variable import Variable
 from BSLlist import BSLlist
 from FuncApplication import FuncApplication
 from LambdaExpr import LambdaExpr
+from BSLError import BSLError
 
 #declarations
 acc = Scope(()).extend('my_var', NumType())\
@@ -43,6 +44,7 @@ type_of_func_app1 = NumType()
 typed_func_app2 = FuncApplication(typed_expr1, BSLlist([typed_expr2]))
 type_of_func_app2 = NumType()
 
+typed_func_app_error = FuncApplication(Variable('x'), BSLlist([typed_expr1]))
 
 def test_consts():
     assert Num(3).type_of(acc) == NumType()
@@ -59,3 +61,7 @@ def test_lambda():
 def test_func_app():
     assert typed_func_app1.type_of(acc) == type_of_func_app1
     assert typed_func_app2.type_of(acc) == type_of_func_app2
+
+def test_func_app_error():
+    with pytest.raises(BSLError):
+        typed_func_app_error.type_of(acc)

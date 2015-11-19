@@ -1,7 +1,6 @@
 import DirPaths
-import copy
-from collections import Counter
 from BSLExpr import BSLExpr
+from FuncType import FuncType
 from BSLError import BSLError
 from Applicable import Applicable
 
@@ -33,19 +32,16 @@ class FuncApplication(BSLExpr):
             return self.function_position == other.function_position and self.sl.__eq__(other.sl)
 
     def type_of(self, acc):
-        """
-        Assume that we get lambda exressions here.
-        :param acc:
-        :return:
-        """
         func = self.function_position
         t = func.type_of(acc)
+        if not isinstance(t, FuncType):
+            raise BSLError('%s is not an instance of FuncType' % str(t))
         if t.frm_list == self.type_of_helper(acc):
-           return t.to_type
+            return t.to_type
 
     def type_of_helper(self, acc):
         """
-        Calculates the types of a list of parameters
+        Calculates the types of a list of arguments
         :param acc:
         :return: [Types]
         """
