@@ -15,6 +15,7 @@ class FuncType(Type):
         self.frm_list = frm_list
         self.to_type = to_type
 
+
     def __eq__(self, other):
         if not isinstance(other, FuncType):
             return False

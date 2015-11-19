@@ -36,19 +36,9 @@ class FuncApplication(BSLExpr):
         t = func.type_of(acc)
         if not isinstance(t, FuncType):
             raise BSLError('%s is not an instance of FuncType' % str(t))
-        if t.frm_list == self.type_of_helper(acc):
+        if t.frm_list == self.sl.type_of_helper(acc):
             return t.to_type
+        else:
+            raise BSLError('Domain Type does not match the argument type')
 
-    def type_of_helper(self, acc):
-        """
-        Calculates the types of a list of arguments
-        :param acc:
-        :return: [Types]
-        """
-        type_list = []
-        my_list = self.sl.sl
-        for element in my_list:
-            t = element.type_of(acc)
-            type_list.append(t)
-        return type_list
 

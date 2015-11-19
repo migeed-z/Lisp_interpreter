@@ -1,6 +1,6 @@
 class Type:
     """
-    To represent a lisp type
+    To represent a type
     """
     pass
 

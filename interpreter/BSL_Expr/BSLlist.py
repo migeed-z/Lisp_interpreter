@@ -20,6 +20,18 @@ class BSLlist:
 
         return result
 
+    def type_of_helper(self, acc):
+        """
+        "calculates the types of this application's arguments"
+        :param acc:
+        :return: [Types]
+        """
+        type_list = []
+        for element in self.sl:
+            t = element.type_of(acc)
+            type_list.append(t)
+        return type_list
+
     def __eq__(self, element):
         """
         evaluates each S-expression to return a boolean then evaluates booleans and returns the result

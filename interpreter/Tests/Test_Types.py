@@ -13,6 +13,7 @@ from Boolean import Boolean
 from Variable import Variable
 from BSLlist import BSLlist
 from FuncApplication import FuncApplication
+from If import If
 from LambdaExpr import LambdaExpr
 from BSLError import BSLError
 
@@ -45,6 +46,8 @@ typed_func_app2 = FuncApplication(typed_expr1, BSLlist([typed_expr2]))
 type_of_func_app2 = NumType()
 
 typed_func_app_error = FuncApplication(Variable('x'), BSLlist([typed_expr1]))
+typed_func_app_error2 = FuncApplication(Variable('+'), BSLlist([Variable('x')]))
+
 
 def test_consts():
     assert Num(3).type_of(acc) == NumType()
@@ -65,3 +68,6 @@ def test_func_app():
 def test_func_app_error():
     with pytest.raises(BSLError):
         typed_func_app_error.type_of(acc)
+
+    with pytest.raises(BSLError):
+        typed_func_app_error2.type_of(acc)
