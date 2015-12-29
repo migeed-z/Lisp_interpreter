@@ -16,10 +16,8 @@ class FuncDef(Binding):
     def __init__(self, name, expr):
         Binding.__init__(self, name, expr)
 
-
     def eval(ast,s):
         return [None, s.extend(ast.name, ast.expr.eval_internal(s))]
-
 
     def __eq__(self, other):
 

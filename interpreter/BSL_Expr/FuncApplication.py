@@ -8,15 +8,15 @@ class FuncApplication(BSLExpr):
     def __init__(self, name, sl):
         """
         :param name: Name of the function
-        :param sl: [BSLexpr]
+        :param sl: [BSLExpr]
         """
         self.name = name
         self.sl = sl
 
     def eval_internal(self, defs):
-        vals = self.sl.helper_eval(defs)
+        vals = [x.eval_internal(defs) for x in self.sl]
         fun = self.name.eval_internal(defs)
-        # if fun is not a primitive function or a Closure, ERRRO!
+        # if fun is not a primitive function or a Closure, ERROR!
         return fun.apply(defs, vals)
 
     def __eq__(self, other):

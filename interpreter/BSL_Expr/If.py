@@ -9,11 +9,11 @@ class If(BSLExpr):
 
     def __init__(self, sl):
         """
-        :param sl: [BSLexpr]
+        :param sl: BSLlist
         """
-        self.test = sl.sl[0]
-        self.if_branch = sl.sl[1]
-        self.else_branch = sl.sl[2]
+        self.test = sl[0]
+        self.if_branch = sl[1]
+        self.else_branch = sl[2]
 
     def eval_internal(self, defs):
 
@@ -36,5 +36,6 @@ class If(BSLExpr):
         if not isinstance(other, If):
             return False
         else:
-            return self.test == other.test and self.if_branch == other.if_branch and\
-                   self.else_branch == other.else_branch
+            return self.test == other.test and \
+                   self.if_branch == other.if_branch\
+                   and self.else_branch == other.else_branch

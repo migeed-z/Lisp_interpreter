@@ -16,7 +16,6 @@ class Closure:
         self.lambda_expr = lambda_expr
         self.curr_scope = curr_scope
 
-
     def __str__(self):
         return '(lambda (a1 a2) ...)'
 

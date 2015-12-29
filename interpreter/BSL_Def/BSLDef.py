@@ -1,5 +1,6 @@
 import DirPaths
 from BSLError import BSLError
+from Closure import Closure
 from abc import abstractmethod
 
 class BSLDef:
@@ -13,7 +14,8 @@ class BSLDef:
         :param params: [String]
         """
         if len(params) != len(set(params)):
-            raise BSLError('Duplicate Params are not allowed in Function definitions')
+            raise BSLError\
+                ('Duplicate Params are not allowed in Function definitions')
         self.params = params
         self.name = name
 
@@ -23,7 +25,7 @@ class BSLDef:
         :param s: current scope
         :return: [None, new_scope]
         """
-        return [None, self.update(s)]
+        return [None,self.update(s)]
 
     @abstractmethod
     def update(self, s):

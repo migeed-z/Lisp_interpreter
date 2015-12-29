@@ -10,12 +10,12 @@ class And(BSLExpr):
     """
     def __init__(self, sl):
         """
-        :param sl: BSLlist
+        :param sl: [BSLExpr]
         """
         self.sl = sl
 
     def eval_internal(self, defs):
-        list = self.sl.sl
+        list = self.sl
 
         for element in list:
             result = element.eval_internal(defs)

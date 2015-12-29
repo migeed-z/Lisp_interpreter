@@ -4,7 +4,6 @@ import sys
 sys.path.insert(0, '/Users/zeinamigeed/Lisp_interpreter/interpreter/BSL_Expr')
 sys.path.insert(0, '/Users/zeinamigeed/Lisp_interpreter/interpreter/Other')
 
-from BSLlist import BSLlist
 from Variable import Variable
 from BSLError import BSLError
 from Num import Num
@@ -16,11 +15,6 @@ def test_eval_num():
     assert Num(1).eval_internal(c.defs1) == Num(1)
     assert Num(9).eval_internal(c.defs1) == Num(9)
 
-def test_eval_expr():
-    assert c.list123.helper_eval(c.defs1) == [Num(1), Num(2), Num(3)]
-
-def test_eval_empty():
-    assert BSLlist([]).helper_eval(c.defs1) == []
 
 def test_eval_add():
     assert c.expradd1.eval_internal(c.defs1) == Num(1)
@@ -114,7 +108,7 @@ def test_if():
     assert c.if_1.eval_internal(c.defs1) == Num(4)
     assert c.if_2.eval_internal(c.defs1) == Num(3)
 
-def test_bigger_and_less_than(): #this test occassionally fails???????????
+def test_bigger_and_less_than(): #this test occassionally fails
     assert c.biggerthan34.eval_internal(c.defs1) == Boolean(False)
     assert c.lessthan34.eval_internal(c.defs1) == Boolean(True)
 
@@ -123,6 +117,7 @@ def test_bigger_and_less_than(): #this test occassionally fails???????????
 
 
 
+#error message that comes with the test:
 
 # >       assert c.lessthan34.eval_internal(c.defs1) == Boolean(True)
 # E       assert <Boolean.Boolean instance at 0x10ef732d8> == <Boolean.Boolean instance at 0x10ef73560>

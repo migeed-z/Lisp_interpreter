@@ -7,7 +7,6 @@ from Boolean import Boolean
 from And import And
 from If import If
 from Variable import Variable
-from BSLlist import BSLlist
 from FuncDef import FuncDef
 from FuncApplication import FuncApplication
 from LambdaExpr import LambdaExpr
@@ -247,9 +246,9 @@ def parse_operation(p, n, expr=None):
         result = parse_expr_list(p)
 
     if expr:
-        return expr(BSLlist(result))
+        return expr(result)
 
-    return FuncApplication(name, BSLlist(result))
+    return FuncApplication(name, result)
 
 
 def parse_expr_list(lst):

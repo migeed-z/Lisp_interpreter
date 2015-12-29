@@ -20,7 +20,8 @@ class SelectorDef(BSLDef):
             raise BSLError('Can only select from a Structure')
 
         if vals[0].name != self.name:
-            raise BSLError('Expects a %s, given a %s' % (self.name, vals[0].name))
+            raise BSLError\
+                ('Expects a %s, given a %s' % (self.name, vals[0].name))
 
         tuples = vals[0].tuples
         param = self.params[0]

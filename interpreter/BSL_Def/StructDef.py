@@ -17,7 +17,8 @@ class StructDef(BSLDef):
 
     def update(self, defs):
         """
-        Extends the scope with new definitions for make-name, name_param, ..., is_name
+        Extends the scope with new definitions for
+        make-name, name_param, ..., is_name
         (name-param (make-name ... p ...)) = p
         :param: Current Scope
         :return: New scope with above names
