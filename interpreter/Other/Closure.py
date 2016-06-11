@@ -52,3 +52,4 @@ class Closure:
             defs = defs.extend(name, val)
 
         return defs
+

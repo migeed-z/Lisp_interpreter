@@ -23,7 +23,7 @@ class ComparisonDef:
     def apply(self, name, args):
         self.validate(args, self.argcls)
 
-        return self.cls(apply(self.comp, args))
+        return self.cls(self.comp(*args))
 
     def validate(self, args, type):
         """

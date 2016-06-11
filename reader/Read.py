@@ -1,12 +1,36 @@
 import DirPaths
-from sys import stdin, stdout
-from Reader import Reader
+from sys import stdout
+from retic import Void, Bool, String
 from Parser import parse
 from ParserError import ParserError
 from Global_Scope import foo
+from Reader import Reader
+from types import P_Expr, Line
 
+#
+# class P_Expr:
+#     """
+#     Represents a union type p-expr
+#     """
+#     def __init__(self, expr):
+#         """
+#         :param p_expr: List of string or None
+#         :return: None
+#         """
+#         self.expr = expr
+#
+#
+# class Line:
+#     """
+#     To represent the read line or False if no line was read
+#     """
+#     def __init__(self, line):
+#         """
+#         :param line: [String, ...] or False
+#         """
+#         self.line = line
 
-def read_eval_print_loop():
+def read_eval_print_loop()->Void:
     """
     read S-expression, parse and evaluate, print, REPEAT
     :return: None
@@ -16,8 +40,8 @@ def read_eval_print_loop():
     while True:
 
         try:
-            p_expr = read()
-            # print p_expr
+            p_expr0 = read()
+            p_expr = p_expr0.expr
             if p_expr == False:
                 break
             elif not p_expr:
@@ -26,30 +50,32 @@ def read_eval_print_loop():
             [the_value, s] = ast.eval(global_s.getter())
             global_s.setter(s)
             if the_value:
-                print str(the_value)
+                print (str(the_value))
         except ParserError:
-            print ('bla bla bla')
+            print('bla bla bla')
 
 
-def read():
+def read()-> P_Expr:
     """
     Reads a line from the IP and instantiates a Reader using the IP
     and returns the resulting p-expression
     :return: p_expr
     """
-    try:
-        ip = read_lines()
-        if not ip:
-            return False
-        r = Reader(ip)
-        p_expr = r.reader()
-        return p_expr
+    # try:
+    ip = read_lines().line
+    if not ip:
+        return P_Expr(False)
+    r = Reader(ip)
+    p_expr = r.reader()
+    return P_Expr(p_expr)
 
-    except:
-        return None
+    # except Exception as e:
+    #     pass
+    #
+    # return P_Expr(None)
 
 
-def read_lines():
+def read_lines()-> Line:
     """
     Reads lines from std input
     :return: List containing input seperated by space
@@ -60,22 +86,23 @@ def read_lines():
 
     while True:
         try:
-            userinput = raw_input()
+            userinput = input()
             input_list.append(userinput)
             all_input = ' '.join(input_list)
             if has_equal_parens(all_input):
-                return all_input
+                return Line(all_input)
+            else: return Line(None)
 
         except (EOFError):
-            return None
+            return Line(None)
+    return Line(None)
 
 
-
-def has_equal_parens(line):
+def has_equal_parens(line:String)->Bool:
     """
     Returns True if number of right parens is equal to the number of left parens, and returns False otherwise
     :param line: String
-    :return:
+    :return: Bool
     """
     left = 0
     right = 0
@@ -85,11 +112,7 @@ def has_equal_parens(line):
         elif char == ')':
             right +=1
 
-    if left == right:
-        return True
-
+    return right == left
 
 print("Zeina's BSL intepreter, v.06\n")
 read_eval_print_loop()
-
-
