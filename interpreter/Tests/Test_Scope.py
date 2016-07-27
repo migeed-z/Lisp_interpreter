@@ -1,6 +1,6 @@
 import sys
-sys.path.insert(0, '/Users/zeinamigeed/Lisp_interpreter/interpreter/Other')
 
+sys.path.insert(0, '../Other')
 from Scope import Scope
 
 class Test_scope:
